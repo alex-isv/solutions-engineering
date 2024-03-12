@@ -2,7 +2,7 @@
 # Format Type
 ADOC_TYPE="article"
 
-                                               # ** Nvidia DGX on SUSE-Rancher RKE2 cluster validation setup steps **
+                                               #H1 ** Nvidia DGX on SUSE-Rancher RKE2 cluster validation setup steps **
 
 
 Test environment:
