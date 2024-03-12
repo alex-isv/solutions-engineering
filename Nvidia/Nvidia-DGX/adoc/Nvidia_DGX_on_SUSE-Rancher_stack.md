@@ -10,15 +10,7 @@ Setup:
 Due to limited resources for this particular verification test, SUSE Harvester server was used to mimic a test kubernetes environment.
 Harvester is a cloud-native hyperconverged infrastructure solution for Kubernetes which designed to simplify VMs workloads with integrated storage capabilities and supports containerized environments automatically through integration with Rancher. Please review -> https://docs.harvesterhci.io/v1.1 for more details.
 
-
-
-
-
-
-
-
-
-
+![harv-1](https://github.com/alex-isv/solutions-engineering/assets/52678960/c4c4d0ce-09b4-43da-815f-d360271c6b88)
 
 For the cluster nodes SLE Micro 5.4 was used as a base OS for a Rancher server manager and RKE2 cluster nodes.
 Sle Micro is designed as a host OS to run containers. It’s a minimal/stripped OS with a transactional-update.
