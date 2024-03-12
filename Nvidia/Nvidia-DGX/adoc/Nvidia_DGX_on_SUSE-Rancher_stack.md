@@ -1,5 +1,8 @@
 
-                                                                    Nvidia DGX on SUSE-Rancher RKE2 cluster validation setup steps
+# Format Type
+ADOC_TYPE="article"
+
+                                                    == Nvidia DGX on SUSE-Rancher RKE2 cluster validation setup steps
 
 
 Test environment:
