@@ -36,6 +36,7 @@ k3s kubectl get nodes
 ````
 >
 > NAME          STATUS   ROLES                       AGE   VERSION
+>
 > cl2-rancher   Ready    control-plane,etcd,master   86s   v1.27.10+k3s1
 
 
