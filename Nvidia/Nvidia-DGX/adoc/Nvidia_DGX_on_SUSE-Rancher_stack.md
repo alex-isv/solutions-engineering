@@ -6,6 +6,7 @@ DGX as a Kubernetes target node that can be used for the deployment of accelerat
 workloads leveraging NVIDIA GPUs.
 
 
+
 Test environment:
 
 SUSE Harvester physical node with 4 VM:\
