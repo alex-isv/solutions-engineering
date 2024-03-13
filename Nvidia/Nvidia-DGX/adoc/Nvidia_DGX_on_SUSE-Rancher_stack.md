@@ -1,6 +1,6 @@
 # Nvidia DGX on SUSE-Rancher RKE2 cluster validation setup steps
 
-#f03c15 Test environment 
+Test environment 
 
 SUSE Harvester physical node with 4 VM:\
 1 Rancher server VM\
@@ -28,7 +28,9 @@ Install helm.\
 
 If PackageHub repo is not activated, enable it with
 ````
-**SUSEConnect -p PackageHub/15.4/x86_64**
+*
+SUSEConnect -p PackageHub/15.4/x86_64**
+*
 ````
 
 
