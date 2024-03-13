@@ -23,21 +23,20 @@ Install helm
 zypper in helm
 ````
 
-Install k3s
  
-Verify the last certified version >> (https://github.com/k3s-io/k3s/releases)
+Verify the last certified k3s version >> (https://github.com/k3s-io/k3s/releases)
+
+Install k3s:
 
 ````
 curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="v1.27.10+k3s1" INSTALL_K3S_SKIP_SELINUX_RPM=true INSTALL_K3S_EXEC='server --cluster-init --write-kubeconfig-mode=644' sh -s -
 ````
 
+Verify installation:
 ````
 k3s kubectl get nodes
 ````
->
->- NAME          STATUS   ROLES                       AGE   VERSION
-
->- cl2-rancher   Ready    control-plane,etcd,master   86s   v1.27.10+k3s1
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/1c2786fc-dc5d-405d-8e46-8cc3bb0cb3da)
 
 
 ````
