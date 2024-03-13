@@ -27,7 +27,7 @@ Steps:
 
 Install helm.\
 If PackageHub repo is not activated, enable it with 
-`SUSEConnect -p PackageHub/15.4/x86_64`
+----`SUSEConnect -p PackageHub/15.4/x86_64`----
 
 install helm:
 `transactional-update pkg install helm-3.8.0-bp154.2.27`
