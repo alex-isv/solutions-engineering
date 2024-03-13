@@ -188,7 +188,7 @@ Verify that nvidia-smi command is working on the **worker** node.
 
 
 
-## Install gpu-operator with helm command:
+## Install a gpu-operator with helm command:
 
 ````
 helm install -n gpu-operator \
@@ -249,7 +249,7 @@ kubectl logs -n gpu-operator -l app=nvidia-operator-validator
 > 2 worker nodes with 1 x A100 80Gb and 2 x A100 40Gb
 
 
-**Bringing a workload**
+- **Bringing a workload**
 
 From the Rancher Dashboard click <int>Import Yaml</int> and paste the following:
 
