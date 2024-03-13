@@ -222,17 +222,28 @@ Verify that gpu-operator was installed:
 
 Check that `driver-validation`, `cuda-validation` and `toolkit-validation` passed.
 
-![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/6dc60128-b09f-4456-a5bc-449cee6d704b)
-
-
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/dd1b4d19-50a8-4462-8618-2afabb9f48c9)
 
 
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/6dc60128-b09f-4456-a5bc-449cee6d704b)
 
-Adding a 2nd worker node to cluster:
+
+
+On the 2nd cluster adding 2 worker nodes with 3 GPUs total:
 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/96a87968-b9f6-4885-b9e8-7fadc7668c0a)
 
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/ff8c352f-1c46-410a-842c-6887552b9d52)
+
+or from the master node:
+
+````
+kubectl logs -n gpu-operator -l app=nvidia-operator-validator
+````
+
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/14da7bf1-62c1-497d-8911-b061fd140c20)
 
 
 > 2 worker nodes with 1 x A100 80Gb and 2 x A100 40Gb
