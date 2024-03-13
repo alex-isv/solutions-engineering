@@ -45,13 +45,13 @@ Source the environment
 ````
 export KUBECONFIG=/etc/rancher/k3s/k3s.yaml \
 ````
-
+Install a cert-manager:
 ````
 kubectl apply --validate=false -f https://github.com/cert-manager/cert-manager/releases/download/v1.14.2/cert-manager.crds.yaml \
 helm repo add jetstack https://charts.jetstack.io \
 helm repo update
 ````
-Install a cert-manager:
+
 ````
 helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace
 ````
