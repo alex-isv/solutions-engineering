@@ -280,4 +280,14 @@ For the reference use > (https://developer.nvidia.com/blog/getting-kubernetes-re
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/38ea6c87-290a-409c-aa86-80e89faac41c)
 
 
+or check with command 
+
+````
+kubectl logs tf-benchmarks
+````
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/98918319-932b-4832-91a1-cc421c7f286a)
+
+
+
 
