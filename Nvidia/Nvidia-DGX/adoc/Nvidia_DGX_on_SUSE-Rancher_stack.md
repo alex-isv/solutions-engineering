@@ -1,4 +1,4 @@
-# Nvidia DGX on SUSE-Rancher RKE2 cluster validation setup steps
+# Nvidia DGX on SUSE-Rancher RKE2 cluster setup steps
 
 Test environment:
 
@@ -92,27 +92,32 @@ Click <Create> and select a proper Node Role and copy registration command
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/3ccdf799-e97c-4214-a1d0-739057b96873)
 
 
-Paste to the target node.
+Paste a registration command to the target nodes.
+
+> [!TIP]
+> It’s also possible to create RKE2 cluster directly in one step from the Harvester with a node driver as described in (https://docs.harvesterhci.io/v1.2/rancher/node/rke2-cluster)
+> Where you can define a machine pool and a machine count preconfigured with a proper cloud provider.
+
+From Machines tab of the rke2-cluster verify that node was deployed and part of the RKE2 cluster:
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/aed61a7c-a76c-4df8-88e8-844aebf30e1a)
+
+
+Make sure that you have the odd number of nodes in RKE2 cluster. In this test case 3 nodes total with all 3 roles assigned:
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/349407e6-6ba7-4489-aebc-9c654755217a)
 
 
 
-It’s also possible to create RKE2 cluster directly in one step from the Harvester with a node driver as described in (https://docs.harvesterhci.io/v1.2/rancher/node/rke2-cluster)
 
-Where you can define a machine pool and a machine count preconfigured with a proper cloud provider.
+<u>Add DGX nodes to the existing RKE2 cluster</u>
 
-From Machines tab of the rke2-cluster verify that node was deployed.
-
-Make sure that you have the odd number of nodes in RKE2 cluster. In this test case 3 nodes total with all 3 roles assigned.
-
-
-
-Add DGX nodes to the existing RKE2 cluster:
-
-Go to the Registration tab, select worker role and paste to DGX nodes.
+Go to the Registration tab, select worker role, copy and paste a registration command to DGX nodes.
 
  Verify that all nodes deployed to the cluster.
 
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/0b646e87-cb5a-4b6d-8c5e-7843b446c3b3)
 
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/2d7d9918-4716-4e4a-b4d3-43f4e61c73a7)
 
 
 Install and test Nvidia gpu-operator on the cluster.
