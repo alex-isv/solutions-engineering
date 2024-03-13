@@ -127,6 +127,7 @@ Review steps from (https://docs.nvidia.com/datacenter/tesla/tesla-installation-n
 
 This section includes instructions for installing the NVIDIA driver on SLES 15 using the package manager.\
     1. Install the CUDA repository public GPG key.
+    
 ````
 distribution=$(. /etc/os-release;echo $ID$VERSION_ID | sed -e 's/\.[0-9]//')
 ````
