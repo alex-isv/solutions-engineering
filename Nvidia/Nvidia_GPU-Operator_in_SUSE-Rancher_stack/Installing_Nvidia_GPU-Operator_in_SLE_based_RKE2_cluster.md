@@ -16,7 +16,7 @@ You can also integrate a Rancher server with a Harvester cluster for easy cluste
 > [!NOTE]
 > Verify a support matrix before the installation  (https://www.suse.com/suse-rancher/support-matrix/all-supported-versions/rancher-v2-8-2/)
 
-  **Installing a Rancher server on SLES**
+  - **Installing a Rancher server on SLES**
 
 Install helm
 ````
@@ -73,7 +73,7 @@ kubectl get pods --namespace cert-manager
 
 Login to Rancher URL in the browser and change a password.
 
-  **Create RKE2 cluster**
+- **Create RKE2 cluster**
 
 
 From Rancher server go to the Cluster Management and select RKE2 and click Custom
