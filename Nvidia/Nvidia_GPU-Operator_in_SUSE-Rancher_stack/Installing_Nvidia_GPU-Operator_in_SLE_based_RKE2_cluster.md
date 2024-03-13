@@ -3,6 +3,8 @@
 ## Purpose
 These steps outlines installation of Nvidia gpu-operator in SUSE Kubernetes cluster with SLES based worker nodes and a Rancher server for easy deployment and management.
 
+## Prerequisites
+
 <ins> Setup environment </ins>
 
 In this test SUSE HARVESTER cluster 1.2.1 with SLE15.5 VMs was used as a base RKE2 cluster and physical SLES based worker nodes with Nvidia GPU installed.
