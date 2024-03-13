@@ -126,25 +126,24 @@ Review steps from (https://docs.nvidia.com/datacenter/tesla/tesla-installation-n
 
 
 This section includes instructions for installing the NVIDIA driver on SLES 15 using the package manager.\
-    1. Install the CUDA repository public GPG key.
+
+1.Install the CUDA repository public GPG key.
     
 ````
 distribution=$(. /etc/os-release;echo $ID$VERSION_ID | sed -e 's/\.[0-9]//')
 ````
-
-    2. Setup the CUDA network repository.
+2.Setup the CUDA network repository.
     
 ````
 sudo zypper ar http://developer.download.nvidia.com/compute/cuda/repos/$distribution/x86_64/cuda-$distribution.repo
 ````
 
-    3. If not already done, activate the SUSE Package Hub with SUSEConnect.
+3.If not already done, activate the SUSE Package Hub with SUSEConnect.
     
 ````
 sudo SUSEConnect  -p PackageHub/15.4/x86_64
 ````
-
-    4. Update the repository cache.
+4.Update the repository cache.
     
 ````
 sudo zypper refresh
@@ -159,24 +158,22 @@ sudo zypper refresh
 ````
 uname -r 
 ````
-
-    5. 5.14.21-150500.55.49-default
+5.5.14.21-150500.55.49-default
  In this example, the version is 5.14.21-150500.55.49 and the variant is default. The kernel headers and development packages can then be installed with the following command, replacing <variant> and <version> with the variant and version discovered from the previous uname command:
 ````
 sudo zypper install -y kernel-<variant>-devel=<version>
 ````
 
-    6. Proceed to install the driver using the cuda-drivers meta-package.
+6.Proceed to install the driver using the cuda-drivers meta-package.
 ````
 sudo zypper install -y cuda-drivers
 ````
-
-    7. On SUSE systems, add the user to the video group.
+7.On SUSE systems, add the user to the video group.
  ````
 sudo usermod -a -G video <username>
 ````
 
-    8. A reboot of the system may be required to verify that the NVIDIA driver modules are loaded and the devices visible under /dev.
+8.A reboot of the system may be required to verify that the NVIDIA driver modules are loaded and the devices visible under /dev.
 ````
 sudo reboot
 ````
