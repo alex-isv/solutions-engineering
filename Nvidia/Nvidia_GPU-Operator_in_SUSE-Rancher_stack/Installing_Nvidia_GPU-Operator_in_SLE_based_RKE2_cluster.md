@@ -111,7 +111,7 @@ Add a worker node with a <ins>GPU</ins> installed.
 - **Install GPU drivers on the worker node**
 
 > [!TIP]
-> Before installing new drivers, make sure to remove CUDA Toolkit and Nvidia drivers:
+> Before installing new drivers, make sure to remove older versions of CUDA Toolkit and Nvidia drivers:
 ````
 sudo zypper remove "cuda*" "*cublas*" "*cufft*" "*cufile*" "*curand*" \
  "*cusolver*" "*cusparse*" "*gds-tools*" "*npp*" "*nvjpeg*" "nsight*" "*nvvm*"
