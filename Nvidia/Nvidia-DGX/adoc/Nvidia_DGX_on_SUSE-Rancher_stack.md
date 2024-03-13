@@ -22,7 +22,9 @@ and the [SLE Micro Admin guide](https://documentation.suse.com/sle-micro/5.4/pdf
 Install Rancher server on test1 VM.
 For the reference use [Rancher documentation](https://ranchermanager.docs.rancher.com/getting-started/quick-start-guides/deploy-rancher-manager/helm-cli)
 
-Verify support matrix before the installation (https://www.suse.com/suse-rancher/support-matrix/all-supported-versions/rancher-v2-8-2/)\
+> [!NOTE]
+> Verify SUSE components support matrix before the installation (https://www.suse.com/suse-rancher/support-matrix/all-supported-versions/rancher-v2-8-2/)
+
 Steps:
 
 If PackageHub repo is not activated, enable it with
