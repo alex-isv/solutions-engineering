@@ -288,5 +288,155 @@ From Longhorn UI, you can review available nodes on the cluster and the storage
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/39da69ad-b413-4d20-9e7a-9b5660c8765e)
 
 
+
 **Bringing a test workload**
+
+ For the reference review (https://developer.nvidia.com/blog/getting-kubernetes-ready-for-the-a100-gpu-with-multi-instance-gpu/) which can be used for different Nvidia tests including MIG strategy.
+
+
+Deploy tf-benchmarks.yaml file with
+````
+kubectl apply -f tf-benchmarks.yaml
+````
+from your master node.
+
+or from the Rancher Dashboard click *Import Yaml* and paste the following:
+````
+ # tf-benchmarks.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tf-benchmarks
+spec:
+  restartPolicy: Never
+  containers:
+    - name: tf-benchmarks
+      image: "nvcr.io/nvidia/tensorflow:23.10-tf2-py3"
+      command: ["/bin/sh", "-c"]
+      args: ["cd /workspace && git clone https://github.com/tensorflow/benchmarks/ && cd /workspace/benchmarks/scripts/tf_cnn_benchmarks && python tf_cnn_benchmarks.py --num_gpus=1 --batch_size=64 --model=resnet50 --use_fp16"]
+      resources:
+        limits:
+          nvidia.com/gpu: 1
+````
+
+ 
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/9d4298fd-5398-4d09-80f9-98f5ab1e9b3e)
+
+
+Click import which will create tf-benchmark pod.\
+While pod is in the training mode, run the nvidi-smi command to validate the workload:
+````
+kubectl exec -it \
+"$(for EACH in \
+$(kubectl get pods -n gpu-operator \
+-l app=nvidia-driver-daemonset \
+-o jsonpath={.items..metadata.name}); \
+do echo ${EACH}; done)" \
+-n gpu-operator \
+nvidia-smi
+````
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/157b4233-24d5-462d-8085-b15e9f90c3af)
+
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/5616626e-ca0c-4295-8cbd-bf8598869f44)
+
+
+Also, you can check logs from tf-benchmarks pod 
+````
+kubectl logs tf-benchmarks
+````
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/c9e0d965-ad33-4c02-b609-4a010adb87b9)
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/97379bec-fd4a-4809-85b3-428f2161f33b)
+
+
+Or simply click on pod’s View Logs  >
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/b3e84615-c956-44e5-ac4b-cd2cc44ea3a6)
+
+
+**Review GPU metrics**
+
+To view GPU metrics modify _Prometheus_ yaml in rancher-monitoring during Rancher-Monitoring installation
+````
+prometheus:
+  prometheusSpec:
+    serviceMonitorSelectorNilUsesHelmValues: false
+    additionalScrapeConfigs:
+    - job_name: gpu-metrics
+      scrape_interval: 1s
+      metrics_path: /metrics
+      scheme: http
+      kubernetes_sd_configs:
+      - role: endpoints
+        namespaces:
+          names:
+          - gpu-operator
+      relabel_configs:
+      - source_labels: [__meta_kubernetes_pod_node_name]
+        action: replace
+        target_label: kubernetes_node
+````
+
+In Prometheus panel enter _DCGM_FI_DEV_GPU_TEMP_
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/23831b93-1b8c-45a9-a6dc-716ad778bde0)
+
+
+Import NVIDIA DCGM Exporter Dashboard from Grafana
+
+Open Grafana >
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/6439741b-d4a0-4ed5-8700-5d7fcca1979b)
+
+Search for NVIDIA DCGM dashboard
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/5d98bb90-d052-44ce-8013-9723eb9b6c4f)
+
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/191aae01-53aa-4ade-9333-ff983b57d5c1)
+
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/8aa13232-e073-4e33-9a49-caa4c4b07a22)
+
+
+
+Diff. test values will give you diff numbers.
+For ex. changing arguments can increase the GPU utilization:
+````
+python tf_cnn_benchmarks.py --num_gpus=1 --batch_size=1024 --model=resnet50
+          --variable_update=parameter_server --use_fp16
+````
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/093af05b-0202-4bea-9a3e-d2a7b4d8b290)
+
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/65687675-62f3-409e-8d6f-2a339562b1e1)
+
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/ae2a905b-8faa-492e-a3dc-90e7fb6e2c2e)
+
+
+Another example:
+
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/9bb8c71b-6b76-4191-9dc0-288f1e5c721e)
+
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/5559c4eb-80b8-4452-9b20-faf3c098b30f)
+
+
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/c04ca0fb-87a9-49dc-bdfc-1e824a2af8e6)
+
+
+More _tf_cnn_benchmarks_ tests are available at  (https://github.com/tensorflow/benchmarks/tree/master/scripts/tf_cnn_benchmarks)
+
+
+
+
+
+
 
