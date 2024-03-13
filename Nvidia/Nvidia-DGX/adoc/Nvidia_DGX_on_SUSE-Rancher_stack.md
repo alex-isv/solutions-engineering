@@ -10,27 +10,30 @@ SUSE Harvester physical node with 4 VM:\
 
 Setup:\
 SUSE Harvester server was used as a test Kubernetes environment.\
-Harvester is a cloud-native hyperconverged infrastructure solution for Kubernetes which designed to simplify VMs workloads with integrated storage capabilities and supports containerized environments automatically through integration with Rancher. Please review [Harvester documentation](https://docs.harvesterhci.io/v1.1) for more details.
+Harvester is a cloud-native hyperconverged infrastructure solution for Kubernetes which designed to simplify VMs workloads with integrated storage capabilities and supports containerized environments automatically through integration with Rancher. Please review [Harvester documentation](https://docs.harvesterhci.io/v1.2) for more details.
 
 ![harv-1](https://github.com/alex-isv/solutions-engineering/assets/52678960/c4c4d0ce-09b4-43da-815f-d360271c6b88)
 
 For the cluster nodes SLE Micro 5.4 was used as a base OS for a Rancher server manager and RKE2 cluster nodes.
 
 Sle Micro is designed as a host OS to run containers. It’s a minimal/stripped OS with a transactional-update.
-For more details on Micro, review [SLE Micro deployment guide](https://documentation.suse.com/sle-micro/5.4/pdf/book-deployment-slemicro_en.pdf)\
+For more details on Micro, review [SLE Micro deployment guide](https://documentation.suse.com/sle-micro/5.4/pdf/book-deployment-slemicro_en.pdf)
 and the [SLE Micro Admin guide](https://documentation.suse.com/sle-micro/5.4/pdf/book-administration-slemicro_en.pdf)
 
 Install Rancher server on test1 VM.
-> https://ranchermanager.docs.rancher.com/getting-started/quick-start-guides/deploy-rancher-manager/helm-cli
+For the reference use [Rancher documentation](https://ranchermanager.docs.rancher.com/getting-started/quick-start-guides/deploy-rancher-manager/helm-cli)
+
 Steps:
-Install helm.
+
+Install helm.\
 If PackageHub repo is not activated, enable it with 
-SUSEConnect -p PackageHub/15.4/x86_64
-And install helm:
-# transactional-update pkg install helm-3.8.0-bp154.2.27
+`SUSEConnect -p PackageHub/15.4/x86_64`
+
+install helm:
+`transactional-update pkg install helm-3.8.0-bp154.2.27`
 
 Install K3s on Linux
-# curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="v1.24.14+k3s1" INSTALL_K3S_SKIP_SELINUX_RPM=true INSTALL_K3S_EXEC='server --cluster-init --write-kubeconfig-mode=644' sh -s -
+`curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="v1.24.14+k3s1" INSTALL_K3S_SKIP_SELINUX_RPM=true INSTALL_K3S_EXEC='server --cluster-init --write-kubeconfig-mode=644' sh -s -`
 
 
 # k3s kubectl get nodes
