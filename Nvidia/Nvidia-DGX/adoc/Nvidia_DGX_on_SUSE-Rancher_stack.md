@@ -7,7 +7,7 @@ SUSE Harvester physical node with 4 VM:\
 3 VMs as RKE2 cluster (all VMs are SLE Micro based).\
 2 Nvidia DGX servers physical nodes
 
-Setup:
+Setup:\
 SUSE Harvester server was used as a test Kubernetes environment.\
 Harvester is a cloud-native hyperconverged infrastructure solution for Kubernetes which designed to simplify VMs workloads with integrated storage capabilities and supports containerized environments automatically through integration with Rancher. Please review [Harvester documentation](https://docs.harvesterhci.io/v1.2) for more details.
 
@@ -32,69 +32,75 @@ If PackageHub repo is not activated, enable it with
 SUSEConnect -p PackageHub/15.4/x86_64**
 ````
 
-Install helm:\
+Install helm:
 ````
 transactional-update pkg install helm-3.8.0-bp154.2.27
 ````
 
-Install K3s on Linux:\
+Install K3s on Linux:
 ````
-curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="v1.24.14+k3s1" INSTALL_K3S_SKIP_SELINUX_RPM=true INSTALL_K3S_EXEC='server --cluster-init --write-kubeconfig-mode=644' sh -s -
+curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="v1.27.10+k3s1" INSTALL_K3S_SKIP_SELINUX_RPM=true INSTALL_K3S_EXEC='server --cluster-init --write-kubeconfig-mode=644' sh -s -
 ````
-Check with
+Source the environment
 ````
-k3s kubectl get nodes
-````
-
-````
-kubectl apply --validate=false -f https://github.com/cert-manager/cert-manager/releases/download/v1.11.0/cert-manager.crds.yaml\
-helm repo add jetstack https://charts.jetstack.io\
-helm repo update\
-export KUBECONFIG=/etc/rancher/k3s/k3s.yaml\
-helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.11.0
-````
-Verify with
-````
-kubectl get pods --namespace cert-manager
+export KUBECONFIG=/etc/rancher/k3s/k3s.yaml \
 ````
 
-# helm repo add rancher-stable https://releases.rancher.com/server-charts/stable
-# export HOSTNAME="test1.eth.cluster"
-# export RANCHER_VERSION="2.7.3"
+````
+kubectl apply --validate=false -f https://github.com/cert-manager/cert-manager/releases/download/v1.14.2/cert-manager.crds.yaml \
+helm repo add jetstack https://charts.jetstack.io \
+helm repo update
+````
+Install a cert-manager:
+````
+helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace
+````
 
-# kubectl create namespace cattle-system
-# helm install rancher rancher-stable/rancher --namespace cattle-system --set hostname=test1.eth.cluster --set version=2.7.4 --set replicas=1
-Go to Rancher server URL and login > 
+Install a Rancher server:
+````
+helm repo add rancher-stable https://releases.rancher.com/server-charts/stable \
+kubectl create namespace cattle-system \
+helm install rancher rancher-stable/rancher --namespace cattle-system --set hostname=test1.eth.cluster --set version=2.8.2 --set replicas=1
+````
+
+Go to Rancher server URL login and change the password.
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/81447757-9d1d-4360-8dd3-c648cf7c75ba)
+
+It's possible to integrate Rancher with Harvester as described in (https://docs.harvesterhci.io/v1.2/rancher/index)
 
 
-Run the command from <For a Helm installation> to show generated password to enter and create a new one.
-Integrate Rancher with Harvester as described in > https://docs.harvesterhci.io/v1.1/rancher/rancher-integration#virtualization-management
-
-
-
-
-
-Create an RKE2 cluster.
+## Create an RKE2 cluster.
 From Rancher server go to the Cluster Management and select RKE2 and click Custom
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/847f1dcc-ac01-4286-8332-05c29cf6e250)
 
 Select a proper/certified Kubernetes version and a cloud provider
 
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/d5be1b49-e000-4594-92ee-5ede9869866b)
 
 
 
 In this test setup we used RKE2 embedded
-Click <Create> and select Node Role and copy registration command
 
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/7965ff0a-bf61-49fe-9030-3e1623ec1c4c)
 
+Click <Create> and select a proper Node Role and copy registration command
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/3ccdf799-e97c-4214-a1d0-739057b96873)
 
 
 Paste to the target node.
 
-It’s also possible to create RKE2 cluster directly in one step from the Harvester with a node driver as described in > https://docs.harvesterhci.io/v1.1/rancher/node/node-driver#rke2-kubernetes-cluster
+
+
+It’s also possible to create RKE2 cluster directly in one step from the Harvester with a node driver as described in (https://docs.harvesterhci.io/v1.2/rancher/node/rke2-cluster)
+
 Where you can define a machine pool and a machine count preconfigured with a proper cloud provider.
+
 From Machines tab of the rke2-cluster verify that node was deployed.
 
-Make sure that you have the odd number of nodes in RKE2 cluster. In this case 3 nodes total with all 3 roles assigned.
+Make sure that you have the odd number of nodes in RKE2 cluster. In this test case 3 nodes total with all 3 roles assigned.
 
 
 
