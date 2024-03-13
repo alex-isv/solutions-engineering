@@ -22,6 +22,7 @@ and the [SLE Micro Admin guide](https://documentation.suse.com/sle-micro/5.4/pdf
 Install Rancher server on test1 VM.
 For the reference use [Rancher documentation](https://ranchermanager.docs.rancher.com/getting-started/quick-start-guides/deploy-rancher-manager/helm-cli)
 
+Verify support matrix before the installation (https://www.suse.com/suse-rancher/support-matrix/all-supported-versions/rancher-v2-8-2/)\
 Steps:
 
 If PackageHub repo is not activated, enable it with
@@ -30,13 +31,18 @@ SUSEConnect -p PackageHub/15.4/x86_64**
 ````
 
 Install helm:\
-````transactional-update pkg install helm-3.8.0-bp154.2.27
+````
+transactional-update pkg install helm-3.8.0-bp154.2.27
 ````
 
 Install K3s on Linux:\
-````curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="v1.24.14+k3s1" INSTALL_K3S_SKIP_SELINUX_RPM=true INSTALL_K3S_EXEC='server --cluster-init --write-kubeconfig-mode=644' sh -s -
 ````
-# k3s kubectl get nodes
+curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="v1.24.14+k3s1" INSTALL_K3S_SKIP_SELINUX_RPM=true INSTALL_K3S_EXEC='server --cluster-init --write-kubeconfig-mode=644' sh -s -
+````
+Check with
+````
+k3s kubectl get nodes
+````
 
 ````
 kubectl apply --validate=false -f https://github.com/cert-manager/cert-manager/releases/download/v1.11.0/cert-manager.crds.yaml\
