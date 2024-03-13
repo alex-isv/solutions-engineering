@@ -132,16 +132,19 @@ distribution=$(. /etc/os-release;echo $ID$VERSION_ID | sed -e 's/\.[0-9]//')
 ````
 
     2. Setup the CUDA network repository.
+    
 ````
 sudo zypper ar http://developer.download.nvidia.com/compute/cuda/repos/$distribution/x86_64/cuda-$distribution.repo
 ````
 
     3. If not already done, activate the SUSE Package Hub with SUSEConnect.
+    
 ````
 sudo SUSEConnect  -p PackageHub/15.4/x86_64
 ````
 
     4. Update the repository cache.
+    
 ````
 sudo zypper refresh
 ````
