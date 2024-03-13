@@ -148,7 +148,7 @@ Under toolkit add the following values:
 
 
 > [!NOTE]
-> By default migManager is coming as all-disabled
+> By default migManager is coming as *all-disabled*
 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/7668ec1d-f8be-4796-b396-82561285d1f6)
 
@@ -176,7 +176,7 @@ For the reference review (https://docs.nvidia.com/datacenter/cloud-native/gpu-op
 
  *mig.strategy* should be set to mixed when MIG mode if not enabled on all GPUs on a node.
 
-Default value is ‘all-disabled’
+Default value is *all-disabled*
 
 Check a correct profile for your GPU type.
 > [!NOTE]
@@ -217,7 +217,9 @@ You can check Mig-manager logs
 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/94eb448f-efb7-4484-8164-d094b3d9ab32)
 
+
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/82f0cb56-91c2-4a6d-aa3f-2ccc0fc9d71c)
+
 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/6af687aa-19f8-4ebd-81e0-76f2ce3fe0c3)
 
@@ -230,6 +232,7 @@ Upon successful change you should be able to see changes in labels on the node
 You can also verify from DGX node
 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/8b0b4fa7-2d82-4be3-9860-dd521450c764)
+
 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/73cad02e-afae-4bb0-9717-3a69272da66e)
 
@@ -266,151 +269,22 @@ Also, Ubuntu DGX nodes had mask by default for iscsi, so need to run
 ````
 sudo systemctl unmask iscsid.service
 ````
- to unmask it.
+to unmask it.
 
 
-
-
-
-
-Enable Opni loggin > https://opni.io/installation/opni/backends
-You need to port forward from your local machine to access a dashboard.
-> kubectl -n opni port-forward svc/opni-admin-dashboard web:web
-
-To access the cluster from the local machine you need to install kubectl and copy the cluster's kubeconfig file (rke2.yaml) to your local ~/.kube/config directory and > export KUBECONFIG=/root/.kube/config/rke2.yaml
- 
-
-Access dashboard from the browser > http://localhost:12080
-Note: use Chrome
 
 
 Click on the Loggin tab from the left and install
 
 Review storage provisioning from Rancher Storage > PersistentVolumeClaims 
 
-From Longhorn UI, you can review available nodes on the cluster and the storage >
+From Longhorn UI, you can review available nodes on the cluster and the storage 
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/750ecff2-e523-46de-8f81-92e608f3335c)
 
 
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/39da69ad-b413-4d20-9e7a-9b5660c8765e)
 
-Enable Loggin from the Opni dashboard:
-
-
-
-Select 3 replicas for the Controlplane Pods
 
 We used a persistent storage with 3 replicas for the longhorn storage class.
-
-Opni-controlplane-0, 1 and 2 are attached to 3 diff. nodes from the Longhorn.
-
-
-Login to OpenSearch dashboard
-kubectl -n opni port-forward svc/opni-opensearch-svc-dashboards 5601:5601
-
-
-
-Get a username: kubectl get secret -n opni opni-admin-password -o jsonpath='{.data.username}' | base64 –d
-And a passwd: kubectl get secret -n opni opni-admin-password -o jsonpath='{.data.password}' | base64 –d
-Enable Opni AIOps
-Enable Log Anomaly from Opni Dashboard > https://opni.io/installation/opni/aiops
-
-In our case Deployment Watchlist:
-Auto generated models for user selected workloads
-User selects 1 or more workload deployments important to them
-Opni will self train a model and provide insights for logs belonging to user selected workloads
-NVIDIA GPU is required to run
-
-
-
-Once enabled > opni-svc-gpu-controller pod will be deployed.
-From AIOps click on Deployment Watchlist (wait for some time to collect logs)
-Select a watchlist from the dashboard.
-
-
-Depends on the size, it may take a few hours to collect logs
-
-Opni-svc-gpu-controller is taking care of a workload to GPU node.
-
-
-
-In this case dgx03 is used as the only node with GPU (setting in yaml)
-
-We cordoned another node with GPU to use a specific GPU node.
-
-For more heavier workload I used a kubernetes-manifests
-from https://github.com/GoogleCloudPlatform/microservices-demo
-OPNI will use that workload to redirect to nodes where GPUs are located and will utilize a gpu workload.
-opni-svc-gpu-controller pod is the one used to redirect the workload to GPUs.
-Import kubernetes-manifest.yaml file from Rancher
-
-That will bring some workload to the cluster >
-
-
-
-From Opni dashboard Deployment Watchlist, select ‘default’ namespace
-
-
-With generated logs from kubernetes-manifests deployment.
-From OpenSearch dashboard you can select logs and the workload utilization
-
-
-
-
-
-
-From opni namespace check opni-svc-gpu-controller deployment it should be 100% and deployed once all logs collected.
-
-For a dedicated workload to a specific mig partition a nodeSelector can be added to the test yaml file as nodeSelector: nvidia.com/mig-1g.10gb: 1
-** Note: currently opni is hard coded to be used with a gpu without a MIG so any other gpu tests can be used if allowed.
-Monitoring.
-Opni has an integrated monitoring service. https://opni.io/installation/opni/backends
-You can enable opni monitoring from the dashboard.
-
-
-In this particular setup due to isolated lab environment, Grafana won’t be able to access it for opni, since it requires the oauth flow. Opni was developed to use openid login for Grafana. In a production environment it’s usually using some authentication like auth0 or aws congnito.
-
-The 2nd option is to use the integrated Rancher monitoring tool.
-Go to the Cluster Tools and install Rancher Monitoring.
-
-Edit yaml file and add the following values for Prometheus:
-- job_name: gpu-metrics
-            scrape_interval: 1s
-            metrics_path: /metrics
-            scheme: http
-            kubernetes_sd_configs:
-            - role: endpoints
-              namespaces:
-                names:
-                - gpu-operator
-            relabel_configs:
-            - source_labels: [__meta_kubernetes_pod_node_name]
-              action: replace
-              target_label: kubernetes_node
-
-Install and verify that it’s running.
-The default Admin username and password for the Grafana instance is admin/prom-operator
-
-
-
-Import Nvidia dashboard 
-> https://grafana.com/docs/grafana/latest/dashboards/manage-dashboards/
-
-
-Note: In this particular lab setup, due to network configuration and isolation, Prometheus won’t be able to access it from the remote machine’s browser.
-
-In non-restricted lab environment with Grafana Nvidia DCGM Exporter dashboard
-with some tensorflow workload, It should look similar to this >
-
-
-=============================
-
-To uninstall Nvidia GPU drivers >>
-Run the following commands to uninstall CUDA: 
-zypper remove "cuda*" "*cublas*" "*cufft*" "*cufile*" "*curand*" \
- "*cusolver*" "*cusparse*" "*gds-tools*" "*npp*" "*nvjpeg*" "nsight*" "*nvvm*"
-
-rm -rf /usr/local/cuda-11.4 
-Run the following command to uninstall the GPU driver: 
-               zypper remove "*nvidia*" 
-reboot
-============================================================================
 
