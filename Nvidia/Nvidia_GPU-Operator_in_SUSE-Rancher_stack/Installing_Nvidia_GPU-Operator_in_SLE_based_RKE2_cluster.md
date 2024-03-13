@@ -251,4 +251,29 @@ kubectl logs -n gpu-operator -l app=nvidia-operator-validator
 
 **Bringing a workload**
 
+From the Rancher Dashboard click <int>Import Yaml</int> and paste the following:
+
+````
+ # tf-benchmarks.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tf-benchmarks
+spec:
+  restartPolicy: Never
+  containers:
+    - name: tf-benchmarks
+      image: "nvcr.io/nvidia/tensorflow:23.10-tf2-py3"
+      command: ["/bin/sh", "-c"]
+      args: ["cd /workspace && git clone https://github.com/tensorflow/benchmarks/ && cd /workspace/benchmarks/scripts/tf_cnn_benchmarks && python tf_cnn_benchmarks.py --num_gpus=1 --batch_size=64 --model=resnet50 --use_fp16"]
+      resources:
+        limits:
+          nvidia.com/gpu: 2
+````
+
+For the reference use > (https://developer.nvidia.com/blog/getting-kubernetes-ready-for-the-a100-gpu-with-multi-instance-gpu/) which can be used for different Nvidia tests including MIG strategy.
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/0eea2b84-1eed-4beb-9220-a5cf7983bf8d)
+
+
 
