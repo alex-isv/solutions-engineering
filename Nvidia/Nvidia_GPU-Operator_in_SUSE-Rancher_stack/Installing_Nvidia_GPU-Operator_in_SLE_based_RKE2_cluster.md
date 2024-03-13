@@ -108,21 +108,19 @@ Add a worker node with a <ins>GPU</ins> installed.
 
 
 
-**Install GPU drivers on the worker node**
+- **Install GPU drivers on the worker node**
 
 > [!TIP]
-> Before installing new drivers, make sure to remove CUDA Toolkit:
-> ````
+> Before installing new drivers, make sure to remove CUDA Toolkit and Nvidia drivers:
+````
 sudo zypper remove "cuda*" "*cublas*" "*cufft*" "*cufile*" "*curand*" \
  "*cusolver*" "*cusparse*" "*gds-tools*" "*npp*" "*nvjpeg*" "nsight*" "*nvvm*"
 ````
 
-and remove NVIDIA Drivers:
 ````
 sudo zypper remove "*nvidia*"
 ````
->
->
+
  
 Review steps from (https://docs.nvidia.com/datacenter/tesla/tesla-installation-notes/index.html#suse15)
 
