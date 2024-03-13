@@ -29,7 +29,7 @@ Install helm.\
 
 If PackageHub repo is not activated, enable it with
 ````
-SUSEConnect -p PackageHub/15.4/x86_64
+_SUSEConnect -p PackageHub/15.4/x86_64_
 ````
 
 
