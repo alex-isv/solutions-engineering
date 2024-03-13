@@ -1,7 +1,7 @@
 # Nvidia DGX on SUSE-Rancher RKE2 cluster validation setup steps
 
 
-$${\color{green}Green}$$Test environment$$
+$${\color{green}Test environment}$$
 
 SUSE Harvester physical node with 4 VM:\
 1 Rancher server VM\
