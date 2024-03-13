@@ -18,11 +18,12 @@ You can also integrate a Rancher server with a Harvester cluster for easy cluste
 
 **Installing a Rancher server on SLES**
 
-	Install helm 
+Install helm
 ````
 zypper in helm
 ````
-	Install k3s
+
+Install k3s
  
 Verify the last certified version >> (https://github.com/k3s-io/k3s/releases)
 
