@@ -103,12 +103,8 @@ Add a worker node with a <ins>GPU</ins> installed.
 
 
 > cl2-vm1:/var/lib/rancher/rke2/bin # ./kubectl get nodes
-NAME      STATUS   ROLES                       AGE     VERSION
-cl2-vm1   Ready    control-plane,etcd,master   6m56s   v1.27.10+rke2r1
-cl2-vm2   Ready    control-plane,etcd,master   11m     v1.27.10+rke2r1
-cl2-vm4   Ready    control-plane,etcd,master   6m23s   v1.27.10+rke2r1
-r750-a    Ready    worker                      6m6s    v1.27.10+rke2r1
-> 
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/4af6220c-c235-4ddc-9904-cedc0cdb975d)
 
 
 
