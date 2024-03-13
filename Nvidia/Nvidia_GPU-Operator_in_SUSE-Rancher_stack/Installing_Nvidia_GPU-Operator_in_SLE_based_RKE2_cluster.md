@@ -35,9 +35,9 @@ curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="v1.27.10+k3s1" INSTALL_K3S_S
 k3s kubectl get nodes
 ````
 >
-- NAME          STATUS   ROLES                       AGE   VERSION
+>- NAME          STATUS   ROLES                       AGE   VERSION
 
-- cl2-rancher   Ready    control-plane,etcd,master   86s   v1.27.10+k3s1
+>- cl2-rancher   Ready    control-plane,etcd,master   86s   v1.27.10+k3s1
 
 
 ````
