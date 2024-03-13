@@ -1,6 +1,6 @@
 # Nvidia DGX on SUSE-Rancher RKE2 cluster validation setup steps
 
-Test environment 
+Test environment:
 
 SUSE Harvester physical node with 4 VM:\
 1 Rancher server VM\
@@ -24,31 +24,31 @@ For the reference use [Rancher documentation](https://ranchermanager.docs.ranche
 
 Steps:
 
-Install helm.\
-
 If PackageHub repo is not activated, enable it with
 ````
-*
 SUSEConnect -p PackageHub/15.4/x86_64**
-*
 ````
 
+Install helm:\
+````transactional-update pkg install helm-3.8.0-bp154.2.27
+````
 
-Install helm:
-`transactional-update pkg install helm-3.8.0-bp154.2.27`
-
-Install K3s on Linux
-`curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="v1.24.14+k3s1" INSTALL_K3S_SKIP_SELINUX_RPM=true INSTALL_K3S_EXEC='server --cluster-init --write-kubeconfig-mode=644' sh -s -`
-
-
+Install K3s on Linux:\
+````curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="v1.24.14+k3s1" INSTALL_K3S_SKIP_SELINUX_RPM=true INSTALL_K3S_EXEC='server --cluster-init --write-kubeconfig-mode=644' sh -s -
+````
 # k3s kubectl get nodes
 
-# kubectl apply --validate=false -f https://github.com/cert-manager/cert-manager/releases/download/v1.11.0/cert-manager.crds.yaml
-# helm repo add jetstack https://charts.jetstack.io
-# helm repo update
-# export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
-# helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.11.0
-# kubectl get pods --namespace cert-manager
+````
+kubectl apply --validate=false -f https://github.com/cert-manager/cert-manager/releases/download/v1.11.0/cert-manager.crds.yaml\
+helm repo add jetstack https://charts.jetstack.io\
+helm repo update\
+export KUBECONFIG=/etc/rancher/k3s/k3s.yaml\
+helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.11.0
+````
+Verify with
+````
+kubectl get pods --namespace cert-manager
+````
 
 # helm repo add rancher-stable https://releases.rancher.com/server-charts/stable
 # export HOSTNAME="test1.eth.cluster"
