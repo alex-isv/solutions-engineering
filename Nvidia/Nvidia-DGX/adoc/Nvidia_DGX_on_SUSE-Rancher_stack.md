@@ -1,14 +1,16 @@
 # Nvidia DGX on SUSE-Rancher RKE2 cluster validation setup steps
 
 
-Test environment:
-SUSE Harvester physical node with 4 VM:
-1 Rancher server VM
-3 VMs as RKE2 cluster (all VMs are SLE Micro based).
-2 Nvidia DGX servers physical nodes 
+Test environment
+
+SUSE Harvester physical node with 4 VM:\
+1 Rancher server VM\
+3 VMs as RKE2 cluster (all VMs are SLE Micro based).\
+2 Nvidia DGX servers physical nodes\
+
 Setup:
-Due to limited resources for this particular verification test, SUSE Harvester server was used to mimic a test kubernetes environment.
-Harvester is a cloud-native hyperconverged infrastructure solution for Kubernetes which designed to simplify VMs workloads with integrated storage capabilities and supports containerized environments automatically through integration with Rancher. Please review -> https://docs.harvesterhci.io/v1.1 for more details.
+SUSE Harvester server was used as a test Kubernetes environment.\
+Harvester is a cloud-native hyperconverged infrastructure solution for Kubernetes which designed to simplify VMs workloads with integrated storage capabilities and supports containerized environments automatically through integration with Rancher. Please review [Harvester documentation(https://docs.harvesterhci.io/v1.1) for more details.
 
 ![harv-1](https://github.com/alex-isv/solutions-engineering/assets/52678960/c4c4d0ce-09b4-43da-815f-d360271c6b88)
 
