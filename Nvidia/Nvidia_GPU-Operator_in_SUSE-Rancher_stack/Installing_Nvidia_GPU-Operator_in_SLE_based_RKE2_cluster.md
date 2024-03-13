@@ -182,7 +182,8 @@ sudo reboot
 Verify that nvidia-smi command is working on the **worker** node.
 
 
-![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/3d71fbb0-e883-4c15-80da-e51f64764a3b)
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/c9451823-4e60-4989-8c90-3bd34dac640d)
+
 
 
 
