@@ -261,20 +261,16 @@ Verify from DGX node
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/13db1d09-971e-4489-9d6c-0b450568c1ca)
 
 
+As an option you can install a Longhorn on the Rancher.
 
-*Install Longhorn on the Rancher.*
+> [!NOTE]
+> Before installing a Longhorn make sure that each node on the cluster has open-iscsi installed.\
 
-Before installing a Longhorn make sure that each node on the cluster has open-iscsi installed.\
-Also, Ubuntu DGX nodes had mask by default for iscsi, so need to run 
+Also, Ubuntu DGX node has a mask set by default for iscsi, so need to unmask by running:
 ````
 sudo systemctl unmask iscsid.service
 ````
-to unmask it.
 
-
-
-
-Click on the Loggin tab from the left and install
 
 Review storage provisioning from Rancher Storage > PersistentVolumeClaims 
 
@@ -286,5 +282,5 @@ From Longhorn UI, you can review available nodes on the cluster and the storage
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/39da69ad-b413-4d20-9e7a-9b5660c8765e)
 
 
-We used a persistent storage with 3 replicas for the longhorn storage class.
+*Bringing a test workload*
 
