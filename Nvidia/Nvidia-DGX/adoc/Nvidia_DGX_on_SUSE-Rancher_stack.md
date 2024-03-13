@@ -19,7 +19,8 @@ Sle Micro is designed as a host OS to run containers. It’s a minimal/stripped 
 For more details on Micro, review [SLE Micro deployment guide](https://documentation.suse.com/sle-micro/5.4/pdf/book-deployment-slemicro_en.pdf)
 and the [SLE Micro Admin guide](https://documentation.suse.com/sle-micro/5.4/pdf/book-administration-slemicro_en.pdf)
 
-Install Rancher server on test1 VM.
+**Install a Rancher server on test1 VM.**
+
 For the reference use [Rancher documentation](https://ranchermanager.docs.rancher.com/getting-started/quick-start-guides/deploy-rancher-manager/helm-cli)
 
 > [!NOTE]
@@ -70,7 +71,8 @@ Go to Rancher server URL login and change the password.
 It's possible to integrate Rancher with Harvester as described in (https://docs.harvesterhci.io/v1.2/rancher/index)
 
 
-## Create an RKE2 cluster.
+**Create an RKE2 cluster**
+
 From Rancher server go to the Cluster Management and select RKE2 and click Custom
 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/847f1dcc-ac01-4286-8332-05c29cf6e250)
