@@ -1,4 +1,10 @@
 # Using Nvidia DGX with SUSE-Rancher RKE2 cluster
+## Purpose:
+This document outlines installation and test steps completed by SUSE to certify the successful\
+deployment of its Enterprise Container Management (ECM) software stack with the NVIDIA\
+DGX as a Kubernetes target node that can be used for the deployment of accelerated\
+workloads leveraging NVIDIA GPUs.
+
 
 Test environment:
 
