@@ -1,4 +1,4 @@
-# Nvidia DGX on SUSE-Rancher RKE2 cluster setup steps
+# Using Nvidia DGX with SUSE-Rancher RKE2 cluster
 
 Test environment:
 
