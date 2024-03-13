@@ -138,12 +138,12 @@ distribution=$(. /etc/os-release;echo $ID$VERSION_ID | sed -e 's/\.[0-9]//')
 sudo zypper ar http://developer.download.nvidia.com/compute/cuda/repos/$distribution/x86_64/cuda-$distribution.repo
 ````
 
-3.If not already done, activate the SUSE Package Hub with SUSEConnect.
+3. If not already done, activate the SUSE Package Hub with SUSEConnect.
     
 ````
 sudo SUSEConnect  -p PackageHub/15.4/x86_64
 ````
-4.Update the repository cache.
+4. Update the repository cache.
     
 ````
 sudo zypper refresh
@@ -165,16 +165,16 @@ uname -r
 sudo zypper install -y kernel-<variant>-devel=<version>
 ````
 
-6.Proceed to install the driver using the cuda-drivers meta-package.
+6. Proceed to install the driver using the cuda-drivers meta-package.
 ````
 sudo zypper install -y cuda-drivers
 ````
-7.On SUSE systems, add the user to the video group.
+7. On SUSE systems, add the user to the video group.
  ````
 sudo usermod -a -G video <username>
 ````
 
-8.A reboot of the system may be required to verify that the NVIDIA driver modules are loaded and the devices visible under /dev.
+8. A reboot of the system may be required to verify that the NVIDIA driver modules are loaded and the devices visible under /dev.
 ````
 sudo reboot
 ````
