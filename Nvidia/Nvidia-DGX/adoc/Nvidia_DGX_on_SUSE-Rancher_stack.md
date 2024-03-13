@@ -294,11 +294,10 @@ From Longhorn UI, you can review available nodes on the cluster and the storage
  For the reference review (https://developer.nvidia.com/blog/getting-kubernetes-ready-for-the-a100-gpu-with-multi-instance-gpu/) which can be used for different Nvidia tests including MIG strategy.
 
 
-Deploy tf-benchmarks.yaml file with
+From your Master node deploy tf-benchmarks.yaml file with
 ````
 kubectl apply -f tf-benchmarks.yaml
 ````
-from your master node.
 
 or from the Rancher Dashboard click *Import Yaml* and paste the following:
 ````
