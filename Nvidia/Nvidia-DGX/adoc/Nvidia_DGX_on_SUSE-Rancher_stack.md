@@ -282,5 +282,5 @@ From Longhorn UI, you can review available nodes on the cluster and the storage
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/39da69ad-b413-4d20-9e7a-9b5660c8765e)
 
 
-*Bringing a test workload*
+**Bringing a test workload**
 
