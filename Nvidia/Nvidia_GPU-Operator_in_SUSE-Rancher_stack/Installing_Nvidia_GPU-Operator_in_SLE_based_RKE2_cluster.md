@@ -217,6 +217,14 @@ helm install -n gpu-operator \
 
 Verify that gpu-operator was installed:
 
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/d0577239-88f1-44b5-94d7-71509b958a58)
+
+
+Check that `driver-validation`, `cuda-validation` and `toolkit-validation` passed.
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/6dc60128-b09f-4456-a5bc-449cee6d704b)
+
+
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/dd1b4d19-50a8-4462-8618-2afabb9f48c9)
 
 
