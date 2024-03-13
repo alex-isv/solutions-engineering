@@ -115,7 +115,8 @@ In the yaml, if driver already installed change value to false
 Under toolkit add the following values:
 
 
-Note, that by default migManager is coming as all-disabled
+> [!NOTE]
+> By default migManager is coming as all-disabled
 
 
 Once installed, verify logs
