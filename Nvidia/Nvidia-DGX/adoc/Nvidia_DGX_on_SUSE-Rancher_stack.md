@@ -26,9 +26,9 @@ For the reference use [Rancher documentation](https://ranchermanager.docs.ranche
 Steps:
 
 Install helm.\
-If PackageHub repo is not activated, enable it with\
+If PackageHub repo is not activated, enable it with
 
-[source, console, subs="attributes+"]
+[source, console]
 ----
 SUSEConnect -p PackageHub/15.4/x86_64
 ----
