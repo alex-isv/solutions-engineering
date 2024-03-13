@@ -109,7 +109,7 @@ Make sure that you have the odd number of nodes in RKE2 cluster. In this test ca
 
 
 
-<u>Add DGX nodes to the existing RKE2 cluster</u>
+<ins>Add DGX nodes to the existing RKE2 cluster</ins>
 
 Go to the Registration tab, select worker role, copy and paste a registration command to DGX nodes.
 
