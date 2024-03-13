@@ -127,12 +127,12 @@ Review steps from (https://docs.nvidia.com/datacenter/tesla/tesla-installation-n
 
 This section includes instructions for installing the NVIDIA driver on SLES 15 using the package manager.\
 
-1.Install the CUDA repository public GPG key.
+1. Install the CUDA repository public GPG key.
     
 ````
 distribution=$(. /etc/os-release;echo $ID$VERSION_ID | sed -e 's/\.[0-9]//')
 ````
-2.Setup the CUDA network repository.
+2. Setup the CUDA network repository.
     
 ````
 sudo zypper ar http://developer.download.nvidia.com/compute/cuda/repos/$distribution/x86_64/cuda-$distribution.repo
@@ -153,13 +153,14 @@ sudo zypper refresh
  For SUSE, ensure that the system has the correct Linux kernel sources from the SUSE repositories.
 >
 >
- Use the output of the uname command to determine the running kernel's version and variant:
+5. Use the output of the uname command to determine the running kernel's version and variant:
 
 ````
 uname -r 
 ````
-5.5.14.21-150500.55.49-default
- In this example, the version is 5.14.21-150500.55.49 and the variant is default. The kernel headers and development packages can then be installed with the following command, replacing <variant> and <version> with the variant and version discovered from the previous uname command:
+>5.14.21-150500.55.49-default
+ >In this example, the version is 5.14.21-150500.55.49 and the variant is default. The kernel headers and development packages can then be installed with the following command, replacing <variant> and <version> with the variant and version discovered from the previous uname command:
+>
 ````
 sudo zypper install -y kernel-<variant>-devel=<version>
 ````
