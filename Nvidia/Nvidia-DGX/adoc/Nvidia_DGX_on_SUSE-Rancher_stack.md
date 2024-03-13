@@ -7,7 +7,7 @@ SUSE Harvester physical node with 4 VM:\
 3 VMs as RKE2 cluster (all VMs are SLE Micro based).\
 2 Nvidia DGX servers physical nodes
 
-Setup:\
+Setup:
 SUSE Harvester server was used as a test Kubernetes environment.\
 Harvester is a cloud-native hyperconverged infrastructure solution for Kubernetes which designed to simplify VMs workloads with integrated storage capabilities and supports containerized environments automatically through integration with Rancher. Please review [Harvester documentation](https://docs.harvesterhci.io/v1.2) for more details.
 
