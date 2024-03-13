@@ -61,13 +61,10 @@ helm install cert-manager jetstack/cert-manager --namespace cert-manager --creat
 ````
 kubectl get pods --namespace cert-manager
 ````
->
-NAME                                       READY   STATUS    RESTARTS   AGE
-cert-manager-5dcc4c9b74-8rqtt              1/1     Running   0          34s
-cert-manager-cainjector-644bff8d57-tn7t6   1/1     Running   0          34s
-cert-manager-webhook-7f6b4fbd47-kv6pn      1/1     Running   0          34s
-Verify a certified Rancher version > https://github.com/rancher/rancher/tags
->
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/a0fc4087-b213-4443-8952-9058ffc05f13)
+
+
 
 ````
  helm install rancher rancher-stable/rancher --namespace cattle-system --set hostname=cl2-rancher.isv.suse --set version=2.8.2 --set replicas=1
