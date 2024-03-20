@@ -25,17 +25,29 @@ systemctl status rshim
 
 For Arm systems >>
 
-$ wget https://www.mellanox.com/downloads/DOCA/DOCA_v2.5.0/doca-host-repo-sles15sp5-2.5.0-0.0.1.23.10.1.1.9.0.aarch64.rpm
-$ rpm -Uvh doca-host-repo-sles15sp5-2.5.0-0.0.1.23.10.1.1.9.0.aarch64.rpm
-$ zypper refresh
-$ sudo zypper install doca-ofed
-======
+````
+wget https://www.mellanox.com/downloads/DOCA/DOCA_v2.5.0/doca-host-repo-sles15sp5-2.5.0-0.0.1.23.10.1.1.9.0.aarch64.rpm
+````
+````
+rpm -Uvh doca-host-repo-sles15sp5-2.5.0-0.0.1.23.10.1.1.9.0.aarch64.rpm
+````
+````
+zypper refresh 
+
+````
+
 
 For x86 >>
 
-$ wget https://www.mellanox.com/downloads/DOCA/DOCA_v2.5.0/doca-host-repo-sles15sp5-2.5.0-0.0.1.23.10.1.1.9.0.x86_64.rpm
-$ rpm -Uvh doca-host-repo-sles15sp5-2.5.0-0.0.1.23.10.1.1.9.0.x86_64.rpm
-$ zypper refresh
+````
+wget https://www.mellanox.com/downloads/DOCA/DOCA_v2.5.0/doca-host-repo-sles15sp5-2.5.0-0.0.1.23.10.1.1.9.0.x86_64.rpm
+````
+````
+rpm -Uvh doca-host-repo-sles15sp5-2.5.0-0.0.1.23.10.1.1.9.0.x86_64.rpm
+````
+````
+zypper refresh
+````
 
 
 
