@@ -2,7 +2,9 @@
 
 ## Installing SLES 15 on Nvidia BlueField-2 card
 
-Review (https://github.com/Mellanox/bfb-build/)
+Review (https://github.com/Mellanox/bfb-build/) and modify a DOCKER file with proper values.
+
+
 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/3f2776a1-9ed3-4a7e-a979-e6fe8f0f6503)
 
