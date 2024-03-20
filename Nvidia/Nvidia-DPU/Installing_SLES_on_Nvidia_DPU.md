@@ -4,11 +4,19 @@
 
 Review (https://github.com/Mellanox/bfb-build/)
 
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/3f2776a1-9ed3-4a7e-a979-e6fe8f0f6503)
+
+
+
 **Installing a Rancher server on DPU**
 
-Check releases > (https://github.com/k3s-io/k3s/releases)
+> [!NOTE]
+> ARM64 is the experimental version and not supported.
+> Verify a support option with a SUSE/RANCHER team.
 
-Latest k3s version as of today *3-19-24* >  v1.28.7+k3s1
+Check releases > (https://github.com/k3s-io/k3s/releases) and make sure that k3s version supports a Rancher server release. 
+
+
 
 1. zypper in helm
 2. curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="v1.27.11+k3s1" INSTALL_K3S_SKIP_SELINUX_RPM=true INSTALL_K3S_EXEC='server --cluster-init --write-kubeconfig-mode=644' sh -s -
@@ -20,6 +28,20 @@ Latest k3s version as of today *3-19-24* >  v1.28.7+k3s1
 8. helm repo update
 9. helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace
 10. kubectl get pods --namespace cert-manager
-11. helm install rancher rancher-latest/rancher --namespace cattle-system --set hostname=dpu1.isv.suse --set version=2.8.3 --set replicas=1
+11. helm install rancher rancher-latest/rancher --namespace cattle-system --set hostname=dpu1.isv.suse --set version=2.8.2 --set replicas=1
+
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/9fba1dff-a66c-423d-b4cd-e9324e1b79f7)
+
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/855c1ddf-ce04-4d3f-a2ff-5ae4df36766f)
+
+ ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/76aa22ee-1179-4339-8ae7-c790121f1759)
+
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/e090fb51-452e-4d8d-a373-239f1c552943)
+
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/ee000619-45d3-4533-b79e-3b1d04e696ae)
 
 
