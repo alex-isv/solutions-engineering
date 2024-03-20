@@ -6,6 +6,7 @@ Review (https://github.com/Mellanox/bfb-build/)
 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/3f2776a1-9ed3-4a7e-a979-e6fe8f0f6503)
 
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/ce27a886-9f3c-46a8-8dbd-ee39348b4f9d)
 
 
 **Installing a Rancher server on DPU**
