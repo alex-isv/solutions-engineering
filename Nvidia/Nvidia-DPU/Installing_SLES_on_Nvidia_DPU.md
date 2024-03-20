@@ -1,6 +1,6 @@
-# Installing SLES 15 on Nvidia DPU
+# Installing SLE Micro on Nvidia DPU
 
-## Installing SLES 15 on Nvidia BlueField-2 card
+## Installing MICRO on Nvidia BlueField-2 card
 
 Review (https://github.com/Mellanox/bfb-build/) and modify a DOCKER file with proper values.
 
@@ -48,6 +48,23 @@ rpm -Uvh doca-host-repo-sles15sp5-2.5.0-0.0.1.23.10.1.1.9.0.x86_64.rpm
 ````
 zypper refresh
 ````
+
+````
+git clone https://github.com/Mellanox/bfb-build
+````
+
+````
+cd bfb-build
+````
+
+Modify bfb-build file according to your OS release.
+
+build .bfb image 
+
+````
+./bfb-build
+````
+
 
 
 
