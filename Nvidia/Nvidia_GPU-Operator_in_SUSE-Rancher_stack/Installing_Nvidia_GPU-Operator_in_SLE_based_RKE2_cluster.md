@@ -299,7 +299,7 @@ kubectl logs tf-benchmarks
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/98918319-932b-4832-91a1-cc421c7f286a)
 
 
-To visualize GPU metrics with Grafana review (https://github.com/alex-isv/solutions-engineering/blob/main/Nvidia/Nvidia-DGX/adoc/Nvidia_DGX_on_SUSE-Rancher_stack.md#review-gpu-metrics)
+To visualize a workload review a [GPU metrics with Grafana](https://github.com/alex-isv/solutions-engineering/blob/main/Nvidia/Nvidia-DGX/adoc/Nvidia_DGX_on_SUSE-Rancher_stack.md#review-gpu-metrics)
 
 
 
