@@ -1,6 +1,6 @@
 # Installing SLE Micro on Nvidia DPU
 
-## Installing MICRO on Nvidia BlueField-2 card
+## Installing SLES on Nvidia BlueField-2 card
 
 Review (https://github.com/Mellanox/bfb-build/) and modify a DOCKER file with proper values.
 
