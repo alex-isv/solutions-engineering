@@ -359,7 +359,7 @@ Or simply click on pod’s View Logs  >
 
 
 
-<ins>**Review GPU metrics**</ins>
+### <ins>**Review GPU metrics**</ins>
 
 To view GPU metrics modify _Prometheus_ yaml in rancher-monitoring during Rancher-Monitoring installation
 ````
