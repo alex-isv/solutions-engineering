@@ -1,4 +1,4 @@
-# Installing SLE Micro on Nvidia DPU
+# Installing SLES on Nvidia DPU
 
 ## Installing SLES on Nvidia BlueField-2 card
 
