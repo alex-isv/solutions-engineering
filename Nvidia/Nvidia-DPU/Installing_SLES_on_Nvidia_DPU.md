@@ -57,7 +57,7 @@ git clone https://github.com/Mellanox/bfb-build
 cd bfb-build
 ````
 
-Modify bfb-build file according to your OS release.
+Modify a Dockerfile and bfb-build file according to your OS release.
 
 build .bfb image 
 
