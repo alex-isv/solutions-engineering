@@ -55,6 +55,8 @@ zypper refresh
 sudo zypper install doca-ofed
 ````
 
+Clone a bfb-build from Mellanox git page.
+
 ````
 git clone https://github.com/Mellanox/bfb-build
 ````
