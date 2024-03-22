@@ -36,6 +36,9 @@ zypper refresh
 
 ````
 
+````
+sudo zypper install doca-ofed
+````
 
 For x86 >>
 
@@ -47,6 +50,9 @@ rpm -Uvh doca-host-repo-sles15sp5-2.5.0-0.0.1.23.10.1.1.9.0.x86_64.rpm
 ````
 ````
 zypper refresh
+````
+````
+sudo zypper install doca-ofed
 ````
 
 ````
