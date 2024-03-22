@@ -80,6 +80,8 @@ build .bfb image
 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/ce27a886-9f3c-46a8-8dbd-ee39348b4f9d)
 
+Install MLNX_OFED drivers from (https://network.nvidia.com/products/infiniband-drivers/linux/mlnx_ofed/) on DPU to enable fast interface. Need to untar and run mlnxofedinstall script and also add >> zypper remove mlxbf-bfscripts
+
 
 **Installing a Rancher server on DPU**
 
