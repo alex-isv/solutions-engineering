@@ -25,6 +25,8 @@ verify that rshim is running
 systemctl status rshim
 ````
 
+On the host machine:
+
 For Arm systems >>
 
 ````
@@ -80,6 +82,13 @@ In this test example a host node has 3 DPUs installed, so should have 3 rshim de
 
 
 Modify a Dockerfile and bfb-build file according to your OS release.
+
+install a podman
+
+````
+zypper in podman
+````
+
 
 To build a .bfb image run  
 
