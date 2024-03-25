@@ -81,19 +81,16 @@ build .bfb image
 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/ce27a886-9f3c-46a8-8dbd-ee39348b4f9d)
 
-Download MLNX_OFED drivers from (https://network.nvidia.com/products/infiniband-drivers/linux/mlnx_ofed/) and install on DPU to enable fast interface.
+If MLNX_OFED drivers are not included in your Dockerfile definition download MLNX_OFED drivers from (https://network.nvidia.com/products/infiniband-drivers/linux/mlnx_ofed/) and install on DPU to enable fast interface.
+
 Review [Installing MLNX_OFED](https://docs.nvidia.com/networking/display/mlnxofedv24010331/installing+mlnx_ofed)
 
 untar downloaded package
 
-tar -xzf MLNX_OFED_SRC-<debian?>-<version>.tgz
+tar xzf MLNX_OFED_LINUX-23.10-1.1.9.0-sles15sp5-aarch64.tgz
 
- ./mlnxofedinstall --without-fw-update
+ ./mlnxofedinstall 
  
-Need to untar and run mlnxofedinstall script 
-
- zypper remove mlxbf-bfscripts
-
 
 **Installing a Rancher server on DPU**
 
