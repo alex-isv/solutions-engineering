@@ -86,7 +86,7 @@ To build a .bfb image run
 ````
 ./bfb-build
 ````
-that will create an image in the /tmp/distro/version.pid directory
+that will create an image in the */tmp/distro/version.pid* directory
 
 To install an image to DPU run
 
