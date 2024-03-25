@@ -6,7 +6,7 @@
 
 Review (https://github.com/Mellanox/bfb-build/) and modify a bfb-build and a DOCKER file with proper values.
 
-If installing OS from the host, install rshim on the host and enable it.
+If installing OS from the host, install *rshim* on the host and enable it.
 
 ````
 zypper in rshim
@@ -66,7 +66,7 @@ git clone https://github.com/Mellanox/bfb-build
 ````
 cd bfb-build
 ````
-Make sure that your host node has picocom or minicom installed to access a DPU through rshim.
+Make sure that your host node has *picocom* or *minicom* installed to access a DPU through rshim.
 
 From DPU's uefi disable secure boot.
 ````
@@ -79,14 +79,30 @@ In this test example a host node has 3 DPUs installed, so should have 3 rshim de
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/d5b92529-164e-4659-978c-061b0ce9e0be)
 
 
-
 Modify a Dockerfile and bfb-build file according to your OS release.
 
-build .bfb image 
+To build a .bfb image run  
 
 ````
 ./bfb-build
 ````
+that will create an image in the /tmp/<distro>/<version>.<pid> directory
+
+To install an image to DPU run
+
+````
+ echo "SW_RESET 1" > /dev/rshim0/misc
+````
+with should reset a DPU device and
+
+````
+./bfb-install -b /tmp/leap15.5.72330/leap.bfb -r rshim0
+````
+to push an image to DPU.
+
+> [!NOTE]
+> These steps validated only for BlueField-2
+> For BlueField-3 this installation method should become available with SP6.
 
 
 
