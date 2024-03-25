@@ -4,7 +4,7 @@
 
 ## Installing SLES on Nvidia BlueField-2 card
 
-Review (https://github.com/Mellanox/bfb-build/) and modify a DOCKER file with proper values.
+Review (https://github.com/Mellanox/bfb-build/) and modify a bfb-build and a DOCKER file with proper values.
 
 If installing OS from the host, install rshim on the host and enable it.
 
