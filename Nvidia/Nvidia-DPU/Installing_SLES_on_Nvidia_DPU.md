@@ -66,6 +66,19 @@ git clone https://github.com/Mellanox/bfb-build
 ````
 cd bfb-build
 ````
+Make sure that your host node has picocom or minicom installed to access a DPU through rshim.
+
+From DPU's uefi disable secure boot.
+````
+picocom /dev/rshim0/console
+````
+where rshim0 is the proper DPU.
+
+In this test example a host node has 3 DPUs installed, so should have 3 rshim devices listed:
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/d5b92529-164e-4659-978c-061b0ce9e0be)
+
+
 
 Modify a Dockerfile and bfb-build file according to your OS release.
 
