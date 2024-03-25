@@ -93,12 +93,14 @@ To install an image to DPU run
 ````
  echo "SW_RESET 1" > /dev/rshim0/misc
 ````
-with should reset a DPU device and
+which should reset a DPU device and
+
 
 ````
 ./bfb-install -b /tmp/leap15.5.72330/leap.bfb -r rshim0
 ````
 to push an image to DPU.
+
 
 > [!NOTE]
 > These steps validated only for BlueField-2
