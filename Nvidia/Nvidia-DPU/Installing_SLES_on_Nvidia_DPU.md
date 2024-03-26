@@ -174,7 +174,8 @@ Check releases > (https://github.com/k3s-io/k3s/releases) and make sure that k3s
 From Rancher manager, click *Create* RKE2 custom cluster
 
 
-![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/d363b591-be3d-4350-8666-ff5fcd52d062)
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/87c76d69-5db8-48ee-bea1-7abb38252e02)
+
 
 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/1d6efc0a-e1f0-457a-9073-695efdb75801)
