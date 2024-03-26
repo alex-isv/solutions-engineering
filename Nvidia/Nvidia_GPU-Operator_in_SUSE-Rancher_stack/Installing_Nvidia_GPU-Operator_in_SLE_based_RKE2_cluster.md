@@ -73,6 +73,8 @@ kubectl get pods --namespace cert-manager
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/a0fc4087-b213-4443-8952-9058ffc05f13)
 
 
+Verify existing ARM64 release > (https://github.com/rancher/rancher/releases)
+
 
 ````
  helm install rancher rancher-stable/rancher --namespace cattle-system --set hostname=cl2-rancher.isv.suse --set version=2.8.2 --set replicas=1
