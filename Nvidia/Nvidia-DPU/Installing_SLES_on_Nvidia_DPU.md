@@ -169,3 +169,32 @@ Check releases > (https://github.com/k3s-io/k3s/releases) and make sure that k3s
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/ee000619-45d3-4533-b79e-3b1d04e696ae)
 
 
+**Creating an RKE2 cluster**
+
+From Rancher manager, click *Create* RKE2 custom cluster
+
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/d363b591-be3d-4350-8666-ff5fcd52d062)
+
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/1d6efc0a-e1f0-457a-9073-695efdb75801)
+
+
+From the *Registration* tab provide a proper value for the node and roles which you are planning to add to the cluster.
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/397011ae-90b8-4de2-ad6e-4eaefa2a4424)
+
+
+Copy a registration command and paste to the terminal of the new node.
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/35b382ec-ccb1-4cd7-9d25-875e01396264)
+
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/1f2570df-04dd-43b8-8574-f39f94249446)
+
+
+Do the same for other nodes which you are adding to the RKE2 cluster.
+
+
+
+
