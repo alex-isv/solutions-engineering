@@ -34,7 +34,6 @@ RUN zypper -n in usbutils pciutils binutils
 RUN zypper -n in shim sudo which openssh vim
 RUN zypper --non-interactive in insserv-compat libstdc++6-devel-gcc7 make lsof tk tcl expat libgfortran4 mstflint
 RUN zypper -n in ethtool
-RUN zypper -n rm  kernel-firmware-nvidia-gspx-G06
 RUN /usr/bin/dracut -f --regenerate-all
 
 #RUN zypper --non-interactive in systemd-network ethtool
