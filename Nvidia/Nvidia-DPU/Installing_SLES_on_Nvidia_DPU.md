@@ -106,9 +106,12 @@ which should reset a DPU device and
 
 
 ````
-./bfb-install -b /tmp/leap15.5.72330/leap.bfb -r rshim0
+./bfb-install -b /tmp/sles15.5.2601/sles.bfb -r rshim1
 ````
 to push an image to DPU.
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/ce6f6da1-58a5-4880-9f0a-88d6a819704c)
+
 
 
 > [!NOTE]
