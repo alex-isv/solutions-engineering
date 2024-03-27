@@ -136,7 +136,8 @@ tar xzf MLNX_OFED_LINUX-23.10-1.1.9.0-sles15sp5-aarch64.tgz
  
 
 **Installing a Rancher server on DPU** 
-not supported, just a proof of concept
+
+*not supported, just a proof of concept*
 
 
 > [!NOTE]
