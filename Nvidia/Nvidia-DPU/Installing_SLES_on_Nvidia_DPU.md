@@ -135,7 +135,9 @@ tar xzf MLNX_OFED_LINUX-23.10-1.1.9.0-sles15sp5-aarch64.tgz
  ./mlnxofedinstall 
  
 
-**Installing a Rancher server on DPU** not supported, just a proof of concept
+**Installing a Rancher server on DPU** 
+not supported, just a proof of concept
+
 
 > [!NOTE]
 > ARM64 is the experimental version and not supported.
@@ -198,6 +200,10 @@ Do the same for other nodes which you are adding to the RKE2 cluster.
 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/622aaade-51f3-43ef-aca9-3d86a39097ea)
 
+
+Example from the existing cluster with 2 DPUs and a worker node with Nvidia GPU.
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/c8d8ca88-1257-4a30-bdcf-05edc25bc3de)
 
 
 
