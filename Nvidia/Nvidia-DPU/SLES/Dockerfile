@@ -36,8 +36,8 @@ RUN zypper --non-interactive in insserv-compat libstdc++6-devel-gcc7 make lsof t
 RUN zypper -n in ethtool
 RUN /usr/bin/dracut -f --regenerate-all
 
-#RUN zypper --non-interactive in systemd-network ethtool
-#RUN zypper --non-interactive in NetworkManager
+RUN zypper --non-interactive in systemd-network ethtool
+RUN zypper --non-interactive in NetworkManager
 RUN /usr/bin/dracut -f --regenerate-all
 
 #RUN zypper --non-interactive in wicked wicked-service
