@@ -143,19 +143,18 @@ tar xzf MLNX_OFED_LINUX-23.10-1.1.9.0-sles15sp5-aarch64.tgz
 
 Check releases > (https://github.com/k3s-io/k3s/releases) and make sure that k3s version supports a Rancher server release. 
 
+The below commands can be use for SLES and MICRO.
 
-
-1. zypper in helm
-2. curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="v1.27.11+k3s1" INSTALL_K3S_SKIP_SELINUX_RPM=true INSTALL_K3S_EXEC='server --cluster-init --write-kubeconfig-mode=644' sh -s -
-3. export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
-4. helm repo add rancher-latest https://releases.rancher.com/server-charts/latest
-5. kubectl create namespace cattle-system
-6. kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.14.2/cert-manager.crds.yaml
-7. helm repo add jetstack https://charts.jetstack.io
-8. helm repo update
-9. helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace
-10. kubectl get pods --namespace cert-manager
-11. helm install rancher rancher-latest/rancher --namespace cattle-system --set hostname=dpu1.isv.suse --set version=2.8.2 --set replicas=1
+1. curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="v1.27.11+k3s1" INSTALL_K3S_SKIP_SELINUX_RPM=true INSTALL_K3S_EXEC='server --cluster-init --write-kubeconfig-mode=644' sh -s -
+2. export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+3. helm repo add rancher-latest https://releases.rancher.com/server-charts/latest
+4. kubectl create namespace cattle-system
+5. kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.14.2/cert-manager.crds.yaml
+6. helm repo add jetstack https://charts.jetstack.io
+7. helm repo update
+8. helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace
+9. kubectl get pods --namespace cert-manager
+10. helm install rancher rancher-latest/rancher --namespace cattle-system --set hostname=dpu1.isv.suse --set version=2.8.2 --set replicas=1
 
 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/9fba1dff-a66c-423d-b4cd-e9324e1b79f7)
