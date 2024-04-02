@@ -2,6 +2,9 @@
 
 ## Purpose
 These steps outlines installation of Nvidia gpu-operator in SUSE Kubernetes cluster with SLES based worker nodes and a Rancher server for easy deployment and management.
+> [!NOTE]
+> These steps are validated by SUSE, however are not officially supported by any sides.
+> For more details on the support, please contact Nvidia.
 
 ## Prerequisites
 
