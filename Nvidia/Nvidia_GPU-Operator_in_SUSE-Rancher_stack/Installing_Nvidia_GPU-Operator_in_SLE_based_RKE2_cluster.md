@@ -223,6 +223,7 @@ helm install -n gpu-operator \
 
 > [!NOTE]
 > In this particular scenario GPU drivers installed on the worker node, so `driver.enabled` value should be set to `false` when installing with helm.
+> If using a custom container driver for SLE based system on the local or public registry, review steps [Building the container image](https://documentation.suse.com/trd/kubernetes/pdf/gs_rke2-slebci_nvidia-gpu-operator_en.pdf)
 
 
 Verify that gpu-operator was installed:
