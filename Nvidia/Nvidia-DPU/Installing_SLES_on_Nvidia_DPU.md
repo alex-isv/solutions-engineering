@@ -206,5 +206,11 @@ Example from the existing cluster with 2 DPUs and a worker node with Nvidia GPU.
 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/c8d8ca88-1257-4a30-bdcf-05edc25bc3de)
 
+**Using Nvidia BlueField-3 with SLE Micro or SLES 15**
+
+SLE15 SP6 installation should workd in the same way with BlueField-3.
+For Micro another installation method should be used, since as of today SUSE doesn't have a Micro container image.
+
+*in progress.....*
 
 
