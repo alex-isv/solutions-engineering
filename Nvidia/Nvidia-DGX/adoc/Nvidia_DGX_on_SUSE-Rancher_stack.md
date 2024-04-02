@@ -173,6 +173,8 @@ Verify if test functionality of nvidia-operator-validator pod is passed.
 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/a0713d24-6207-467b-b508-cd55fe280aa6)
 
+You can also install a GPU-Operator with [helm commands](https://github.com/alex-isv/solutions-engineering/blob/main/Nvidia/Nvidia_GPU-Operator_in_SUSE-Rancher_stack/Installing_Nvidia_GPU-Operator_in_SLE_based_RKE2_cluster.md#install-a-gpu-operator-with-helm-command)
+
 
 When enabling MIG change node’s label to a correct value for nvidia.com/mig.config
 
