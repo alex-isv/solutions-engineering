@@ -59,6 +59,10 @@ zypper refresh
 sudo zypper install doca-ofed
 ````
 
+
+Review [Installation files section](https://docs.nvidia.com/doca/sdk/nvidia+doca+installation+guide+for+linux/index.html#installation-files)
+
+
 Clone a bfb-build from Mellanox git page.
 
 ````
