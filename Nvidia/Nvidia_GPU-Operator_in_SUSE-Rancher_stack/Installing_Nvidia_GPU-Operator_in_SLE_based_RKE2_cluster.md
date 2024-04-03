@@ -192,6 +192,9 @@ sudo usermod -a -G video <username>
 sudo reboot
 ````
 
+For more details on the available distros review - (https://developer.download.nvidia.com/compute/cuda/repos/sles15/)
+
+
 Verify that nvidia-smi command is working on the **worker** node.
 
 
