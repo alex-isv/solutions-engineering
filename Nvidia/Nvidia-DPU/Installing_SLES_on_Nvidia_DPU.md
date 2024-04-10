@@ -135,7 +135,7 @@ to push an image to DPU.
 
 
 >[!NOTE]
->If your host OS didn't have *doca_ofed* installed as mentioned above you can include MLNX_OFED drivers in your Dockerfile definition or download MLNX_OFED drivers from (https://network.nvidia.com/product/infiniband-drivers/linux/mlnx_ofed/) and install on DPU directly to enable fast interface on SLES.
+>If your host OS didn't have *DOCA_OFED* installed as mentioned above you can include MLNX_OFED drivers in your Dockerfile definition or download MLNX_OFED drivers from (https://network.nvidia.com/product/infiniband-drivers/linux/mlnx_ofed/) and install on DPU directly to enable fast interface on SLES.
 >Review [Installing MLNX_OFED](https://docs.nvidia.com/networking/display/mlnxofedv24010331/installing+mlnx_ofed)
 >untar downloaded package
 >tar xzf MLNX_OFED_LINUX-23.10-1.1.9.0-sles15sp5-aarch64.tgz
