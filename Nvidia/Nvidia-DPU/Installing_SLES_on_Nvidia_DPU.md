@@ -172,8 +172,10 @@ On SP6: *grub2-mkconfig -o /boot/grub/grub.cfg*
 
 On SLE-Micro: *transactional-update grub.cfg*
 
-The default credentials are root/linux.
-Configure network according to your needs.
+The default credentials are *root/linux*.
+Configure a network according to your needs.
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/10818af0-f1bc-4313-9990-a20d59539214)
 
 
 
