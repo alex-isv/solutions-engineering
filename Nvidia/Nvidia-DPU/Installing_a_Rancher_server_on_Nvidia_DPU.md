@@ -1,4 +1,5 @@
-# Installing a Rancher server on NVIDIA BlueField device#
+# Installing a Rancher server on NVIDIA BlueField device #
+
 **Installing a Rancher server on DPU** 
 
 *Proof of concept. Don't use as an official reference*
