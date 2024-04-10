@@ -175,7 +175,7 @@ On SLE-Micro: *transactional-update grub.cfg*
 The default credentials are *root/linux*.
 Configure a network according to your needs.
 
-*below is the example of SLE MICRO 6.0 cockpit console installed on the BlueField-3*
+*below is the example of SLE MICRO 6.0 with a cockpit console installed on the BlueField-3*
 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/10818af0-f1bc-4313-9990-a20d59539214)
 
