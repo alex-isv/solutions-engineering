@@ -1,6 +1,6 @@
 # Installing SLES on Nvidia DPU 
 
-**EXPERIMENTAL, PROOF OF CONCEPT don't use as a reference**
+**EXPERIMENTAL, PROOF OF CONCEPT. Don't use as a reference**
 
 ## Installing SLES on Nvidia BlueField-2 card
 
