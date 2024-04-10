@@ -70,12 +70,12 @@ Do the same for other nodes which you are adding to the RKE2 cluster.
 
 >*below example of multiple DPU devices added as part of the RKE2 cluster*
 >
-![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/622aaade-51f3-43ef-aca9-3d86a39097ea)
+>![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/622aaade-51f3-43ef-aca9-3d86a39097ea)
 
 
 >
 
 
-*below example from the existing cluster with 2 DPUs and a worker node with Nvidia GPU*
-
-![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/c8d8ca88-1257-4a30-bdcf-05edc25bc3de)
+>*below example from the existing cluster with 2 DPUs and a worker node with Nvidia GPU*
+>
+>![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/c8d8ca88-1257-4a30-bdcf-05edc25bc3de)
