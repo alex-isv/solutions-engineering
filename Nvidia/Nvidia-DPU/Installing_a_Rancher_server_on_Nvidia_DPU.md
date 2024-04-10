@@ -13,7 +13,7 @@ Install SLES or MICRO on Nvidia BlueField device as described [here](https://git
 
 Check releases > (https://github.com/k3s-io/k3s/releases) and make sure that k3s version supports a Rancher server release. 
 
-The below commands can be use for SLES and MICRO.
+The below commands can be used for SLES and MICRO.
 
 1. curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="v1.27.11+k3s1" INSTALL_K3S_SKIP_SELINUX_RPM=true INSTALL_K3S_EXEC='server --cluster-init --write-kubeconfig-mode=644' sh -s -
 2. export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
