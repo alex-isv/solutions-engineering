@@ -65,9 +65,12 @@ Copy a registration command and paste to the terminal of the new node.
 
 Do the same for other nodes which you are adding to the RKE2 cluster.
 
+
+
 *below example of multiple DPU devices added as part of the RKE2 cluster*
 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/622aaade-51f3-43ef-aca9-3d86a39097ea)
+
 
 
 *below example from the existing cluster with 2 DPUs and a worker node with Nvidia GPU*
