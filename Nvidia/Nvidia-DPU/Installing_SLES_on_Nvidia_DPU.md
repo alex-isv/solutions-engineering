@@ -1,8 +1,11 @@
 # Installing SLES on Nvidia DPU 
 
-**EXPERIMENTAL, don't use as a reference**
+**EXPERIMENTAL, PROOF OF CONCEPT don't use as a reference**
 
 ## Installing SLES on Nvidia BlueField-2 card
+
+### Prerequisites ###
+
 
 Review (https://github.com/Mellanox/bfb-build/) and modify a bfb-build and a DOCKER file with proper values.
 
@@ -63,6 +66,7 @@ sudo zypper install doca-ofed
 Review [Installation files section](https://docs.nvidia.com/doca/sdk/nvidia+doca+installation+guide+for+linux/index.html#installation-files) for a proper doca package.
 
 
+### Installation steps ###
 
 Clone a bfb-build from Mellanox git page.
 
@@ -86,7 +90,7 @@ In this test example a host node has 3 DPUs installed, so should have 3 rshim de
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/d5b92529-164e-4659-978c-061b0ce9e0be)
 
 
-Modify a Dockerfile and bfb-build file according to your OS release.
+Modify a Dockerfile and bfb-build file according to your OS release. See attached example Dockerfile for SLES.
 
 install a podman
 
@@ -120,8 +124,8 @@ to push an image to DPU.
 
 
 > [!NOTE]
-> These steps validated only for BlueField-2
-> For BlueField-3 this installation method should become available with SP6.
+> These steps validated only for BlueField-2.
+> For BlueField-3 this installation method should become available with SLES SP6 container image.
 
 
 
@@ -129,24 +133,49 @@ to push an image to DPU.
 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/ce27a886-9f3c-46a8-8dbd-ee39348b4f9d)
 
-If your host OS didn't have *doca_ofed* installed as mentioned above you can include MLNX_OFED drivers in your Dockerfile definition or download MLNX_OFED drivers from (https://network.nvidia.com/products/infiniband-drivers/linux/mlnx_ofed/) and install on DPU to enable fast interface on SLES.
 
-Review [Installing MLNX_OFED](https://docs.nvidia.com/networking/display/mlnxofedv24010331/installing+mlnx_ofed)
+>[!NOTE]
+>If your host OS didn't have *doca_ofed* installed as mentioned above you can include MLNX_OFED drivers in your Dockerfile definition or download MLNX_OFED drivers from (https://network.nvidia.com/product/infiniband-drivers/linux/mlnx_ofed/) and install on DPU directly to enable fast interface on SLES.
+>Review [Installing MLNX_OFED](https://docs.nvidia.com/networking/display/mlnxofedv24010331/installing+mlnx_ofed)
+>untar downloaded package
+>tar xzf MLNX_OFED_LINUX-23.10-1.1.9.0-sles15sp5-aarch64.tgz
+>install drivers with *./mlnxofedinstall* 
 
-untar downloaded package
+## Using Nvidia BlueField-3 with SLE Micro 6.0 or SLES 15 sp6 ##
 
-tar xzf MLNX_OFED_LINUX-23.10-1.1.9.0-sles15sp5-aarch64.tgz
+>[!NOTE]
+>BlueField-3 requires additional eMMC drivers with become available with SLES SP6 or Micro 6.0.
+>For SLE Micro another installation method should be used with a raw image and a custom script.
 
- ./mlnxofedinstall 
- 
+To make a .bfb file download a custom script ./mk-slemicro-bfb.sh and run it as:
+
+* ./mk-slemicro-bfb-v2.sh ./SLES15-SP6-Minimal-Image.aarch64-RaspberryPi-RC1-202403.raw.xz * or MICRO 6.0 raw image.*
+
+Use the following command to install  from bfb-build/suse directory:
+ * ./bfb-install -b ./SLES15-SP6-Minimal-Image.aarch64-RaspberryPi-RC1-202403.raw.bfb -r rshim0 *
+
+From the 2nd terminal start minicom.   
+Wait until sh-4.4# shell appear and enter the following command:
+* sh-4.4# dd bs=4M if=/OS.raw of=/dev/nvme0n1 iflag=fullblock oflag=sync *
+
+Once the DPU rebooted, on boot press ‘e’ and replaced console=ttyS0 to console=hvc0 in the grub.
+
+After boot you have to update/add the same console=hvc0 in /etc/default/grub and execute :
+On SP6)  grub2-mkconfig -o /boot/grub/grub.cfg
+On SLE-Micro) transactional-update grub.cfg
+
+The default credentials are root/linux.
+Configure network according to your needs.
+
+
 
 **Installing a Rancher server on DPU** 
 
-*not supported, just a proof of concept*
+*Proof of concept. Don't use as an official reference*
 
 
 > [!NOTE]
-> ARM64 is the experimental version and not supported.
+> ARM64 is the experimental version and is not officially supported.
 > Verify a support option with a SUSE/RANCHER team.
 
 Check releases > (https://github.com/k3s-io/k3s/releases) and make sure that k3s version supports a Rancher server release. 
@@ -211,11 +240,6 @@ Example from the existing cluster with 2 DPUs and a worker node with Nvidia GPU.
 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/c8d8ca88-1257-4a30-bdcf-05edc25bc3de)
 
-**Using Nvidia BlueField-3 with SLE Micro or SLES 15**
 
-SLE15 SP6 installation should workd in the same way with BlueField-3.
-For Micro another installation method should be used, since as of today SUSE doesn't have a Micro container image.
-
-*in progress.....*
 
 
