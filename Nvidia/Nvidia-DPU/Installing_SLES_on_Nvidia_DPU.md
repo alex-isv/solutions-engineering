@@ -162,7 +162,7 @@ Use the following command to install .bfb image on DPU:
 From the 2nd terminal start minicom.   
 Wait until sh-4.4# shell appear and enter the following command:
 
-$${\color{red}sh-4.4#}$$ dd bs=4M if=/OS.raw of=/dev/nvme0n1 iflag=fullblock oflag=sync
+sh-4.4# *dd bs=4M if=/OS.raw of=/dev/nvme0n1 iflag=fullblock oflag=sync*
 
 Once the DPU rebooted, on boot press ‘e’ and replaced console=ttyS0 to console=hvc0 in the grub.
 
