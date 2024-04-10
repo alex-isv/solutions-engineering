@@ -156,6 +156,7 @@ To make a .bfb file download a custom script ./mk-slemicro-bfb.sh and run it as:
 *./mk-slemicro-bfb-v2.sh ./SLES15-SP6-Minimal-Image.aarch64-RaspberryPi-RC1-202403.raw.xz* or MICRO 6.0 raw image.
 
 Use the following command to install .bfb image on DPU:
+
 *./bfb-install -b ./SLES15-SP6-Minimal-Image.aarch64-RaspberryPi-RC1-202403.raw.bfb -r rshim0*
 
 From the 2nd terminal start minicom.   
@@ -165,8 +166,9 @@ Wait until sh-4.4# shell appear and enter the following command:
 Once the DPU rebooted, on boot press ‘e’ and replaced console=ttyS0 to console=hvc0 in the grub.
 
 After boot you have to update/add the same console=hvc0 in /etc/default/grub and execute :
-On SP6)  grub2-mkconfig -o /boot/grub/grub.cfg
-On SLE-Micro) transactional-update grub.cfg
+
+On SP6:  *grub2-mkconfig -o /boot/grub/grub.cfg*
+On SLE-Micro: *transactional-update grub.cfg*
 
 The default credentials are root/linux.
 Configure network according to your needs.
