@@ -91,7 +91,7 @@ xz -d OS.raw.xz
 #BF3 has nvme
 if [ -b /dev/nvme0n1 ]; then
 	dd bs=4M if=/OS.raw of=/dev/nvme0n1 iflag=fullblock oflag=sync
-fi
+else
 dd bs=4M if=/OS.raw of=/dev/mmcblk0 iflag=fullblock oflag=sync
 sync
 echo "Rebooting ..."
