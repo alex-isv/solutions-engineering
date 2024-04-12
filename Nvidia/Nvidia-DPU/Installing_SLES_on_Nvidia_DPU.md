@@ -153,13 +153,13 @@ to push an image to DPU.
 
 Download .raw.xz image (arm64 version) of SLES 15sp6 or Micro 6.0. (The official release will be available soon from SCC. Beta version is available upon request)
 
-To make a .bfb file download a custom script ./mk-slemicro-bfb.sh and run it as:
+<u>To make a .bfb file</u> download a custom script ./mk-slemicro-bfb.sh (attached in the SLES directory of the current Github page) and run it as:
 
-*./mk-slemicro-bfb-v2.sh ./SLES15-SP6-Minimal-Image.aarch64-RaspberryPi-RC1-202403.raw.xz* or MICRO 6.0 raw image.
+*./mk-slemicro-bfb-v2.sh ./SLES15-SP6-Minimal-Image.aarch64-RaspberryPi-RC1-202403.raw.xz* (or Micro 6.0 raw.xz image).
 
-Use the following command to install .bfb image on DPU:
+<u>To install a *.bfb* image on DPU</U> use the following command :
 
-*./bfb-install -b ./SLES15-SP6-Minimal-Image.aarch64-RaspberryPi-RC1-202403.raw.bfb -r rshim0*
+*./bfb-install -b ./SLES15-SP6-Minimal-Image.aarch64-RaspberryPi-RC1-202403.raw.bfb -r rshim0* (or Micro 6.0 bfb file).
 
 From the 2nd terminal start minicom.
 
