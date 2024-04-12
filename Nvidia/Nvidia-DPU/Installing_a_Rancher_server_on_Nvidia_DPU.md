@@ -1,8 +1,10 @@
 # Installing a Rancher server on NVIDIA BlueField device #
 
+<ins>*Proof of concept. Don't use as an official reference*</ins>
+
 **Installing a Rancher server on DPU** 
 
-*Proof of concept. Don't use as an official reference*
+
 
 Install SLES or MICRO on Nvidia BlueField device as described [here](https://github.com/alex-isv/solutions-engineering/blob/main/Nvidia/Nvidia-DPU/Installing_SLES_on_Nvidia_DPU.md#installing-sles-on-nvidia-dpu)
 
