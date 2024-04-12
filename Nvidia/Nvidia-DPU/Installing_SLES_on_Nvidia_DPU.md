@@ -153,7 +153,7 @@ to push an image to DPU.
 
 Download .raw.xz image (arm64 version) of SLES 15sp6 or Micro 6.0. (The official release will be available soon from SCC. Beta version is available upon request)
 
-<u>To make a .bfb file</u> download a custom script ./mk-slemicro-bfb.sh (attached in the SLES directory of the current Github page) and run it as:
+<ins>To make a .bfb file</ins> download a custom script ./mk-slemicro-bfb.sh (attached in the SLES directory of the current Github page) and run it as:
 
 *./mk-slemicro-bfb-v2.sh ./SLES15-SP6-Minimal-Image.aarch64-RaspberryPi-RC1-202403.raw.xz* (or Micro 6.0 raw.xz image).
 
