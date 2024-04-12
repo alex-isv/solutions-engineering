@@ -151,6 +151,8 @@ to push an image to DPU.
 >BlueField-3 requires additional eMMC drivers with become available with SLES SP6 or Micro 6.0.
 >For SLE Micro another installation method should be used with a raw image and a custom script.
 
+Download .raw.xz image of SLES 15sp6 or Micro 6.0 arm64 version.(The official release will be available soon. Beta version is available upon request)
+
 To make a .bfb file download a custom script ./mk-slemicro-bfb.sh and run it as:
 
 *./mk-slemicro-bfb-v2.sh ./SLES15-SP6-Minimal-Image.aarch64-RaspberryPi-RC1-202403.raw.xz* or MICRO 6.0 raw image.
