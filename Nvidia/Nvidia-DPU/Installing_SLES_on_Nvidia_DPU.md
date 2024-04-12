@@ -157,7 +157,7 @@ Download .raw.xz image (arm64 version) of SLES 15sp6 or Micro 6.0. (The official
 
 *./mk-slemicro-bfb-v2.sh ./SLES15-SP6-Minimal-Image.aarch64-RaspberryPi-RC1-202403.raw.xz* (or Micro 6.0 raw.xz image).
 
-<u>To install a *.bfb* image on DPU</U> use the following command :
+<ins>To install a *.bfb* image on DPU</ins> use the following command :
 
 *./bfb-install -b ./SLES15-SP6-Minimal-Image.aarch64-RaspberryPi-RC1-202403.raw.bfb -r rshim0* (or Micro 6.0 bfb file).
 
