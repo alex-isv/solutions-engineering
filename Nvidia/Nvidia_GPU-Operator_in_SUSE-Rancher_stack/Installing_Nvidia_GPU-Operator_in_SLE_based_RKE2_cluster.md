@@ -252,6 +252,9 @@ On the 2nd cluster adding 2 worker nodes with 3 GPUs total:
 
 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/ff8c352f-1c46-410a-842c-6887552b9d52)
+> 2 worker nodes with 1 x A100 80Gb and 2 x A100 40Gb
+>
+> 
 
 or from the master node:
 
@@ -263,7 +266,7 @@ kubectl logs -n gpu-operator -l app=nvidia-operator-validator
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/14da7bf1-62c1-497d-8911-b061fd140c20)
 
 
-> 2 worker nodes with 1 x A100 80Gb and 2 x A100 40Gb
+
 
 
 - **Bringing a workload**
