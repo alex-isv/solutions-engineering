@@ -76,7 +76,7 @@ kubectl get pods --namespace cert-manager
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/a0fc4087-b213-4443-8952-9058ffc05f13)
 
 
-Verify existing ARM64 release > (https://github.com/rancher/rancher/releases)
+Verify existing release > (https://github.com/rancher/rancher/releases)
 
 
 ````
