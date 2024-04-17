@@ -291,7 +291,7 @@ spec:
           nvidia.com/gpu: 1
 ````
 
-For the reference use > (https://developer.nvidia.com/blog/getting-kubernetes-ready-for-the-a100-gpu-with-multi-instance-gpu/) which can be used for different Nvidia tests including MIG strategy.
+For the reference review > [Mig strategy](https://developer.nvidia.com/blog/getting-kubernetes-ready-for-the-a100-gpu-with-multi-instance-gpu/) which can be used for different Nvidia tests including MIG strategy.
 
 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/adbf20d9-4ab8-40c4-83cd-0366bc72b933)
