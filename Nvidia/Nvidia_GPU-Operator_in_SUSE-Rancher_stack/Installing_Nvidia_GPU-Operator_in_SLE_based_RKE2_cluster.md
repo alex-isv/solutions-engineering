@@ -251,8 +251,11 @@ or from the master node you can check logs as well:
 ````
 kubectl logs -n gpu-operator -l app=nvidia-operator-validator
 ````
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/14da7bf1-62c1-497d-8911-b061fd140c20)
 
-On the 2nd cluster adding 2 worker nodes with 3 GPUs total:
+
+
+For the testing purpose on the 2nd cluster I added 2 worker nodes with 3 GPUs total:
 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/96a87968-b9f6-4885-b9e8-7fadc7668c0a)
 
@@ -261,15 +264,6 @@ On the 2nd cluster adding 2 worker nodes with 3 GPUs total:
 > 2 worker nodes with 1 x A100 80Gb and 2 x A100 40Gb
 >
 > 
-
-
-
-
-![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/14da7bf1-62c1-497d-8911-b061fd140c20)
-
-
-
-
 
 - **Bringing a workload**
 
