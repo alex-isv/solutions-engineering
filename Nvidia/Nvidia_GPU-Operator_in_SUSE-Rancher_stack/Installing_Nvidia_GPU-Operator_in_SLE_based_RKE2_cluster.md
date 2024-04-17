@@ -115,7 +115,7 @@ Add a worker node with a <ins>GPU</ins> installed.
 
 
 
-> cl2-vm1:/var/lib/rancher/rke2/bin # ./kubectl get nodes
+> Check if all nodes added to the cluster # ./kubectl get nodes
 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/4af6220c-c235-4ddc-9904-cedc0cdb975d)
 
