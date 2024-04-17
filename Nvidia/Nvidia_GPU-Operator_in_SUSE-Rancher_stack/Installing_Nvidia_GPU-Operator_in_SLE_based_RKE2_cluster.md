@@ -246,7 +246,11 @@ Check that `driver-validation`, `cuda-validation` and `toolkit-validation` passe
 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/6dc60128-b09f-4456-a5bc-449cee6d704b)
 
+or from the master node you can check logs as well:
 
+````
+kubectl logs -n gpu-operator -l app=nvidia-operator-validator
+````
 
 On the 2nd cluster adding 2 worker nodes with 3 GPUs total:
 
@@ -258,11 +262,7 @@ On the 2nd cluster adding 2 worker nodes with 3 GPUs total:
 >
 > 
 
-or from the master node:
 
-````
-kubectl logs -n gpu-operator -l app=nvidia-operator-validator
-````
 
 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/14da7bf1-62c1-497d-8911-b061fd140c20)
