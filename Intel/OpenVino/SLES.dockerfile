@@ -44,6 +44,9 @@ RUN zypper -n in libopenvino
 RUN zypper -n in openvino-sample
 
 RUN git clone --recurse-submodules https://github.com/openvinotoolkit/open_model_zoo.git
+WORKDIR /opt/intel
+COPY "your precompiled directory" ./openvino
+
 
 
 
