@@ -11,9 +11,9 @@ RUN zypper -n in SUSEConnect
 
 # Add a registration code or use RMT server
 
-# RUN SUSEConnect --regcode INTERNAL-USE-ONLY-****
+RUN SUSEConnect --regcode INTERNAL-USE-ONLY-****
 
-ADD http://192.168.150.160/repo/rmt-server.crt /etc/pki/trust/anchors/rmt.crt
+# ADD http://192.168.150.160/repo/rmt-server.crt /etc/pki/trust/anchors/rmt.crt
 
 # Note: <ADD http://...>  is the IP of the local RMT server.
 # You need to post rmt-server.crt file on your RMT server in the location which can be reachable from url
@@ -39,9 +39,9 @@ RUN zypper --non-interactive in cmake pkg-config ade-devel \
                                         protobuf-devel curl wget git git-core
 
 RUN zypper -n refresh
-#RUN zypper in openvino
-#RUN zypper -n in libopenvino
-#RUN zypper -n in openvino-sample
+# RUN zypper in openvino
+# RUN zypper -n in libopenvino
+# RUN zypper -n in openvino-sample
 
 RUN git clone --recurse-submodules https://github.com/openvinotoolkit/open_model_zoo.git
 WORKDIR /opt/intel
