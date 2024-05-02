@@ -39,9 +39,9 @@ RUN zypper --non-interactive in cmake pkg-config ade-devel \
                                         protobuf-devel curl wget git git-core
 
 RUN zypper -n refresh
-RUN zypper in openvino
-RUN zypper -n in libopenvino
-RUN zypper -n in openvino-sample
+#RUN zypper in openvino
+#RUN zypper -n in libopenvino
+#RUN zypper -n in openvino-sample
 
 RUN git clone --recurse-submodules https://github.com/openvinotoolkit/open_model_zoo.git
 WORKDIR /opt/intel
