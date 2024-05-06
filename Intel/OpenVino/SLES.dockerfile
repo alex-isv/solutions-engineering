@@ -21,7 +21,7 @@ RUN SUSEConnect --regcode INTERNAL-USE-ONLY-****
 # Setup a proper permission to /usr/share/rmt/public/repo directory 
 # Sync rmt server.
 RUN update-ca-certificates
-RUN zypper -gpg-auto-import-keys ref -s
+RUN zypper --gpg-auto-import-keys ref -s
 RUN zypper --non-interactive up
 RUN zypper addrepo https://download.opensuse.org/repositories/home:cabelo:intel/15.5/home:cabelo:intel.repo
 RUN zypper -n refresh
