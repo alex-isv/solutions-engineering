@@ -129,7 +129,7 @@ Go to the Registration tab, select worker role, copy and paste a registration co
 > [!TIP]
 > To access the cluster from the local machine you need to install kubectl and copy the cluster's kubeconfig file (rke2.yaml) to your local `~/.kube/config` directory and run `export KUBECONFIG=/root/.kube/config/rke2.yaml`
 
-**Install and test Nvidia gpu-operator on the cluster**
+## **Install and test Nvidia gpu-operator on the cluster**
 
 From Rancher add a GPU-OPERATOR repo.\
 Add Nvidia GPU-OPERATOR helm chart and modify config. with the following parameters:
