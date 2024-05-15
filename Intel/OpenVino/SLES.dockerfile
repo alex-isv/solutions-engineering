@@ -47,7 +47,7 @@ RUN zypper --non-interactive in cmake pkg-config ade-devel \
                                         snappy-devel ocl-icd-devel \
                                         opencl-cpp-headers opencl-headers \
                                         zlib-devel gflags-devel-static \
-                                        protobuf-devel curl wget git git-core
+                                        protobuf-devel curl wget git git-core vim
 
 RUN zypper --no-gpg-checks -n refresh
 RUN zypper -n in openvino
