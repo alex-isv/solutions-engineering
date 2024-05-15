@@ -53,7 +53,7 @@ RUN zypper --no-gpg-checks -n refresh
 RUN zypper -n in openvino
 RUN zypper -n in libopenvino
 RUN zypper -n in openvino-sample
-# Review a Build the Sample Applications > https://docs.openvino.ai/2024/learn-openvino/openvino-samples/get-started-demos.html#download-model
+# Review a Build the Sample Applications > https://docs.openvino.ai/2024/learn-openvino/openvino-samples/get-started-demos.html and https://docs.openvino.ai/2024/learn-openvino/openvino-samples/get-started-demos.html#download-model
 RUN zypper --no-gpg-checks -n refresh
 
 #Add open_model_zoo for sample demos > https://docs.openvino.ai/2024/omz_demos.html and https://github.com/openvinotoolkit/openvino/tree/master/samples
