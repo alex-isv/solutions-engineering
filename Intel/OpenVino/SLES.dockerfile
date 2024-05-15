@@ -51,8 +51,14 @@ RUN zypper --non-interactive in cmake pkg-config ade-devel \
 RUN zypper --no-gpg-checks -n refresh
 RUN zypper -n in openvino
 RUN zypper -n in libopenvino
-# RUN zypper -n in openvino-sample
+RUN zypper -n in openvino-sample
+# Review a Build the Sample Applications > https://docs.openvino.ai/2024/learn-openvino/openvino-samples/get-started-demos.html#download-model
+RUN zypper --no-gpg-checks -n refresh
 
+#Add open_model_zoo for sample demos > https://docs.openvino.ai/2024/omz_demos.html and https://github.com/openvinotoolkit/openvino/tree/master/samples
 RUN git clone --recurse-submodules https://github.com/openvinotoolkit/open_model_zoo.git
-WORKDIR /root/openvino
+
+# As an alternative, if you compiled manually on the local machine -> https://github.com/openvinotoolkit/openvino/blob/master/docs/dev/build_linux.md  (may take some time),
+# or > https://en.opensuse.org/SDB:Install_OpenVINO 
+# just copy pre-compiled directory to the container.
 #COPY "your precompiled directory" ./openvino
