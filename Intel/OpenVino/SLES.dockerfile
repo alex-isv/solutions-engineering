@@ -1,7 +1,8 @@
 # This Docker file is just a DEMO example to test Intel OpenVino on SLE based container.
 
-FROM registry.suse.com/suse/sle15:15.5
-
+FROM registry.suse.com/suse/sle15:latest
+ENV ADDITIONAL_MODULES sle-module-desktop-applications,sle-we
+RUN zypper --gpg-auto-import-keys ref -s
 LABEL description="This is the dev image for Intel(R) Distribution of OpenVINO(TM) toolkit on SLES 15 sp5"
 LABEL vendor="Intel Corporation"
 
@@ -14,29 +15,29 @@ RUN zypper -n in SUSEConnect
 
 # RUN SUSEConnect --regcode INTERNAL-USE-ONLY-****
 ADD http://192.168.150.160/repo/rmt-server.crt /etc/pki/trust/anchors/rmt.crt
-
+# RUN SUSEConnect --write-config --url http://192.168.150.160
+# ENV ADDITIONAL_MODULES sle-module-desktop-applications
 # Note: <ADD http://...>  is the IP of the local RMT server.
 # You need to post rmt-server.crt file on your RMT server in the location which can be reachable from url
 # So, on our local RMT server copy /etc/rmt/ssl/rmt-server.crt file to the /usr/share/rmt/public/repo directory, which creates symb link to ./var/lib/rmt/public/repo which is a public repo of RMT server.
 # Setup a proper permission to /usr/share/rmt/public/repo directory
 # Sync rmt server.
 RUN update-ca-certificates
+#ENV ADDITIONAL_MODULES sle-module-desktop-applications/15.5/x86_64
 RUN zypper --gpg-auto-import-keys ref -s
 RUN zypper --non-interactive up
 RUN zypper --no-gpg-checks -n refresh
+RUN zypper --no-gpg-checks --gpg-auto-import-keys -n refresh
 RUN zypper addrepo https://download.opensuse.org/repositories/home:cabelo:intel/15.5/home:cabelo:intel.repo
 RUN zypper --no-gpg-checks -n refresh
 RUN SUSEConnect -p PackageHub/15.5/x86_64
 RUN zypper --no-gpg-checks -n refresh
-RUN SUSEConnect -p sle-module-basesystem/15.5/x86_64
-RUN SUSEConnect -p sle-module-server-applications/15.5/x86_64
 RUN zypper --no-gpg-checks -n refresh
 RUN SUSEConnect -p sle-module-desktop-applications/15.5/x86_64
-RUN SUSEConnect -p sle-we/15.5/x86_64
-#RUN zypper --no-gpg-checks -n refresh
-#RUN SUSEConnect -p sle-module-server-applications/15.5/x86_64
-#RUN SUSEConnect -p sle-module-desktop-applications/15.5/x86_64
 RUN zypper --no-gpg-checks -n refresh
+RUN zypper --gpg-auto-import-keys -n refresh
+#RUN SUSEConnect -p sle-we/15.5/x86_64
+RUN zypper --no-gpg-checks --gpg-auto-import-keys -n refresh
 RUN zypper --non-interactive in cmake pkg-config ade-devel \
                                         patterns-devel-C-C++-devel_C_C++ \
                                         opencl-headers ocl-icd-devel opencv-devel \
@@ -47,7 +48,7 @@ RUN zypper --non-interactive in cmake pkg-config ade-devel \
                                         snappy-devel ocl-icd-devel \
                                         opencl-cpp-headers opencl-headers \
                                         zlib-devel gflags-devel-static \
-                                        protobuf-devel curl wget git git-core vim
+                                        protobuf-devel curl wget git git-core
 
 RUN zypper --no-gpg-checks -n refresh
 RUN zypper -n in openvino
@@ -62,4 +63,6 @@ RUN git clone --recurse-submodules https://github.com/openvinotoolkit/open_model
 # As an alternative, if you compiled manually on the local machine -> https://github.com/openvinotoolkit/openvino/blob/master/docs/dev/build_linux.md  (may take some time),
 # or > https://en.opensuse.org/SDB:Install_OpenVINO 
 # just copy pre-compiled directory to the container.
+
 #COPY "your precompiled directory" ./openvino
+
