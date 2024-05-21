@@ -222,7 +222,7 @@ helm install -n gpu-operator \
   --set toolkit.env[2].value=nvidia \
   --set toolkit.env[3].name=CONTAINERD_SET_AS_DEFAULT \
   --set-string toolkit.env[3].value=true \
-  --set toolkit.version=v1.14.5-centos7 \
+  --set toolkit.version=v1.15.0-ubi8  \
   --set validator.driver.env[0].name=DISABLE_DEV_CHAR_SYMLINK_CREATION \
   --set-string validator.driver.env[0].value=true
 ````
