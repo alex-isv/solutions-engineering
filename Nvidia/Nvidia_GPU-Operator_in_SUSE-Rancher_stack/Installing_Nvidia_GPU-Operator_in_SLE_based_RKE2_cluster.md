@@ -172,7 +172,8 @@ sudo zypper refresh
 uname -r 
 ````
 >5.14.21-150500.55.49-default
- >In this example, the version is 5.14.21-150500.55.49 and the variant is default. The kernel headers and development packages can then be installed with the following command, replacing <variant> and <version> with the variant and version discovered from the previous uname command:
+>
+ > In this example, the version is 5.14.21-150500.55.49 and the variant is default. The kernel headers and development packages can then be installed with the following command, replacing <variant> and <version> with the variant and version discovered from the previous uname command:
 >
 ````
 sudo zypper install -y kernel-<variant>-devel=<version>
