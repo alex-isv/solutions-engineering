@@ -9,9 +9,9 @@ Please review [AMD GPU device plugin for Kubernetes](https://github.com/ROCm/k8s
 
 <ins> Setup environment </ins>
 
-SLES 15 sp5 based RKE2 cluster with a Rancher manager.
+- SLES 15 sp5 based RKE2 cluster with a Rancher manager. Please review []( ) on how to install RKE2 cluster.
 
-MI210 AMD GPU installed in the worker node.
+- MI210 AMD GPU installed in the worker node.
 
 - **Install ROCM on the worker (GPU) node**
 
