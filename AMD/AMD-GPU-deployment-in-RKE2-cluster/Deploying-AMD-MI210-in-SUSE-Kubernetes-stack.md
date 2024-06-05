@@ -13,9 +13,9 @@ Please review [AMD GPU device plugin for Kubernetes](https://github.com/ROCm/k8s
 
 - MI210 AMD GPU installed in the worker node.
 
-- **Install ROCM on the worker (GPU) node**
+- Install ROCM on the worker (GPU) node.
 
-Install ROCM on the worker node as per [SUSE Linux Enterprise native installation section](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/tutorial/quick-start.html)
+## Install ROCM on the worker node as per [SUSE Linux Enterprise native installation section](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/tutorial/quick-start.html)
 
 ````
 sudo zypper addrepo https://download.opensuse.org/repositories/devel:languages:perl/15.5/devel:languages:perl.repo
@@ -27,3 +27,17 @@ sudo zypper refresh
 sudo zypper install amdgpu-dkms
 sudo zypper install rocm
 ````
+Reboot a worker node.
+
+## Install a GPU device plugin
+
+Open a Rancher RKE2 cluster, go to Apps - Charts from the left console.
+
+Select all from the Charts and search for AMD.
+
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/e772400a-4e1a-4b6f-9332-505bd497d693)
+
+
+
+
