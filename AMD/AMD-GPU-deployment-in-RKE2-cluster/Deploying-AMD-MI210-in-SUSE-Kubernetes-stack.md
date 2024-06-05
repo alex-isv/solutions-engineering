@@ -1,17 +1,20 @@
-# Deployment steps for AMD GPU in SUSE/Rancher Kubernetes stack.
+# Deployment steps for AMD GPU in SUSE/Rancher Kubernetes stack
 
 ## Purpose 
 These steps outlines installation of AMD GPU Device Plugin in SUSE RKE2 Kubernetes cluster and managed by a Rancher server.
 
 ## Prerequisites
 
+Please review [AMD GPU device plugin for Kubernetes](https://github.com/ROCm/k8s-device-plugin#amd-gpu-device-plugin-for-kubernetes).
+
 <ins> Setup environment </ins>
 
 SLES 15 sp5 based RKE2 cluster with a Rancher manager.
+
 MI210 AMD GPU installed in the worker node.
 
 - **Install ROCM on the worker (GPU) node**
-Please review [AMD GPU device plugin for Kubernetes](https://github.com/ROCm/k8s-device-plugin#amd-gpu-device-plugin-for-kubernetes).
+
 Install ROCM on the worker node as per [](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/tutorial/quick-start.html)
 
 ````
