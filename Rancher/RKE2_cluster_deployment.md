@@ -68,7 +68,7 @@ Verify existing release > (https://github.com/rancher/rancher/releases)
 Login to Rancher URL in the browser and change a password.
 
 - **Create RKE2 cluster from the Rancher**
-- 
+  
 Please review [launch-kubernetes-with-rancher](https://ranchermanager.docs.rancher.com/how-to-guides/new-user-guides/launch-kubernetes-with-rancher#rke2) section for more details.
 
 From Rancher server go to the Cluster Management and select RKE2 and click Custom
