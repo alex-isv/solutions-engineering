@@ -6,6 +6,7 @@ These steps outlines installation of AMD GPU Device Plugin in SUSE RKE2 Kubernet
 ## Prerequisites
 
 <ins> Setup environment </ins>
+
 SLES 15 sp5 based RKE2 cluster with a Rancher manager.
 MI210 AMD GPU installed in the worker node.
 
