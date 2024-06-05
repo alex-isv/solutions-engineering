@@ -90,7 +90,7 @@ Copy a registration command and paste into the terminal of the node which are yo
 
 
 Make sure that you have the odd number of nodes in the cluster.\
-Add a worker node with a <ins>GPU</ins> installed.
+If planning to use a GPU, add a worker node with a <ins>GPU</ins> installed.
 
 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/8c715829-9da4-48e6-ae45-a261b4a4c2bf)
