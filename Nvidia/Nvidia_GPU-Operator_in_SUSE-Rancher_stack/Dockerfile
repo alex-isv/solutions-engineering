@@ -1,14 +1,3 @@
-# Define the names/tags of the container
-#!BuildTag: suse/example:latest suse/example:%PKG_VERSION% suse/example:%PKG_VERSION%.%RELEASE%
-
-# Define labels according to https://en.opensuse.org/Building_derived_containers
-# labelprefix=com.suse.example
-PREFIXEDLABEL org.opencontainers.image.title="Nvidia-GPU-driver-container"
-PREFIXEDLABEL org.opencontainers.image.description="Container based driver version 550.54.15"
-PREFIXEDLABEL org.opensuse.reference="registry.suse.com/suse/example:%PKG_VERSION%.%RELEASE%"
-PREFIXEDLABEL org.openbuildservice.disturl="%DISTURL%"
-PREFIXEDLABEL org.opencontainers.image.created="%BUILDTIME%"
-
 ARG SLES_VERSION
 ARG CUDA_VERSION=12.4
 FROM nvidia/cuda:$CUDA_VERSION-base-ubi8 as license
