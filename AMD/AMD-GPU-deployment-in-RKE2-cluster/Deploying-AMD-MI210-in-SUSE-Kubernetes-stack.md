@@ -57,6 +57,11 @@ or manually add proper labels from the Rancher cluster node section.
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/c23f014e-d7bd-4def-b76f-f969aa622bd7)
 
 
+## Bring some test workload
+
+Select <ins>Import yaml</ins> and add a test workload contents.
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/5237d315-e961-4ecc-8c41-d0a71ad012b7)
 
 
 
