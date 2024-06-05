@@ -64,6 +64,25 @@ Select <ins>Import yaml</ins> and add a test workload contents.
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/5237d315-e961-4ecc-8c41-d0a71ad012b7)
 
 
+In this particular example Tensorflow with inception3 model was used.
+
+Container should be created and workload verified from logs.
+
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/7f57162a-e88d-43e2-a1d7-48f230790be3)
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/2e7089c1-a0a7-41a8-9e84-fd17fa89092f)
+
+or from the Master node run 
+````
+cl2-vm1:/var/lib/rancher/rke2/bin # ./kubectl logs benchmark-gpu -n amd-plugin
+````
+to verify 
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/3cb42bdf-aaf4-4433-9b2c-74e651f45cff)
+
+
+
 
 
 
