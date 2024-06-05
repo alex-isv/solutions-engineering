@@ -33,11 +33,13 @@ Reboot a worker node.
 
 Open a Rancher RKE2 cluster, go to Apps - Charts from the left console.
 
-Select all from the Charts and search for AMD.
+Select All from the Charts and search for AMD.
 
 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/e772400a-4e1a-4b6f-9332-505bd497d693)
 
+
+Click on *AMD GPU Device Plugin* helm chart and install.
 
 
 
