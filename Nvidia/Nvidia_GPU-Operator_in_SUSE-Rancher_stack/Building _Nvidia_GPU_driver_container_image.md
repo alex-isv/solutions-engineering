@@ -26,3 +26,14 @@ podman build -t nvidia-gpu-driver-sle15sp5-550.54.15 \
 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/2fffc3f7-b358-4713-8c77-03c65210cb4b)
 
+
+> [!TIP]
+> Before installing new drivers, make sure to remove older versions of CUDA Toolkit and Nvidia drivers:
+````
+sudo zypper remove "cuda*" "*cublas*" "*cufft*" "*cufile*" "*curand*" \
+ "*cusolver*" "*cusparse*" "*gds-tools*" "*npp*" "*nvjpeg*" "nsight*" "*nvvm*"
+````
+
+````
+sudo zypper remove "*nvidia*"
+````
