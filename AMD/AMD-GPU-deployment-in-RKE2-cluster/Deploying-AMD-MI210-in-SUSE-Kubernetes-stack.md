@@ -39,7 +39,11 @@ Select All from the Charts and search for AMD.
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/e772400a-4e1a-4b6f-9332-505bd497d693)
 
 
-Click on *AMD GPU Device Plugin* helm chart and install.
+Click on **AMD GPU Device Plugin** helm chart to install.
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/e725ad23-42d7-4194-b0c8-7e4f46cbd26e)
+
+
 
 
 
