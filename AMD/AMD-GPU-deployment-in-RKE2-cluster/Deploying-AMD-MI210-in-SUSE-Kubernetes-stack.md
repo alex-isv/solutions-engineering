@@ -43,6 +43,14 @@ Click on **AMD GPU Device Plugin** helm chart to install.
 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/e725ad23-42d7-4194-b0c8-7e4f46cbd26e)
 
+Review [AMD GPU labeller](https://github.com/ROCm/k8s-device-plugin/blob/master/cmd/k8s-node-labeller/README.md#amd-gpu-kubernetes-node-labeller) section for a proper node labels for a GPU node.
+
+You can either install sample yaml file [k8s-ds-amdgpu-labeller.yaml](https://github.com/ROCm/k8s-device-plugin/blob/master/k8s-ds-amdgpu-labeller.yaml) or manually add proper labels from the Rancher cluster node section.
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/c23f014e-d7bd-4def-b76f-f969aa622bd7)
+
+
+
 
 
 
