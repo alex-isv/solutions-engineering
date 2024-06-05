@@ -32,6 +32,18 @@ sudo zypper install amdgpu-dkms
 sudo zypper install rocm
 ````
 Reboot a worker node.
+Verify ROCm installation by running
+````
+./clinfo
+````
+or
+````
+./rocminfo
+````
+from the installation directory
+
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/b70e4f44-b0fd-4258-b4c6-11a0dc778d25)
+
 
 ## Install a GPU device plugin
 
