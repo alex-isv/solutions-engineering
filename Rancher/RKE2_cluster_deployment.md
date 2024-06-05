@@ -2,7 +2,7 @@
 
 - **Installing a Rancher server on SLES**
 
-  Please review a[quick start guide](https://ranchermanager.docs.rancher.com/getting-started/quick-start-guides/deploy-rancher-manager/helm-cli) for more details.
+  Please review a [quick start guide](https://ranchermanager.docs.rancher.com/getting-started/quick-start-guides/deploy-rancher-manager/helm-cli) for more details.
 
 Install helm
 ````
