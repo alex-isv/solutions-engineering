@@ -12,6 +12,10 @@ Open a Dockerfile and set <INS>CUDA_VERSION</ins> to 12.4 and <ins>golang</ins> 
 
 Build a driver
 
+> [!NOTE]
+> As of June 2024 the latest version of available driver was used.
+> Please validate a driver and a CUDA version during your deployment as they can be different. 
+
 ````
 podman build -t nvidia-gpu-driver-sle15sp5-550.54.15 \
     --build-arg DRIVER_VERSION="550.54.15" \
