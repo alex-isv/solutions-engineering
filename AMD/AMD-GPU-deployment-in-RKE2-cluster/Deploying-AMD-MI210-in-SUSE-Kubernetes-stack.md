@@ -13,6 +13,10 @@ Please review [AMD GPU device plugin for Kubernetes](https://github.com/ROCm/k8s
 
 - MI210 AMD GPU installed in the worker node.
 
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/7f7ea5ad-2041-44e9-9bac-adead5843646)
+
+
+
   ## Install ROCM on the worker (GPU) node.
 
  Install ROCM on the worker node as per ROCm documentation [SUSE Linux Enterprice native installation](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/tutorial/quick-start.html) section.
