@@ -15,7 +15,7 @@ Please review [AMD GPU device plugin for Kubernetes](https://github.com/ROCm/k8s
 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/7f7ea5ad-2041-44e9-9bac-adead5843646)
 
-
+In the above example, the RKE2 6 nodes cluster is shown from the Rancher console.
 
   ## Install ROCM on the worker (GPU) node.
 
