@@ -15,7 +15,7 @@ MI210 AMD GPU installed in the worker node.
 
 - **Install ROCM on the worker (GPU) node**
 
-Install ROCM on the worker node as per [](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/tutorial/quick-start.html)
+Install ROCM on the worker node as per [SUSE Linux Enterprise native installation section](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/tutorial/quick-start.html)
 
 ````
 sudo zypper addrepo https://download.opensuse.org/repositories/devel:languages:perl/15.5/devel:languages:perl.repo
