@@ -54,3 +54,6 @@ podman build -t ghcr.io/alex-isv/nvidia-gpu-driver-sle15sp5-550.54.15:latest \ -
     --build-arg SLES_VERSION="15.5" \
     .
 ````
+````
+podman push ghcr.io/alex-isv/nvidia-gpu-driver-sle15sp5-550.54.15:latest
+````
