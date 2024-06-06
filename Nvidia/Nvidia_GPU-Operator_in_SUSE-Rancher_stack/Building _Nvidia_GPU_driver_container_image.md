@@ -1,5 +1,9 @@
 # Creating container based Nvidia GPU driver
 
+## Purpose
+These steps outlines building of the container based Nvidia GPU driver for the large Kubernetes environment.
+For more details, please review section [Building the container image](https://documentation.suse.com/trd/kubernetes/pdf/gs_rke2-slebci_nvidia-gpu-operator_en.pdf#%5B%7B%22num%22%3A80%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C63.779%2C450.553%2Cnull%5D)
+
 Clone the NVIDIA driver GitHub repository and change to the driver/sle15 directory
 
 ````
