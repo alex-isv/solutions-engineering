@@ -100,4 +100,12 @@ sudo podman exec -it  driver.sle15sp5-550.54.15 nvidia-smi
 
   ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/9cf7b43c-6f98-4c93-af07-bb612e8366e0)
 
+To delete a local container, execute:
+````
+podman stop driver.sle15sp5-550.54.15
+````
+and
+````
+podman rm driver.sle15sp5-550.54.15
+````
 
