@@ -1,5 +1,10 @@
 # Creating a container based Nvidia GPU driver
 
+> [!NOTE]
+> This guidance is not providing any support.
+> Steps are publicly available from Nvidia Github page [gpu-driver-container for sle15](https://github.com/NVIDIA/gpu-driver-container/tree/main/sle15), but modified with the latest versions.
+>
+> 
 ## Purpose
 These steps outlines building process of the container based Nvidia GPU driver for SUSE Linux Enterprise Server in the large Kubernetes environment.
 For more details, please review section [Building the container image](https://documentation.suse.com/trd/kubernetes/pdf/gs_rke2-slebci_nvidia-gpu-operator_en.pdf#%5B%7B%22num%22%3A80%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C63.779%2C450.553%2Cnull%5D)
@@ -52,10 +57,11 @@ sudo zypper remove "cuda*" "*cublas*" "*cufft*" "*cufile*" "*curand*" \
 ````
 sudo zypper remove "*nvidia*"
 ````
-If building directly in the registry, the following command can be used.
+If pushing directly to the private or public registry, the following commands can be used.
 
-For the ghcr.io example
+In the below example the <ins>ghcr.io</ins> is used as a public container registry.
 ````
+
 podman build -t ghcr.io/alex-isv/nvidia-gpu-driver-sle15sp5-550.54.15:latest \
 --build-arg DRIVER_VERSION="550.54.15" \
 --build-arg CUDA_VERSION="12.4.1" \
@@ -65,3 +71,11 @@ podman build -t ghcr.io/alex-isv/nvidia-gpu-driver-sle15sp5-550.54.15:latest \
 ````
 podman push ghcr.io/alex-isv/nvidia-gpu-driver-sle15sp5-550.54.15:latest
 ````
+
+- Running a container locally.
+  
+  ````
+   sudo podman run -d ghcr.io/alex-isv/nvidia-gpu-driver-sle15sp5-550.54.15
+  ````
+
+  
