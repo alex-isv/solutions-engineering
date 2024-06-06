@@ -72,6 +72,13 @@ podman build -t ghcr.io/alex-isv/nvidia-gpu-driver-sle15sp5-550.54.15:latest \
 podman push ghcr.io/alex-isv/nvidia-gpu-driver-sle15sp5-550.54.15:latest
 ````
 
+Check if it visible.
+
+````
+podman search --list-tags ghcr.io/alex-isv/nvidia-gpu-driver-sle15sp5-550.54.15:latest
+````
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/45d5c214-a136-4301-abad-9ca96360702b)
+
 - Running a container locally.
   
 ````
