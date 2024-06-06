@@ -74,8 +74,22 @@ podman push ghcr.io/alex-isv/nvidia-gpu-driver-sle15sp5-550.54.15:latest
 
 - Running a container locally.
   
-  ````
-   sudo podman run -d ghcr.io/alex-isv/nvidia-gpu-driver-sle15sp5-550.54.15
-  ````
+````
+sudo podman run -d --name driver.sle15sp5-550.54.15  --privileged --pid=host -v /run/nvidia:/run/nvidia:shared -v /var/log:/var/log --restart=unless-stopped ghcr.io/alex-isv/nvidia-gpu-driver-sle15sp5-550.54.15 
+````
+Verify if a container was deployed.
+````
+sudo podman logs -f driver.sle15sp5-550.54.15
+````
 
-  
+
+Check if a container can see a GPU.
+
+````
+sudo podman exec -it  driver.sle15sp5-550.54.15 nvidia-smi
+````
+
+
+  ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/9cf7b43c-6f98-4c93-af07-bb612e8366e0)
+
+
