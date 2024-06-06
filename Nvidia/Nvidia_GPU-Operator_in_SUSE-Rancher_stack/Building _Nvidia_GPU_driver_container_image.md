@@ -1,4 +1,4 @@
-# Creating container based Nvidia GPU driver
+# Creating a container based Nvidia GPU driver
 
 ## Purpose
 These steps outlines building process of the container based Nvidia GPU driver for SUSE Linux Enterprise Server in the large Kubernetes environment.
