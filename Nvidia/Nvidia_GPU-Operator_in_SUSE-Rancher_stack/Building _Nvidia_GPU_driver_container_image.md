@@ -4,7 +4,7 @@
 These steps outlines building process of the container based Nvidia GPU driver for SUSE Linux Enterprise Server in the large Kubernetes environment.
 For more details, please review section [Building the container image](https://documentation.suse.com/trd/kubernetes/pdf/gs_rke2-slebci_nvidia-gpu-operator_en.pdf#%5B%7B%22num%22%3A80%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C63.779%2C450.553%2Cnull%5D)
 
-Clone the NVIDIA driver GitHub repository and change to the driver/sle15 directory
+- Clone the NVIDIA driver GitHub repository and change to the driver/sle15 directory
 
 ````
 git clone https://github.com/NVIDIA/gpu-driver-container.git && cd gpu-driver-container/sle15/
@@ -14,7 +14,7 @@ Open a Dockerfile and set <INS>CUDA_VERSION</ins> to 12.4 and <ins>golang</ins> 
 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/5df93be4-76cd-4cef-aff8-a490fbd9d12d)
 
-Build a driver
+- Build a driver
 
 > [!NOTE]
 > As of June 2024 the latest version of the available driver was used.
