@@ -49,9 +49,10 @@ If building directly in the registry, the following command can be used.
 
 For the ghcr.io example
 ````
-podman build -t ghcr.io/alex-isv/nvidia-gpu-driver-sle15sp5-550.54.15:latest \ --build-arg DRIVER_VERSION="550.54.15" \
-    --build-arg CUDA_VERSION="12.4.1" \
-    --build-arg SLES_VERSION="15.5" \
+podman build -t ghcr.io/alex-isv/nvidia-gpu-driver-sle15sp5-550.54.15:latest \
+--build-arg DRIVER_VERSION="550.54.15" \
+--build-arg CUDA_VERSION="12.4.1" \
+--build-arg SLES_VERSION="15.5" \
     .
 ````
 ````
