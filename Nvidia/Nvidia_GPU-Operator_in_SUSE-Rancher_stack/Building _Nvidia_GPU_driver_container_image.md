@@ -88,6 +88,7 @@ Verify if a container was deployed.
 ````
 sudo podman logs -f driver.sle15sp5-550.54.15
 ````
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/9b4a72e5-188b-4d2f-8f06-677b964fbb29)
 
 
 Check if a container can see a GPU.
