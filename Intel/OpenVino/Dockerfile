@@ -1,4 +1,4 @@
-# This Docker file is just a DEMO example to test Intel OpenVino on SLE based container.
+# This Docker file is just a DEMO example to test Intel OpenVino on SLES based container.
 
 FROM registry.suse.com/suse/sle15:latest
 ENV ADDITIONAL_MODULES sle-module-desktop-applications,sle-we
