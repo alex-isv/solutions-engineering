@@ -109,6 +109,7 @@ Verify that nvidia-smi command is working on the **worker** node.
 
 
 - **Build a container based driver(option 2)**
+  
 Please follow steps as described in [Creating a container based Nvidia GPU driver](https://github.com/alex-isv/solutions-engineering/blob/main/Nvidia/Nvidia_GPU-Operator_in_SUSE-Rancher_stack/Building%20_Nvidia_GPU_driver_container_image.md#if-building-a-gpu-driver-container-for-the-nvidia-gpu-operator-use-the-following-steps).
 
 
