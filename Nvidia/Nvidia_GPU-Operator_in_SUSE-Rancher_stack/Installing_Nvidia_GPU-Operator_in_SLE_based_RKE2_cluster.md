@@ -23,6 +23,8 @@ You can also integrate a Rancher server with a Harvester cluster for easy cluste
 
   Please review [Deploying RKE2 cluster](https://github.com/alex-isv/solutions-engineering/blob/main/Rancher/RKE2_cluster_deployment.md#deploying-rke2-cluster-in-sles-based-environment ) guide on how to install RKE2 cluster with a Rancher manager.
   
+## Installing Nvidia gpu driver  
+
 There are two option available on how a gpu driver can be installed.
 1. Using a locally installed driver on the worker node suitable for small cluster with a few worker nodes.
 2. For larger clusters with multiple worker nodes a container based gpu driver should be used.
