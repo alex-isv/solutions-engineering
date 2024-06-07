@@ -26,8 +26,8 @@ You can also integrate a Rancher server with a Harvester cluster for easy cluste
 ## Installing Nvidia GPU driver  
 
 There are two option available on how a gpu driver can be installed.
-1. Using a locally installed driver on the worker node suitable for small cluster with a few worker nodes.
-2. For larger clusters with multiple worker nodes a container based gpu driver should be used.
+1. Using a *locally* installed driver on the worker node suitable for small cluster with a few worker nodes.
+2. For larger clusters with multiple worker nodes a *container based* GPU driver should be used.
    
 - **Install a GPU driver on the worker node (option 1)**
 
