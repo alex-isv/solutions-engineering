@@ -194,7 +194,7 @@ If used a custom registry you should be able to see it listed under `nvidia-daem
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/6363b361-de4f-4e6e-bd0b-c589a1fbdfea)
 
 
-For the testing purpose on the 2nd cluster I added 2 worker nodes with 3 GPUs total:
+For the testing purpose on the 2nd cluster 2 worker nodes were added with 3 GPUs total:
 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/96a87968-b9f6-4885-b9e8-7fadc7668c0a)
 
