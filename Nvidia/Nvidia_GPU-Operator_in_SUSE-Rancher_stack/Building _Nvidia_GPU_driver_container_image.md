@@ -89,7 +89,7 @@ and
 podman rm driver.sle15sp5-550.54.15
 ````
 
-- If building a gpu-driver container for the Nvidia gpu-operator use the following steps:
+### If building a gpu-driver container for the Nvidia gpu-operator use the following steps:
   
 
 In the below example the <ins>ghcr.io</ins> is used as a public container registry.
