@@ -23,8 +23,11 @@ You can also integrate a Rancher server with a Harvester cluster for easy cluste
 
   Please review [Deploying RKE2 cluster](https://github.com/alex-isv/solutions-engineering/blob/main/Rancher/RKE2_cluster_deployment.md#deploying-rke2-cluster-in-sles-based-environment ) guide on how to install RKE2 cluster with a Rancher manager.
   
-
-- **Install GPU drivers on the worker node**
+There are two option available on how a gpu driver can be installed.
+1. Using a locally installed driver on the worker node suitable for small cluster with a few worker nodes.
+2. For larger clusters with multiple worker nodes a container based gpu driver should be used.
+   
+- **Install a GPU driver on the worker node (option 1)**
 
 > [!TIP]
 > Before installing new drivers, make sure to remove older versions of CUDA Toolkit and Nvidia drivers:
@@ -105,10 +108,14 @@ Verify that nvidia-smi command is working on the **worker** node.
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/c9451823-4e60-4989-8c90-3bd34dac640d)
 
 
+-**Build a container based driver(option 2)**
+Please follow steps as described in [Creating a container based Nvidia GPU driver](https://github.com/alex-isv/solutions-engineering/blob/main/Nvidia/Nvidia_GPU-Operator_in_SUSE-Rancher_stack/Building%20_Nvidia_GPU_driver_container_image.md#if-building-a-gpu-driver-container-for-the-nvidia-gpu-operator-use-the-following-steps).
 
 
+## Install a gpu-operator with a helm command:
 
-## Install a gpu-operator with helm command:
+> [!NOTE]
+>  **If gpu driver was installed locally on the worker node use option `--set driver.enabled=false`**
 
 ````
 helm install -n gpu-operator \
@@ -131,14 +138,35 @@ helm install -n gpu-operator \
   --set-string validator.driver.env[0].value=true
 ````
 
+
 > [!NOTE]
-> In this particular scenario GPU drivers installed on the worker node, so `driver.enabled` value should be set to `false` when installing with helm.
-> If using a custom container driver for SLE based system on the local or public registry, review steps [Building the container image](https://documentation.suse.com/trd/kubernetes/pdf/gs_rke2-slebci_nvidia-gpu-operator_en.pdf).
-> 
-> Please be aware, that steps for building a container based driver were tested for specific versions, so any <ins>new versions</ins> of gpu-operator, container toolkit or Go, should be re-validated again.
+>  **If driver was build as a container based use a custom registry `--set driver.repository=<custom-registry>`**
+
+````
+helm install -n gpu-operator \
+  --generate-name \
+  --wait \
+  --create-namespace \
+	nvidia/gpu-operator \
+  --set driver.repository=ghcr.io/alex-isv \
+  --set operator.defaultRuntime=containerd \
+  --set toolkit.env[0].name=CONTAINERD_CONFIG \
+  --set toolkit.env[0].value=/var/lib/rancher/rke2/agent/etc/containerd/config.toml \
+  --set toolkit.env[1].name=CONTAINERD_SOCKET \
+  --set toolkit.env[1].value=/run/k3s/containerd/containerd.sock \
+  --set toolkit.env[2].name=CONTAINERD_RUNTIME_CLASS \
+  --set toolkit.env[2].value=nvidia \
+  --set toolkit.env[3].name=CONTAINERD_SET_AS_DEFAULT \
+  --set-string toolkit.env[3].value=true \
+  --set toolkit.version=v1.15.0-ubi8  \
+  --set validator.driver.env[0].name=DISABLE_DEV_CHAR_SYMLINK_CREATION \
+  --set-string validator.driver.env[0].value=true
+````
+
+In the above example `ghcr.io/alex-isv` is a custom test container registry with a prebuilt driver version `550.54.15`.
 
 
-Verify that gpu-operator was installed:
+- Verify that a gpu-operator was installed:
 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/d0577239-88f1-44b5-94d7-71509b958a58)
 
