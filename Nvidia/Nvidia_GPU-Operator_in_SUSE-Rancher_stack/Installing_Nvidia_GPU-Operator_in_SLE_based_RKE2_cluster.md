@@ -1,4 +1,4 @@
-# Deploying Nvidia GPU-Operator in SUSE based RKE2 cluster
+# Deploying Nvidia GPU-Operator in SLES based RKE2 cluster
 
 ## Purpose
 These steps outlines installation of Nvidia gpu-operator in SUSE Kubernetes cluster with SLES based worker nodes and a Rancher server for easy deployment and management.
