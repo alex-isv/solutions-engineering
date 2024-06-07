@@ -62,21 +62,32 @@ If pushing directly to the private or public registry, the following commands ca
 In the below example the <ins>ghcr.io</ins> is used as a public container registry.
 ````
 
-podman build -t ghcr.io/alex-isv/nvidia-gpu-driver-sle15sp5-550.54.15:latest \
+podman build -t ghcr.io/alex-isv/nvidia-sle15sp5-550.54.15 \
 --build-arg DRIVER_VERSION="550.54.15" \
 --build-arg CUDA_VERSION="12.4.1" \
 --build-arg SLES_VERSION="15.5" \
-    .
+.
+
 ````
+Tag with the following command:
+
 ````
-podman push ghcr.io/alex-isv/nvidia-gpu-driver-sle15sp5-550.54.15:latest
+podman tag ghcr.io/alex-isv/nvidia-sle15sp5-550.54.15:latest ghcr.io/alex-isv/driver:550.54.15-sles15.5
+
+````
+
+Push to the registry
+````
+podman push ghcr.io/alex-isv/nvidia-sle15sp5-550.54.15:latest && podman push ghcr.io/alex-isv/driver:550.54.15-sles15.5
 ````
 
 Check if the container is listed on the registry.
 
 ````
-podman search --list-tags ghcr.io/alex-isv/nvidia-gpu-driver-sle15sp5-550.54.15:latest
+podman search --list-tags ghcr.io/alex-isv/driver
 ````
+![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/694a8968-97b1-42a3-ad81-7a67e9d8a1ac)
+
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/45d5c214-a136-4301-abad-9ca96360702b)
 
 - Running a container locally.
