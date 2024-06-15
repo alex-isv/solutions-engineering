@@ -50,6 +50,15 @@ podman images
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/d79609e7-13c5-4197-89a2-d54d295357cb)
 
 
+Make sure that
+
+````
+sudo lsmod | grep nvidia
+````
+is not returning any values.
+If anything is listed, remove nvidia with a below commands and reboot the server.
+
+
 > [!TIP]
 > Before installing new drivers, make sure to remove older versions of CUDA Toolkit and Nvidia drivers:
 ````
