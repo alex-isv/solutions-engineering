@@ -29,6 +29,7 @@ RUN zypper --non-interactive up
 RUN zypper --no-gpg-checks -n refresh
 RUN zypper --no-gpg-checks --gpg-auto-import-keys -n refresh
 RUN zypper addrepo https://download.opensuse.org/repositories/home:cabelo:intel/15.5/home:cabelo:intel.repo
+# The above repo is not certified by SUSE and is from openSUSE community based repo. Use just for the testing purpose.
 RUN zypper --no-gpg-checks -n refresh
 RUN SUSEConnect -p PackageHub/15.5/x86_64
 RUN zypper --no-gpg-checks -n refresh
