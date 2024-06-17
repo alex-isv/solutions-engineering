@@ -2,7 +2,7 @@
 
 > [!NOTE]
 > This guidance is not providing any support.
-> Steps are publicly available from Nvidia Github page [gpu-driver-container for sle15](https://github.com/NVIDIA/gpu-driver-container/tree/main/sle15), but modified with the latest versions.
+> Steps are publicly available from Nvidia Github page [gpu-driver-container for sle15](https://github.com/NVIDIA/gpu-driver-container/tree/main/sle15), but modified with the latest versions. These steps were validated for Nvidia GPU A100 and H100.
 >
 > 
 ## Purpose
