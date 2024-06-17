@@ -155,17 +155,23 @@ Download .raw.xz image (arm64 version) of SLES 15sp6 or Micro 6.0. (The official
 
 <ins>To make a .bfb file</ins> download a custom script ./mk-slemicro-bfb.sh (attached in the SLES directory of the current Github page) and run it as:
 
+````
 *./mk-slemicro-bfb-v2.sh ./SLES15-SP6-Minimal-Image.aarch64-RaspberryPi-RC1-202403.raw.xz* (or Micro 6.0 raw.xz image).
+````
 
 <ins>To install a *.bfb* image on DPU</ins> use the following command :
 
+````
 *./bfb-install -b ./SLES15-SP6-Minimal-Image.aarch64-RaspberryPi-RC1-202403.raw.bfb -r rshim0* (or Micro 6.0 bfb file).
+````
 
 From the 2nd terminal start minicom.
 
-Wait until sh-4.4# shell appear and enter the following command:
+Wait until `sh-4.4#` shell appear and enter the following command:
 
+````
 sh-4.4# *dd bs=4M if=/OS.raw of=/dev/nvme0n1 iflag=fullblock oflag=sync*
+````
 
 Once the DPU rebooted, on boot press ‘e’ and replace *console=ttyS0* to *console=hvc0* in the grub.
 
