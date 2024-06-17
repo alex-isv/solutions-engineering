@@ -146,7 +146,7 @@ to push an image to DPU.
 >install drivers with:
 >````
 >./mlnxofedinstall
-````
+>````
 
 ## Using Nvidia BlueField-3 with SLE Micro 6.0 or SLES 15 sp6 ##
 
