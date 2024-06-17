@@ -10,7 +10,9 @@ These steps outlines installation of Nvidia gpu-operator in SUSE Kubernetes clus
 
 <ins> Setup environment </ins>
 
-In this test SUSE HARVESTER cluster 1.2.1 with SLE15.5 VMs was used as a base RKE2 cluster and physical SLES based worker nodes with Nvidia GPU installed.
+Either VMs or physical nodes can be used for the cluster.
+
+In this test SUSE HARVESTER cluster 1.2.1 with SLE15.5 VMs was used as a base RKE2 cluster and physical SLES based systems with Nvidia GPU installed as worker nodes.
 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/9dfe7c00-8055-4290-8365-d38fbe8cb03f)
 
