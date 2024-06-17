@@ -62,7 +62,7 @@ sudo zypper ar http://developer.download.nvidia.com/compute/cuda/repos/$distribu
 3. If not already done, activate the SUSE Package Hub with SUSEConnect.
     
 ````
-sudo SUSEConnect  -p PackageHub/15.4/x86_64
+sudo SUSEConnect  -p PackageHub/15.5/x86_64
 ````
 4. Update the repository cache.
     
