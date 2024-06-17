@@ -28,7 +28,7 @@ Open a Dockerfile and set <INS>CUDA_VERSION</ins> to 12.4 and <ins>golang</ins> 
 > As of June 2024 the latest version of the available driver was used.
 > Please validate a driver and a CUDA version during your deployment as they can be different.
 > 
-> The kernel validated in this setup is <u>*5.14.21-150500.55.62-default*</u>.
+> The kernel validated in this setup is **_5.14.21-150500.55.62-default_**.
 > Newer kernel versions currently are not validated.
 
 ````
