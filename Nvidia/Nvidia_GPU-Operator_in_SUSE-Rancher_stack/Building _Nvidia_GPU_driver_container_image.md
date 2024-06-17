@@ -136,5 +136,12 @@ podman search --list-tags ghcr.io/alex-isv/driver
 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/45d5c214-a136-4301-abad-9ca96360702b)
 
+For the testing purpose a pre-build container driver version 550.54.15 is available to try from:
+
+````
+podman pull ghcr.io/alex-isv/driver:550.54.15-sles15.5
+````
+
+
 To deploy Nvidia gpu-operator follow [Deploying Nvidia GPU-Operator in SLES based cluster](https://github.com/alex-isv/solutions-engineering/blob/main/Nvidia/Nvidia_GPU-Operator_in_SUSE-Rancher_stack/Installing_Nvidia_GPU-Operator_in_SLE_based_RKE2_cluster.md#deploying-nvidia-gpu-operator-in-sles-based-rke2-cluster).
 
