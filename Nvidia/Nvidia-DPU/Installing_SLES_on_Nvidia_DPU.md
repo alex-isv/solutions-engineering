@@ -99,14 +99,14 @@ zypper in podman
 ````
 
 
-To build a .bfb image run  
+To build a .bfb image run:
 
 ````
 ./bfb-build
 ````
 that will create an image in the */tmp/distro/version.pid* directory
 
-To install an image to DPU run
+To install an image on DPU run:
 
 ````
  echo "SW_RESET 1" > /dev/rshim0/misc
