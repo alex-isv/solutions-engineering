@@ -176,7 +176,6 @@ From the 2nd terminal start minicom.
 
 Wait until `sh-4.4#` shell appear and enter the following command:
 
-`sh-4.4#`
 
 ````
 dd bs=4M if=/OS.raw of=/dev/nvme0n1 iflag=fullblock oflag=sync
