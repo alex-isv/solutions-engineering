@@ -29,7 +29,7 @@ Open a Dockerfile and set <INS>CUDA_VERSION</ins> to 12.4 and <ins>golang</ins> 
 > Please validate a driver and a CUDA version during your deployment as they can be different.
 > 
 > The kernel validated in this setup is **_5.14.21-150500.55.62-default_**.
-> Newer kernel versions currently are not validated.
+> Other kernel versions currently are not validated due to the `nvidia-driver` script issue.
 
 ````
 podman build -t nvidia-gpu-driver-sle15sp5-550.54.15 \
