@@ -29,7 +29,11 @@ Open a Dockerfile and set <INS>CUDA_VERSION</ins> to 12.4 and <ins>golang</ins> 
 > Please validate a driver and a CUDA version during your deployment as they can be different.
 > 
 > The kernel validated in this setup is **_5.14.21-150500.55.62-default_**.
-> Other kernel versions currently are not validated due to the `nvidia-driver` script issue.
+> Due to the `nvidia-driver` script issue as described in [sle15/nvidia-driver fails to parse correct kernel version](https://gitlab.com/nvidia/container-images/driver/-/issues/52). Use the following workaround:
+> ````
+if grep -q 'grep "Basesystem"' nvidia-driver; then   echo "The change has already been made.";   else   sed -i 's/\(grep \$version_without_flavor \)/\1| grep "Basesystem" /' nvidia-driver;   echo "The change has been applied."; fi
+> ````
+
 
 ````
 podman build -t nvidia-gpu-driver-sle15sp5-550.54.15 \
