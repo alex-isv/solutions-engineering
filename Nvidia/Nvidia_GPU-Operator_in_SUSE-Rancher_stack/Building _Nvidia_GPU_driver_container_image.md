@@ -22,14 +22,14 @@ Open a Dockerfile and set <INS>CUDA_VERSION</ins> to 12.4 and <ins>golang</ins> 
 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/5df93be4-76cd-4cef-aff8-a490fbd9d12d)
 
-- Build a local driver
+
 
 > [!NOTE]
 > As of June 2024 the latest version of the available driver was used.
 > Please validate a driver and a CUDA version during your deployment as they can be different.
 > 
 > The kernel validated in this setup is **_5.14.21-150500.55.62-default_**.
-> Due to the `nvidia-driver` script issue as described in [sle15/nvidia-driver fails to parse correct kernel version](https://gitlab.com/nvidia/container-images/driver/-/issues/52) the workaround should be used.
+> Due to the `nvidia-driver` script issue as described in [sle15/nvidia-driver fails to parse correct kernel version](https://gitlab.com/nvidia/container-images/driver/-/issues/52) the workaround should be used to update the `nvidia-driver` script.
 > 
 > Run the following command:
 >  ````
@@ -37,6 +37,7 @@ Open a Dockerfile and set <INS>CUDA_VERSION</ins> to 12.4 and <ins>golang</ins> 
 >  
 > ````
 
+- Build a local driver
 
 ````
 podman build -t nvidia-gpu-driver-sle15sp5-550.54.15 \
