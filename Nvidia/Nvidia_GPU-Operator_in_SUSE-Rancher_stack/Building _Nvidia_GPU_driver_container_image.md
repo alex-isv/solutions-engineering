@@ -15,7 +15,7 @@ For more details, please review section [Building the container image](https://d
 git clone https://github.com/NVIDIA/gpu-driver-container.git && cd gpu-driver-container/sle15/
 ````
 
-Open a Dockerfile and set <INS>CUDA_VERSION</ins> to 12.4 and <ins>golang</ins> version to 1.22 
+Open a Dockerfile and set <ins>golang</ins> version to 1.22 
 > [!NOTE]
 > Check the latest available version for CUDA and golang.
 >  For this particular example CUDA 12.4.1 with golang 1.22 and a driver version 550.54.15 were validated with SLES15 sp5.
