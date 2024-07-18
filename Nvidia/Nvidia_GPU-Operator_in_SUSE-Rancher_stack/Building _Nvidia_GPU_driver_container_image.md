@@ -9,6 +9,23 @@
 These steps outlines building process of the container based Nvidia GPU driver for SUSE Linux Enterprise Server in the large Kubernetes environment.
 For more details, please review section [Building the container image](https://documentation.suse.com/trd/kubernetes/pdf/gs_rke2-slebci_nvidia-gpu-operator_en.pdf#%5B%7B%22num%22%3A80%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C63.779%2C450.553%2Cnull%5D)
 
+- Prerequisites:
+  Install the folowing on the host:
+  
+````
+sudo zypper install \
+kernel-firmware-nvidia \
+kernel-firmware-nvidia-gspx-G06 \
+libnvidia-container-tools \
+libnvidia-container1 \
+nvidia-container-runtime \
+sle-module-NVIDIA-compute-release
+````
+
+> [!NOTE]
+> Make sure that the kernel-firmware-nvidia version is matching the driver's version.
+> For ex. if installing a driver version 550.90.07, you need to install kernel-firmware-nvidia-gspx-G06-550.90.07-150500.11.29.1
+
 - Clone the NVIDIA driver GitHub repository and change to the driver/sle15 directory
 
 ````
