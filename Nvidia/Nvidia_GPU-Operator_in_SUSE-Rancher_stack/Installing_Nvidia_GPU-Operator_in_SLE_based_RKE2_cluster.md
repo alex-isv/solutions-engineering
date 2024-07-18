@@ -152,7 +152,7 @@ helm install -n gpu-operator \
   --generate-name \
   --wait \
   --create-namespace \
-  --version=
+  --version=23.9.1 \
     nvidia/gpu-operator \
   --set driver.repository=ghcr.io/alex-isv \
   --set driver.version=550.54.15 \
