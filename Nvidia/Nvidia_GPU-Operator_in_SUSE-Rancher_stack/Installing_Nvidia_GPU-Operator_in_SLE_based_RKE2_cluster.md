@@ -154,6 +154,7 @@ helm install -n gpu-operator \
   --create-namespace \
 	nvidia/gpu-operator \
   --set driver.repository=ghcr.io/alex-isv \
+  --set driver.version=550.54.15 \
   --set operator.defaultRuntime=containerd \
   --set toolkit.env[0].name=CONTAINERD_CONFIG \
   --set toolkit.env[0].value=/var/lib/rancher/rke2/agent/etc/containerd/config.toml \
