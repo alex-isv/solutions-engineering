@@ -152,7 +152,8 @@ helm install -n gpu-operator \
   --generate-name \
   --wait \
   --create-namespace \
-	nvidia/gpu-operator \
+  --version=
+    nvidia/gpu-operator \
   --set driver.repository=ghcr.io/alex-isv \
   --set driver.version=550.54.15 \
   --set operator.defaultRuntime=containerd \
