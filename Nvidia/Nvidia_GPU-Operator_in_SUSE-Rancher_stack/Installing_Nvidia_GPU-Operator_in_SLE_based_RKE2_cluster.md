@@ -29,7 +29,7 @@ You can also integrate a Rancher server with a Harvester cluster for easy cluste
 
 There are two option available on how a gpu driver can be installed.
 1. Using a *locally* installed driver on the worker node suitable for small cluster with a few worker nodes.
-2. For larger clusters with multiple worker nodes a *container based* GPU driver should be used.
+2. For larger clusters with multiple worker nodes a *container based* GPU driver should be used.(Currently not supported by Nvidia)
    
 - **Install a GPU driver on the worker node (option 1)**
 
@@ -112,7 +112,7 @@ Verify that nvidia-smi command is working on the **worker** node.
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/c9451823-4e60-4989-8c90-3bd34dac640d)
 
 
-- **Build a container based driver(option 2)**
+- **Build a container based driver(option 2)** (Currently not supported by Nvidia)
   
 Please follow steps as described in [Creating a container based Nvidia GPU driver](https://github.com/alex-isv/solutions-engineering/blob/main/Nvidia/Nvidia_GPU-Operator_in_SUSE-Rancher_stack/Building%20_Nvidia_GPU_driver_container_image.md#if-building-a-gpu-driver-container-for-the-nvidia-gpu-operator-use-the-following-steps).
 
