@@ -145,7 +145,7 @@ helm install -n gpu-operator \
 
 
 > [!NOTE]
->  **If driver was build as a container based use a custom registry `--set driver.repository=<custom-registry>`**
+>  **If driver was build as a container based use a custom registry `--set driver.repository=<custom-registry>`** (Currently not supported)
 
 ````
 helm install -n gpu-operator \
