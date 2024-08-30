@@ -36,6 +36,10 @@ sudo zypper install amdgpu-dkms
 sudo zypper install rocm
 ````
 Reboot a worker node.
+
+> [!NOTE]
+> Secure boot should be disabled from BIOS.
+> 
 Verify ROCm installation by running
 ````
 ./clinfo
