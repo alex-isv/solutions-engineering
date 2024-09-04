@@ -22,7 +22,7 @@ Install [ROCm and AMD GPU device plugin](https://github.com/alex-isv/solutions-e
 
 For more details review [AMD GPU device plugin for Kubernetes](https://github.com/ROCm/k8s-device-plugin#amd-gpu-device-plugin-for-kubernetes).
 
-Install a Local Path Provisioner as described [here](https://github.com/rancher/local-path-provisioner)
+If planning to use a local storage, install a Local Path Provisioner as described [here](https://github.com/rancher/local-path-provisioner)
 
 ````
 kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/v0.0.29/deploy/local-path-storage.yaml
@@ -108,7 +108,8 @@ service:
 tolerations: []
 topologySpreadConstraints: []
 ````
-Modify according to your setup.
+Modify according to your setup. For the storageClass, longhorn can be used as well.
+
 
 Check deployed pods from Workloads:
 
