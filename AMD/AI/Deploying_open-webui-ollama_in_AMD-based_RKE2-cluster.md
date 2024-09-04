@@ -108,7 +108,7 @@ service:
 tolerations: []
 topologySpreadConstraints: []
 ````
-Modify according to your setup. For the storageClass, longhorn can be used as well.
+Modify according to your setup. For the storageClass, longhorn can be used as well for which a new StorageClass should be created in advanced and set to default.
 
 
 Check deployed pods from Workloads:
