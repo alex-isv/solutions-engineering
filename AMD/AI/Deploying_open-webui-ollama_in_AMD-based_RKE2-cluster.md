@@ -32,7 +32,7 @@ kubectl patch storageclass local-path -p '{"metadata": {"annotations":{"storagec
 ````
 
 
-## Install WebUI with Helm
+## Install Open WebUI with Helm
 
 Add a new repository from Rancher Repositories and call it openwebui with url: https://helm.openwebui.com/ 
 
