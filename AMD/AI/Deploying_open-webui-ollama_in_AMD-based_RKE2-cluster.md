@@ -18,7 +18,7 @@ In the above example, the RKE2 5 nodes cluster is shown from the Rancher console
 
   
 
-Install [ROCm and AMD GPU device plugin](https://github.com/alex-isv/solutions-engineering/blob/main/AMD/AMD-GPU-deployment-in-RKE2-cluster/Deploying-AMD-GPU-in-SUSE-Kubernetes-stack.md#install-rocm-on-the-worker-gpu-node)
+Install [ROCm and AMD GPU device plugin](https://github.com/alex-isv/solutions-engineering/blob/main/AMD/AMD-GPU-deployment-in-RKE2-cluster/Deploying-AMD-GPU-in-SUSE-Kubernetes-stack.md#install-rocm-on-the-worker-gpu-node).
 
 For more details review [AMD GPU device plugin for Kubernetes](https://github.com/ROCm/k8s-device-plugin#amd-gpu-device-plugin-for-kubernetes).
 
