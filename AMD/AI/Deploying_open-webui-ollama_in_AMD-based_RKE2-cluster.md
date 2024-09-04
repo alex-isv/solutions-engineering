@@ -1,4 +1,4 @@
-# Installing WebUI with AMD + ROCm for Ollama in SUSE/Rancher RKE2 Kubernetes cluster
+# Installing Open WebUI with AMD + ROCm for Ollama in SUSE/Rancher RKE2 Kubernetes cluster
 
 ## Purpose 
 These steps outlines installation of Open WebUI + Ollama using AMD GPU in SUSE RKE2 Kubernetes cluster and managed by a Rancher server.
