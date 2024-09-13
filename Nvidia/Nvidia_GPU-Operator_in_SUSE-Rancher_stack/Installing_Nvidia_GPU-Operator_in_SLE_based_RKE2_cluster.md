@@ -105,7 +105,7 @@ sudo reboot
 
 For more details on the available distros review - (https://developer.download.nvidia.com/compute/cuda/repos/sles15/)
 
-<u>As an alternative</u> you can use open-source .run version:
+<ins>As an alternative</ins> you can use open-source .run version:
 
 Download .run file from:
 
