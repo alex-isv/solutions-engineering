@@ -105,6 +105,18 @@ sudo reboot
 
 For more details on the available distros review - (https://developer.download.nvidia.com/compute/cuda/repos/sles15/)
 
+As an alternative you can use open-source .run version:
+
+Download .run file from:
+
+````
+wget https://download.nvidia.com/XFree86/Linux-x86_64/550.90.07/NVIDIA-Linux-x86_64-550.90.07.run
+````
+
+Install with:
+````
+sh NVIDIA-Linux-x86_64-550.90.07.run -m=kernel-open
+````
 
 Verify that nvidia-smi command is working on the **worker** node.
 
