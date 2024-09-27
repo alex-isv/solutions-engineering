@@ -146,9 +146,9 @@ Add listed IP to your local machine /etc/hosts:
 
 ## Using AMD CPUs with Ollama
 
-If running Ollama just on CPUs, AMD EPYC CPUs can provide very good results.
+Ollama can also be run on modern CPUs if GPU is not available.
 
-In the below test example 2 AMD EPYC 7763 64-Core Processors were used with 64 phicisal cores each. (256 total threads)
+In the below test example a worker node with 2 AMD EPYC 7763 64-Core processors with 64 phicisal cores each were used with llama3.1 model. (256 total threads)
 
 >[!NOTE]
 > In order to use just CPUs, you need to remove or disable a GPU in the mentioned Helm chart.
