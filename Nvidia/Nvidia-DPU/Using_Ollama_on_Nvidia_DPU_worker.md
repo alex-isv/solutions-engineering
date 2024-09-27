@@ -10,7 +10,7 @@
 - Nvidia BluedField-3 as a worker node (Micro 6.0) 16 arm cores total.
 
 
-Sample performance with default num_thread = 2 Ollama.
+Sample performance with default num_thread = 2 (Ollama) and llama3 model.
 
 ![image](https://github.com/user-attachments/assets/38e80e01-6e2f-487d-b14e-b18dfd9a4cc5)
 
