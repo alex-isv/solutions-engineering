@@ -14,3 +14,7 @@ Sample performance with default num_thread = 2 (Ollama) and llama3 model.
 
 ![image](https://github.com/user-attachments/assets/38e80e01-6e2f-487d-b14e-b18dfd9a4cc5)
 
+
+
+![image](https://github.com/user-attachments/assets/56d34d66-b553-45bf-b42f-2aba9e25011a)
+
