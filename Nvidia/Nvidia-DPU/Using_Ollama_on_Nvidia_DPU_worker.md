@@ -23,3 +23,5 @@ Sample performance with 12 threads assigned and llama3.1 model.
 
 ![image](https://github.com/user-attachments/assets/ab4580da-1fae-4f79-8502-4f564580ced5)
 
+![image](https://github.com/user-attachments/assets/1717823f-2526-4687-8cb9-a3ff753932bb)
+
