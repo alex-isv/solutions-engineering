@@ -1,4 +1,4 @@
-# Utilization of Nvidia BlueField 3 arm cores with Ollama-OpenWebUi.
+# Utilization of Nvidia BlueField-3 arm cores with Ollama-OpenWebUi.
 
 > [!NOTE]
 > This is not the official reference. Used only as a proof of concept.
