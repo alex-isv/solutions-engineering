@@ -2,6 +2,7 @@
 
 > [!NOTE]
 > This is not the official reference. Used only as a proof of concept.
+> Nvidia's DPUs are not designed for that purpose.
 
 <ins>Setup environment:</ins>
 
