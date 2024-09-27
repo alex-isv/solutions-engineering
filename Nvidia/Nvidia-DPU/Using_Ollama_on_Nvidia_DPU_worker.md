@@ -19,6 +19,7 @@ Sample performance with num_thread (Ollama) set to 12 and llama3.1 model.
 ![image](https://github.com/user-attachments/assets/fb25e01d-cac2-46ec-a96b-0837f614e165)
 
 
-![image](https://github.com/user-attachments/assets/4acf6bdd-d2a4-4882-ac53-b2bfce53a1a2)
+![image](https://github.com/user-attachments/assets/d4c98960-46d6-4582-94c2-dfcc780926e5)
+
 
 
