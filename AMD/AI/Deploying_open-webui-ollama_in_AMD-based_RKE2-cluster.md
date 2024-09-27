@@ -144,6 +144,22 @@ Add listed IP to your local machine /etc/hosts:
 
 ![image](https://github.com/user-attachments/assets/b3a77225-a2fb-4630-b76e-5ccfe4118e77)
 
+## Using AMD CPUs with Ollama
+
+If running Ollama just on CPUs, AMD EPYC CPUs can provide very good results.
+
+In the below test example 2 AMD EPYC 7763 64-Core Processors were used with 64 phicisal cores each. (256 total threads)
+
+>[!NOTE] In order to use just CPUs, you need to remove or disable a GPU in the mentioned Helm chart.
+
+ In the below CPU utulization example llama3 model was used on just CPUs
+
+![image](https://github.com/user-attachments/assets/9707638c-8057-4d26-854c-62daa86f58bb)
+
+![image](https://github.com/user-attachments/assets/2b26e7d2-5881-4331-8e9e-a6f3c586f626)
+
+
+
 
 
 
