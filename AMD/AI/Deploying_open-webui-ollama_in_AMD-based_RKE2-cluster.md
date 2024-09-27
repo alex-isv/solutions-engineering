@@ -155,9 +155,9 @@ In the below test example a worker node with 2 AMD EPYC 7763 64-Core processors 
 
  In the below CPU utilization example llama3 model was used on just CPUs
 
-![image](https://github.com/user-attachments/assets/9707638c-8057-4d26-854c-62daa86f58bb)
+![image](https://github.com/user-attachments/assets/00ab7508-1d7b-4c3b-993f-83001f1e01a3)
 
-![image](https://github.com/user-attachments/assets/2b26e7d2-5881-4331-8e9e-a6f3c586f626)
+![image](https://github.com/user-attachments/assets/601ca7bc-0a3d-442a-bf5b-b15974269eea)
 
 
 
