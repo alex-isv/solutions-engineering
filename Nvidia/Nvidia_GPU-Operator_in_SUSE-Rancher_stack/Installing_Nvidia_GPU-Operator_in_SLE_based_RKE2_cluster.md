@@ -132,7 +132,7 @@ Please follow steps as described in [Creating a container based Nvidia GPU drive
 ## Install a gpu-operator with a helm command:
 
 > [!NOTE]
->  **If gpu driver was installed locally on the worker node use option `--set driver.enabled=false`**
+>  **If a gpu driver was installed locally on the worker node use option `--set driver.enabled=false`**
 
 ````
 helm install -n gpu-operator \
@@ -157,7 +157,7 @@ helm install -n gpu-operator \
 
 
 > [!NOTE]
->  **If driver was build as a container based use a custom registry `--set driver.repository=<custom-registry>`** (Currently not supported)
+>  **If a driver was build as a container based use a custom registry `--set driver.repository=<custom-registry>`** (Currently not supported)
 
 ````
 helm install -n gpu-operator \
