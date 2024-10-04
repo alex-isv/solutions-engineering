@@ -107,6 +107,7 @@ Check deployed pods from Workloads:
 
 
 Edit open-webui StatefulSets:
+
 ![image](https://github.com/user-attachments/assets/32262025-b471-469d-86ca-dc0c33034b67)
 
 and add WEBUI_AUTH with FALSE value to access without authentication.
@@ -115,20 +116,13 @@ and add WEBUI_AUTH with FALSE value to access without authentication.
 
 Verify nginx url from Ingresses:
 
-![image](https://github.com/user-attachments/assets/06e2e666-303a-4686-9b6d-b18966d3dbbe)
+![image](https://github.com/user-attachments/assets/783d8f35-6b01-42f2-aaf8-871df87ad21e)
 
-and check assigned IP with:
-````
-kubectl -n openwebui get ing
-````
 
-![image](https://github.com/user-attachments/assets/35f9bd3b-971b-4c3a-bb68-4f52595d6ccc)
+Add your worker's IP to your local machine /etc/hosts:
 
-In my case I have 2 nodes with Worker roles available on the cluster.
-
-Add listed IP to your local machine /etc/hosts:
-
-<ins> 192.168.150.115 ollama.isv.suse ollama </ins>
+<ins> 192.168.150.92 openwebui.isv.suse ollama </ins>
 
 
 ## Access Open WebUI from your browser and test Ollama
+
