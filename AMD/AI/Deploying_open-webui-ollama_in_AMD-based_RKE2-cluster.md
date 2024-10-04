@@ -7,7 +7,7 @@ These steps outlines installation of Open WebUI + Ollama using AMD GPU in SUSE R
 
 <ins> Setup environment </ins>
 
-![image](https://github.com/user-attachments/assets/3bdf73a2-5507-4669-9cdb-81425f7dc982)
+![image](https://github.com/user-attachments/assets/78a31357-c061-47f3-a040-931567c9235b)
 
 
 - SL Micro 6.0 based RKE2 cluster with a Rancher manager. Please review [Deploying RKE2 cluster](https://github.com/alex-isv/solutions-engineering/blob/main/Rancher/RKE2_cluster_deployment.md#deploying-rke2-cluster-in-sles-based-environment ) guide on how to install RKE2 cluster.
