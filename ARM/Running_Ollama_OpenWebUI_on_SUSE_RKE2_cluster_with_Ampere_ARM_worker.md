@@ -128,7 +128,7 @@ Add your worker's IP to your local machine /etc/hosts:
 
 ![image](https://github.com/user-attachments/assets/5c457637-a927-4737-9915-35942cc6383e)
 
-In the above example, llama2 model was used with 64 threads defined.
+In the above example, llama3 model was used with 64 threads defined.
 
 ![image](https://github.com/user-attachments/assets/48750a68-5adc-49af-b8cd-5e5d333a93f1)
 
