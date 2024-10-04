@@ -5,7 +5,7 @@
 <ins> Setup environment </ins>
 
 
-- Harvester 1.3.1 server running on GIGABYTE Ampere Altra ARMv8 80 cores.( For production environment it's recommended to have a cluster of at least 3 Harvester nodes)
+- Harvester 1.3.1 server running on GIGABYTE Ampere Altra ARMv8 80 cores. (For the production environment it's recommended to have a cluster with at least 3 Harvester nodes)
 - Micro 6.0 ARM based VMs as part of the RKE2 cluster.
 - 2nd GIGABYTE Ampere Altra as a worker node (SLES 15.6 ARM based).
 
