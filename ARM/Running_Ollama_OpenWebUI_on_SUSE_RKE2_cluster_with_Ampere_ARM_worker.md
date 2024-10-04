@@ -11,3 +11,6 @@
 
 ![image](https://github.com/user-attachments/assets/bb3253d5-59ab-4584-af31-37ecb4eea1d9)
 
+- SL Micro 6.0 based RKE2 cluster with a Rancher manager. Please review [Deploying RKE2 cluster](https://github.com/alex-isv/solutions-engineering/blob/main/Rancher/RKE2_cluster_deployment.md#deploying-rke2-cluster-in-sles-based-environment ) guide on how to install RKE2 cluster.
+
+  
