@@ -103,7 +103,8 @@ Modify according to your setup. For the storageClass, longhorn can be used as we
 
 Check deployed pods from Workloads:
 
-![image](https://github.com/user-attachments/assets/0ca5254f-fcb5-447d-bb47-e8eda9c16ab3)
+![image](https://github.com/user-attachments/assets/8762ae26-5589-4533-878c-2980abba71c3)
+
 
 Edit open-webui StatefulSets:
 ![image](https://github.com/user-attachments/assets/32262025-b471-469d-86ca-dc0c33034b67)
