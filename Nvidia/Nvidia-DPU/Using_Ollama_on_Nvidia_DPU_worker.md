@@ -6,6 +6,9 @@
 
 <ins>Setup environment:</ins>
 
+![image](https://github.com/user-attachments/assets/e85c5fe7-6877-4c49-8048-b0fbfc2df1e7)
+
+
 - RKE2 cluster with ARM based nodes (SLE Micro 6.0 based) managed by a Rancher server running on Nvidia BlueField-2 (Micro 6.0 Arm).
   
   ( Please review [Deploying RKE2 cluster](https://github.com/alex-isv/solutions-engineering/blob/main/Rancher/RKE2_cluster_deployment.md#deploying-rke2-cluster-in-sles-based-environment ) guide on how to install RKE2 cluster.)
