@@ -12,6 +12,9 @@
 
 - Nvidia BluedField-3 as a worker node (Micro 6.0) 16 arm cores total.
 
+## Install Open WebUI with Helm
+
+Review steps on how to install [Ollama with OpenWebUI](https://github.com/alex-isv/solutions-engineering/blob/main/ARM/Running_Ollama_OpenWebUI_on_SUSE_RKE2_cluster_with_Ampere_ARM_worker.md#install-open-webui-with-helm)
 
 Sample performance with num_thread (Ollama) set to 12 and llama3.1 model.
 
