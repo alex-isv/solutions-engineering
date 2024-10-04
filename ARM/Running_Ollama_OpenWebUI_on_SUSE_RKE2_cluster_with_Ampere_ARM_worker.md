@@ -35,7 +35,7 @@ Click Web-UI helm chart.
 
 ![image](https://github.com/user-attachments/assets/f78fabb8-293a-49c6-a2b3-e71d4b82764c)
 
-Create a new namespace called ollama.
+Create a new namespace called openwebui.
 Customize Helm with the following values:
 
 ````
@@ -56,7 +56,7 @@ ingress:
   class: nginx
   enabled: true
   existingSecret: ''
-  host: ollama.isv.suse
+  host: openwebui.isv.suse
   tls: false
 nameOverride: ''
 nodeSelector: {}
@@ -118,7 +118,7 @@ Verify nginx url from Ingresses:
 
 and check assigned IP with:
 ````
-kubectl -n ollama get ing
+kubectl -n openwebui get ing
 ````
 
 ![image](https://github.com/user-attachments/assets/35f9bd3b-971b-4c3a-bb68-4f52595d6ccc)
