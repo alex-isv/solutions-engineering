@@ -124,8 +124,8 @@ to push an image to DPU.
 
 
 > [!NOTE]
-> These steps validated only for BlueField-2.
-> For BlueField-3 this installation method should become available with SLES SP6 container image.
+> These steps validated for BlueField-2 and BlueField-3 with SLES SP6 container image.
+>  
 
 
 
