@@ -1,4 +1,4 @@
-# Installing SLES on Nvidia DPU 
+# Installing SLES or SL Micro on Nvidia DPU 
 
 **EXPERIMENTAL, PROOF OF CONCEPT. Don't use as the official reference**
 
