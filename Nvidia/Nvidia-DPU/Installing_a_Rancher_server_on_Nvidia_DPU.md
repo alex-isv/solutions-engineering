@@ -56,6 +56,10 @@ From the *Registration* tab provide a proper value for the node and roles which 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/397011ae-90b8-4de2-ad6e-4eaefa2a4424)
 
 
+> [!NOTE]
+> Public IP is the external management interface and a Private IP is the internal fast interface.
+> 
+
 Copy a registration command and paste to the terminal of the new node.
 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/35b382ec-ccb1-4cd7-9d25-875e01396264)
