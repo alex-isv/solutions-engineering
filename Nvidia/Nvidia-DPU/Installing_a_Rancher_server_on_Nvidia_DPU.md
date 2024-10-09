@@ -1,4 +1,4 @@
-# Installing a Rancher server on NVIDIA BlueField device #
+# Installing a Rancher server on NVIDIA BlueField device and managing RKE2 cluster#
 
 <ins>*Proof of concept. Don't use as an official reference*</ins>
 
