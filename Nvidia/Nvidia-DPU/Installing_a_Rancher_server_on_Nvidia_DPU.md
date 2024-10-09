@@ -10,8 +10,7 @@ Install SLES or MICRO on Nvidia BlueField device as described [here](https://git
 
 
 > [!NOTE]
-> Rancher for ARM64 is the experimental version and is not officially supported.
-> Verify a support option with a SUSE/RANCHER team.
+> Verify a support option for Rancher ARM64 with a SUSE/RANCHER team.
 
 Check releases > (https://github.com/k3s-io/k3s/releases) and make sure that k3s version supports a Rancher server release. 
 
