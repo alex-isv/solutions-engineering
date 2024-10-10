@@ -88,7 +88,8 @@ PATH=$PATH:/usr/bin
 echo 'V' > /dev/watchdog
 xz -d OS.raw.xz
 
-#BF3 has nvme
+# BF3 has nvme
+
 if [ -b /dev/nvme0n1 ]; then
 	dd bs=4M if=/OS.raw of=/dev/nvme0n1 iflag=fullblock oflag=sync
 else
