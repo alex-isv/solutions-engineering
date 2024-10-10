@@ -93,7 +93,8 @@ xz -d OS.raw.xz
 if [ -b /dev/nvme0n1 ]; then
 	dd bs=4M if=/OS.raw of=/dev/nvme0n1 iflag=fullblock oflag=sync
 else
-dd bs=4M if=/OS.raw of=/dev/mmcblk0 iflag=fullblock oflag=sync
+	dd bs=4M if=/OS.raw of=/dev/mmcblk0 iflag=fullblock oflag=sync
+fi
 sync
 echo "Rebooting ..."
 reboot -f
