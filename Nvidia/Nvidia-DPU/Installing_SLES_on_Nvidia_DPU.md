@@ -157,25 +157,32 @@ to push an image to DPU.
 ## Using Nvidia BlueField-3 with SLE Micro 6.0 or SLES 15 sp6 ##
 
 >[!NOTE]
->BlueField-3 requires additional eMMC drivers which become available with SLES SP6 or Micro 6.0.
->For SLE Micro another installation method should be used with a raw image and a custom script.
+> For SLE Micro another installation method should be used with a raw image and a custom script.
+>
 
-Download .raw.xz image (arm64 version) of SLES 15sp6 or Micro 6.0.
+Download .raw.xz image (arm64 version) of Micro 6.0.
 
 <ins>To make a .bfb file</ins> download a custom script ./mk-slemicro-bfb.sh (attached in the SLES directory of the current Github page) and run it as:
 
 ````
-./mk-slemicro-bfb-v2.sh ./SLES15-SP6-Minimal-Image.aarch64-RaspberryPi-RC1-202403.raw.xz* 
+./mk-slemicro-bfb.sh ./SL-Micro.aarch64-6.1-Base-Beta2.raw.xz 
 ````
-(or Micro 6.0 raw.xz image).
+
+
+![image](https://github.com/user-attachments/assets/9dde46ae-2e54-43c9-ad87-b46b3289ad25)
+
+Reset DPU with
+
+````
+ echo "SW_RESET 1" > /dev/rshim0/misc
+````
 
 
 <ins>To install a *.bfb* image on DPU</ins> use the following command :
 
 ````
-./bfb-install -b ./SLES15-SP6-Minimal-Image.aarch64-RaspberryPi-RC1-202403.raw.bfb -r rshim0* 
+./bfb-install -b ./SL-Micro.aarch64-6.1-Base-Beta2.raw.bfb -r rshim0
 ````
-(or Micro 6.0 bfb file).
 
 
 From the 2nd terminal start minicom.
