@@ -83,6 +83,12 @@ From DPU's uefi disable secure boot.
 ````
 picocom /dev/rshim0/console
 ````
+Use the following serial settings:
+
+
+![image](https://github.com/user-attachments/assets/66719abe-e588-470c-a337-279650c8a00d)
+
+
 where rshim0 is the proper DPU.
 
 In this test example a host node has 3 DPUs installed, so should have 3 rshim devices listed:
