@@ -191,9 +191,9 @@ From the 2nd terminal start minicom.
 Once the DPU rebooted, on boot press ‘e’ and replace *console=ttyS0* to *console=hvc0* in the grub.
 
 >[!NOTE]
-> That *console* prereq. will be fixed in later versions. It also can be modified and customized with the original .raw image. Review 
-> [Deploying SLE Micro Using a
-Raw Disk Image on Bare Metal](https://documentation.suse.com/sle-micro/6.0/pdf/Micro-deployment-raw-images_en.pdf) and [Fuel Ignition tool](https://opensuse.github.io/fuel-ignition/) 
+> That *console* prereq. will be fixed in later versions. It also can be modified and customized with the original .raw image.
+>Review [Deploying SLE Micro Using a Raw Disk Image on Bare Metal](https://documentation.suse.com/sle-micro/6.0/pdf/Micro-deployment-raw-images_en.pdf) and [Fuel Ignition tool](https://opensuse.github.io/fuel-ignition/).
+>For more detailed steps check [Ignition](https://en.opensuse.org/Portal:MicroOS/Ignition#Ignition_Quick_Start) and [Combustion](https://en.opensuse.org/Portal:MicroOS/Combustion) quick start guides.
 >
 
 After boot you have to update/add the same console=hvc0 in `/etc/default/grub` and execute:
