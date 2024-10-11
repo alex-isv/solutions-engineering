@@ -210,7 +210,7 @@ transactional-update grub.cfg
 
 The default credentials are *root/linux*.
 
-Configure a network according to your needs.
+Configure DPU's network and other parameters according to your needs if ignition/combustion config wasn't used during the install.
 
 *below is the example of SLE MICRO 6.0 with a cockpit console installed on the BlueField-3*
 
