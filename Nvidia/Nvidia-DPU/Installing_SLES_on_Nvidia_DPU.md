@@ -187,17 +187,13 @@ Reset DPU with
 
 From the 2nd terminal start minicom.
 
-Wait until `sh-4.4#` shell appear and enter the following command:
-
-
-````
-dd bs=4M if=/OS.raw of=/dev/nvme0n1 iflag=fullblock oflag=sync
-````
 
 Once the DPU rebooted, on boot press ‘e’ and replace *console=ttyS0* to *console=hvc0* in the grub.
 
 >[!NOTE]
-> That *console* prereq. will be fixed in later versions. It also can be modified and customized with the original .raw image.
+> That *console* prereq. will be fixed in later versions. It also can be modified and customized with the original .raw image 
+> [Deploying SLE Micro Using a
+Raw Disk Image on Bare Metal](https://documentation.suse.com/sle-micro/6.0/pdf/Micro-deployment-raw-images_en.pdf)
 >
 
 After boot you have to update/add the same console=hvc0 in `/etc/default/grub` and execute:
