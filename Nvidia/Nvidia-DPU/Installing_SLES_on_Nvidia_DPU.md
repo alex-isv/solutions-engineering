@@ -191,7 +191,7 @@ From the 2nd terminal start minicom.
 Once the DPU rebooted, on boot press ‘e’ and replace *console=ttyS0* to *console=hvc0* in the grub.
 
 >[!NOTE]
-> That *console* prereq. as well as any additional custom paramethers such as users creation or networking for the cluster can be modified by customizing the original .raw Micro image  with [SUSE Edge Image Builder](https://github.com/suse-edge/edge-image-builder/blob/main/docs/building-images.md) tool.
+> That *console* prereq. as well as any additional custom paramethers such as users creation or networking for the cluster can be modified by customizing the original .raw Micro image  with [SUSE Edge Image Builder](https://suse-edge.github.io/quickstart-eib.html#) tool.
 > 
 
 After boot you have to update/add the same console=hvc0 in `/etc/default/grub` and execute:
