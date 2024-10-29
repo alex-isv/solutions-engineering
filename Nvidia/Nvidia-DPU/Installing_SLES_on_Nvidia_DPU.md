@@ -194,7 +194,7 @@ Once the DPU rebooted, on boot press ‘e’ and replace *console=ttyS0* to *con
 > That *console* prereq. as well as any additional custom paramethers such as users creation or networking for the cluster can be modified by customizing the original .raw Micro image  with [SUSE Edge Image Builder](https://suse-edge.github.io/quickstart-eib.html#) tool.
 > 
 
-After boot you have to update/add the same console=hvc0 in `/etc/default/grub` and execute:
+If grub wasn't modified in the original .raw image with Edge Image Builder tool, after boot you have to update/add the same console=hvc0 in `/etc/default/grub` and execute:
 
 On SP6: 
 ````
@@ -208,7 +208,7 @@ transactional-update grub.cfg
 
 The default credentials are *root/linux*.
 
-Configure DPU's network and other parameters according to your needs if ignition/combustion config wasn't used during the install.
+Configure DPU's network and other parameters according to your needs if [Edge Image Builder](https://suse-edge.github.io/quickstart-eib.html#) wasn't used during the install.
 
 *below is the example of SLE MICRO 6.0 with a cockpit console installed on the BlueField-3*
 
