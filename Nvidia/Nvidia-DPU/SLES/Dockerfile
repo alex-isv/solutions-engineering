@@ -12,15 +12,9 @@ ADD qemu-aarch64-static /usr/bin/
 RUN zypper -n in SUSEConnect
 
 # Add a registration code or use RMT server
+RUN SUSEConnect --regcode Your-reg-code-****
 
-# RUN SUSEConnect --regcode INTERNAL-USE-ONLY-****
-ADD http://192.168.150.160/repo/rmt-server.crt /etc/pki/trust/anchors/rmt.crt
-
-# Note: <ADD http://...>  is the IP of the local RMT server.
-# You need to post rmt-server.crt file on your RMT server in the location which can be reachable from url
-# So, on our local RMT server copy /etc/rmt/ssl/rmt-server.crt file to the /usr/share/rmt/public/repo directory, which creates symb link to ./var/lib/rmt/public/repo which is a public repo of RMT server. 
-# Setup a proper permission to /usr/share/rmt/public/repo directory 
-# Sync rmt server.
+# Review steps on how to use your local RMT server - https://github.com/SUSE/container-suseconnect
 
 
 RUN zypper ref
