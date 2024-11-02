@@ -68,15 +68,7 @@ Review [Installation files section](https://docs.nvidia.com/doca/sdk/nvidia+doca
 
 ### Installation steps ###
 
-Clone a bfb-build from Mellanox git page.
 
-````
-git clone https://github.com/Mellanox/bfb-build
-````
-
-````
-cd bfb-build
-````
 Make sure that your host node has *picocom* or *minicom* installed to access a DPU through rshim.
 
 From DPU's uefi disable secure boot.
@@ -103,6 +95,16 @@ install a podman
 ````
 zypper in podman
 ````
+Clone a bfb-build from Mellanox git page.
+
+````
+git clone https://github.com/Mellanox/bfb-build
+````
+
+````
+cd bfb-build
+````
+
 Create a directory called sles.
 
 Copy install.sh and create_bfb scripts into sles directory, together with modified bfb_build and Dockerfile (attached in the SLES folder of currect Github page).
