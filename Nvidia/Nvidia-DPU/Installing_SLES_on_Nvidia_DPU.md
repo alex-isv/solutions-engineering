@@ -96,13 +96,17 @@ In this test example a host node has 3 DPUs installed, so should have 3 rshim de
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/d5b92529-164e-4659-978c-061b0ce9e0be)
 
 
-Modify a Dockerfile and bfb-build file according to your OS release. See attached example Dockerfile for SLES.
+
 
 install a podman
 
 ````
 zypper in podman
 ````
+Create a directory called sles.
+
+Copy install.sh and create_bfb scripts into sles directory, together with modified bfb_build and Dockerfile (attached in the SLES folder of currect Github page).
+
 
 
 To build a .bfb image run:
