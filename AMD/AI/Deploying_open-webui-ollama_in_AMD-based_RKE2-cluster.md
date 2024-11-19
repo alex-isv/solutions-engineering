@@ -25,6 +25,8 @@ Install [ROCm and AMD GPU device plugin](https://github.com/alex-isv/solutions-e
 
 For more details review [AMD GPU device plugin for Kubernetes](https://github.com/ROCm/k8s-device-plugin#amd-gpu-device-plugin-for-kubernetes).
 
+For the larger cluster use [AMD GPU Operator](https://github.com/ROCm/gpu-operator).
+
 If planning to use a local storage, install a Local Path Provisioner as described [here](https://github.com/rancher/local-path-provisioner)
 
 ````
