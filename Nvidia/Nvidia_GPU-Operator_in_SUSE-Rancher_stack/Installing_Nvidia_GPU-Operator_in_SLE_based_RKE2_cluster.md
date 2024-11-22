@@ -107,21 +107,44 @@ For more details on the available distros review - (https://developer.download.n
 
 <ins>As an alternative</ins> you can use open-source .run version:
 
+For example for the clean instance of SLES15 sp6 run the following:
+
+Check the kernel version:
+````
+uname -r
+````
+6.4.0-150600.23.25-default
+
+Install kernel-default-devel:
+
+````
+sudo zypper install -y kernel-default-devel=6.4.0-150600.23.25
+````
+
+Install gcc:
+````
+zypper in gcc
+````
+
+
 Download .run file from:
 
 ````
-wget https://download.nvidia.com/XFree86/Linux-x86_64/550.90.07/NVIDIA-Linux-x86_64-550.90.07.run
+wget https://download.nvidia.com/XFree86/Linux-x86_64/560.35.03/NVIDIA-Linux-x86_64-560.35.03.run
 ````
 
 Install with:
 ````
-sh NVIDIA-Linux-x86_64-550.90.07.run -m=kernel-open
+sh NVIDIA-Linux-x86_64-560.35.03.run -m=kernel-open
 ````
 
 Verify that nvidia-smi command is working on the **worker** node.
 
 
 ![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/c9451823-4e60-4989-8c90-3bd34dac640d)
+
+
+![image](https://github.com/user-attachments/assets/f3b276a6-05a5-4415-afdf-87f5a189e256)
 
 
 - **Build a container based driver(option 2)** (Currently not supported by Nvidia)
