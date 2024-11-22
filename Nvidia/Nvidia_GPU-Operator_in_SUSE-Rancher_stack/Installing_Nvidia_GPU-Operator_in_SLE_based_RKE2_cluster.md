@@ -105,7 +105,7 @@ sudo reboot
 
 For more details on the available distros review - (https://developer.download.nvidia.com/compute/cuda/repos/sles15/)
 
-<ins>As an alternative</ins> you can use open-source .run version:
+**<ins>As an alternative</ins>** you can use open-source .run version:
 
 For example for the clean instance of SLES15 sp6 run the following:
 
@@ -139,9 +139,6 @@ sh NVIDIA-Linux-x86_64-560.35.03.run -m=kernel-open
 ````
 
 Verify that nvidia-smi command is working on the **worker** node.
-
-
-![image](https://github.com/alex-isv/solutions-engineering/assets/52678960/c9451823-4e60-4989-8c90-3bd34dac640d)
 
 
 ![image](https://github.com/user-attachments/assets/f3b276a6-05a5-4415-afdf-87f5a189e256)
