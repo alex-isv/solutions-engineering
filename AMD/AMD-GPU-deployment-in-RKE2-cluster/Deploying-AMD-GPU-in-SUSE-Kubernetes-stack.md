@@ -23,7 +23,7 @@ In the above example, the RKE2 6 nodes cluster is shown from the Rancher console
 
   ## Install ROCM on the worker (GPU) node.
 
- Install ROCM on the worker node as per ROCm documentation [SUSE Linux Enterprice native installation](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/tutorial/quick-start.html) section.
+ Install ROCM on the worker node as per ROCm documentation [SUSE Linux Enterprise native installation](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/tutorial/quick-start.html) section.
 
 ````
 sudo zypper addrepo https://download.opensuse.org/repositories/devel:languages:perl/15.5/devel:languages:perl.repo
