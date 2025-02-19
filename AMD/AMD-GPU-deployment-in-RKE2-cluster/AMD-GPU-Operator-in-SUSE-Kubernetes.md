@@ -21,7 +21,7 @@ Please review [AMD GPU-Operator deployment](https://dcgpu.docs.amd.com/projects/
 
 **Intall AMD Rocm on the worker node**
 
-That can be done either with a locally installed Rocm driver on the worker node or with the use of the Dockerfile for compiling drivers.
+That can be done either with a locally installed Rocm driver on the worker node or with the help of the AMD gpu-operator and pre-compiled container based drivers on the registry (work in progress).
 
 Option 1.
 Locally installed driver.
