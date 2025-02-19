@@ -11,9 +11,9 @@ SLES based RKE2 cluster managed by a Rancher server. Review [RKE2 installation s
  Test case:
  SLES based (15 sp6)
  
- 3 control-plane, etcd nodes
+ 3 (control-plane, etcd) nodes
  
- 1 worker node with AMD GPU MI210.
+ 1 (worker) node with AMD GPU MI210.
 
  ![image](https://github.com/user-attachments/assets/3b859427-04ec-4500-aecf-9a279591e467)
 
