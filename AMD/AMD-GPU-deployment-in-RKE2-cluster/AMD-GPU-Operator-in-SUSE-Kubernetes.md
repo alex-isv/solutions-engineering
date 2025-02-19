@@ -8,8 +8,13 @@ AMD GPU-operator can help deploy GPUs in the Kubernetes cluster at scale.
 
 SLES based RKE2 cluster managed by a Rancher server. Review [RKE2 installation steps](https://github.com/alex-isv/solutions-engineering/blob/main/Rancher/RKE2_cluster_deployment.md#deploying-rke2-cluster-in-sles-based-environment).
 
- Test case:
- SLES based (15 sp6)
+Test case:
+ SLES15 sp6 RKE2 cluster with Rancher server v2.10.2
+ 
+ K3s version v1.31.5+k3s1
+  
+ RKE2 v1.31
+
  
  3 (control-plane, etcd) nodes
  
