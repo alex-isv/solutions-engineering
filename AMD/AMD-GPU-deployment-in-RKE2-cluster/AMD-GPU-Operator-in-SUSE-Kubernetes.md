@@ -164,6 +164,10 @@ kubectl get deviceconfigs -n kube-amd-gpu -o yaml
 kubectl get nodes -o yaml | grep "amd.com/gpu"
 ````
 
+![image](https://github.com/user-attachments/assets/0818d9cc-ef65-4c46-9bbf-9a35b3d43f92)
+
+
+
 ## Test GPU workload
 
 Paste yaml from the Rancher or as 
