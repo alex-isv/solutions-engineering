@@ -255,7 +255,7 @@ spec:
     feature.node.kubernetes.io/amd-gpu: "true"
 ````
 
-SLES based container should be used for copiling the drivers as described in [Preparing Pre-compiled Driver Images](https://dcgpu.docs.amd.com/projects/gpu-operator/en/latest/drivers/precompiled-driver.html).
+SLES based container should be used for compiling the drivers as described in [Preparing Pre-compiled Driver Images](https://dcgpu.docs.amd.com/projects/gpu-operator/en/latest/drivers/precompiled-driver.html).
 That should be pushed to the registry and defined in the DeviceConfig CRD.
 
 
