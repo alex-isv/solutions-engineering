@@ -207,7 +207,10 @@ or from the admin node:
 
 
 
+
 <ins> WORK IN PROGRESS .... </INS>
+
+
 If using a GPU-operator to install drivers, you need to set <ins> spec.driver.blacklist=true </ins> and use the following CRD:
 
 ````
@@ -254,6 +257,7 @@ spec:
 
 SLES based container should be used for copiling the drivers as described in [Preparing Pre-compiled Driver Images](https://dcgpu.docs.amd.com/projects/gpu-operator/en/latest/drivers/precompiled-driver.html).
 That should be pushed to the registry and defined in the DeviceConfig CRD.
+
 
 Work in progress..
 
