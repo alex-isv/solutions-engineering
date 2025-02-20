@@ -216,9 +216,10 @@ or from the admin node:
 .
 
 
+**Option2**
 
 
-### **Option2** Install out-of-tree AMD GPU Drivers with the Operator. <ins> WORK IN PROGRESS .... </INS>
+###  <ins> WORK IN PROGRESS .... </INS> Install out-of-tree AMD GPU Drivers with the Operator. <ins> WORK IN PROGRESS .... </INS>
 
 Review attached Dockerfile.
 
