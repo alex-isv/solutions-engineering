@@ -4,7 +4,7 @@ ARG KERNEL_FULL_VERSION
 ARG DRIVERS_VERSION
 ARG REPO_URL
 
-RUN  zypper addrepo https://download.opensuse.org/repositories/devel:languages:perl/16.6/devel:languages:perl.repo
+RUN  zypper addrepo https://download.opensuse.org/repositories/devel:languages:perl/15.6/devel:languages:perl.repo
 RUN  zypper addrepo https://download.opensuse.org/repositories/Education/15.6/Education.repo
 RUN  zypper addrepo https://download.opensuse.org/repositories/science/SLE_15_SP5/science.repo
 RUN  zypper --gpg-auto-import-keys refresh
