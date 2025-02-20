@@ -205,9 +205,8 @@ spec:
  restartPolicy: Never
 ````
 
-Check output of <ins> amd-smi </ins>
+Check output of <ins> amd-smi </ins> either from the Rancher:
 
-either from the Rancher:
 
 ![image](https://github.com/user-attachments/assets/c9418425-0059-44cf-b618-7628e25045a2)
 
