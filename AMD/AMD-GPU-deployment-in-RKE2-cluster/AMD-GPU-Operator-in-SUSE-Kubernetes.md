@@ -85,7 +85,7 @@ Verify installed driver:
 
 
 
-## Install AMD GPU-operator with helm command.
+**Install AMD GPU-operator with helm command.**
 
 Follow [Kubernetes (Helm) installation steps](https://dcgpu.docs.amd.com/projects/gpu-operator/en/latest/installation/kubernetes-helm.html).
 
