@@ -213,6 +213,8 @@ Check output of <ins> amd-smi </ins> either from the Rancher:
 or from the admin node:
 
 ![image](https://github.com/user-attachments/assets/8140f76e-2535-415f-be54-296836a08522)
+.
+
 
 
 
