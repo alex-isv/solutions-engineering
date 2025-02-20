@@ -289,6 +289,10 @@ Import CRD to install Rocm by the operator:
 ![image](https://github.com/user-attachments/assets/22d0de6e-1cd5-4789-987c-2eccffbfa6e1)
 
 
+![image](https://github.com/user-attachments/assets/0e926930-10a8-4119-8f8e-c827fb677835)
+
+
+
 Work in progress..
 
 
