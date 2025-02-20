@@ -33,7 +33,7 @@ Please review [AMD GPU-Operator deployment](https://dcgpu.docs.amd.com/projects/
 
 That can be done either with a locally installed Rocm driver on the worker node or with the help of the AMD gpu-operator and pre-compiled container based drivers on the registry (work in progress).
 
-Option 1.
+**Option 1.**
 Locally installed driver.
 
 Please review [Rocm installation doc for SLES15](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/install/install-methods/package-manager/package-manager-sles.html).
@@ -218,7 +218,7 @@ or from the admin node:
 
 
 
-### ***Install out-of-tree AMD GPU Drivers with the Operator. <ins> WORK IN PROGRESS .... </INS>
+### **Option2** Install out-of-tree AMD GPU Drivers with the Operator. <ins> WORK IN PROGRESS .... </INS>
 
 Review attached Dockerfile.
 
