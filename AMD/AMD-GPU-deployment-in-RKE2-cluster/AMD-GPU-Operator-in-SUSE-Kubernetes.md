@@ -110,7 +110,7 @@ Verify installation with
 kubectl get pods -n kube-amd-gpu
 ````
 
-Install CRD:
+**Install CRD:**
 
 1) If the driver was installed locally on the worker node use the following yaml file with <ins> spec.driver.enable=false </ins> option:
 
