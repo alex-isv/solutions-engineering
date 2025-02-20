@@ -216,7 +216,9 @@ or from the admin node:
 
 
 
-### Install out-of-tree AMD GPU Drivers with the Operator. <ins> WORK IN PROGRESS .... </INS>
+### ***Install out-of-tree AMD GPU Drivers with the Operator. <ins> WORK IN PROGRESS .... </INS>
+
+Review attached Dockerfile.
 
 To build a container driver on the worker node, use the following steps:
 
