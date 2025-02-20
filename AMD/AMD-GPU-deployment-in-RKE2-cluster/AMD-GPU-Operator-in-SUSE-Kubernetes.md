@@ -268,6 +268,11 @@ That should be pushed to the registry and defined in the DeviceConfig CRD.
 
 Work in progress..
 
+Import CRD to install Rocm by the operator:
+
+![image](https://github.com/user-attachments/assets/22d0de6e-1cd5-4789-987c-2eccffbfa6e1)
+
+
 
 
 
