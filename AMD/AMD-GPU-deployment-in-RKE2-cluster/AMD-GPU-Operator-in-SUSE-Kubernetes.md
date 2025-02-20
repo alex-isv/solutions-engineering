@@ -217,6 +217,23 @@ or from the admin node:
 
 <ins> WORK IN PROGRESS .... </INS>
 
+To build a container driver on the worker node, use the following steps:
+
+````
+podman build -t ghcr.io/alex-isv/amdgpu-driver --build-arg KERNEL_FULL_VERSION=$(uname -r) --build-arg DRIVER
+S_VERSION=6.3.2 .
+````
+
+Tag it with:
+
+````
+podman tag ghcr.io/alex-isv/amdgpu-driver:latest ghcr.io/alex-isv/amdgpu-driver:sles-15.6-6.4.0-150600.23.38-default-6.3.2
+````
+
+Push to your local registry: (Github in my test case)
+````
+podman push ghcr.io/alex-isv/amdgpu-driver:sles-15.6-6.4.0-150600.23.38-default-6.3.2
+````
 
 If using a GPU-operator to install drivers, you need to set <ins> spec.driver.blacklist=true </ins> and use the following CRD:
 
@@ -235,15 +252,13 @@ spec:
     blacklist: true
     # Specify your repository to host driver image
     # DO NOT include the image tag as AMD GPU Operator will automatically manage the image tag for you
-    image: docker.io/username/repo
+    image: ghcr.io/alex-isv/amdgpu-driver
     # (Optional) Specify the credential for your private registry if it requires credential to get pull/push access
     # you can create the docker-registry type secret by running command like:
     # kubectl create secret docker-registry mysecret -n kmm-namespace --docker-username=xxx --docker-password=xxx
     # Make sure you created the secret within the namespace that KMM operator is running
-    imageRegistrySecret:
-      name: mysecret
     # Specify the driver version by using ROCm version
-    version: "6.2.1"
+    version: "6.3.2"
 
   devicePlugin:
     devicePluginImage: rocm/k8s-device-plugin:latest
@@ -262,17 +277,13 @@ spec:
     feature.node.kubernetes.io/amd-gpu: "true"
 ````
 
-SLES based container should be used for compiling the drivers as described in [Preparing Pre-compiled Driver Images](https://dcgpu.docs.amd.com/projects/gpu-operator/en/latest/drivers/precompiled-driver.html).
-That should be pushed to the registry and defined in the DeviceConfig CRD.
-
-
-Work in progress..
 
 Import CRD to install Rocm by the operator:
 
 ![image](https://github.com/user-attachments/assets/22d0de6e-1cd5-4789-987c-2eccffbfa6e1)
 
 
+Work in progress..
 
 
 
