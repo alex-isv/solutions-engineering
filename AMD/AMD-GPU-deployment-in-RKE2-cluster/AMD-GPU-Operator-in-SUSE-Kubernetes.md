@@ -216,8 +216,7 @@ or from the admin node:
 
 
 
-
-<ins> WORK IN PROGRESS .... </INS>
+### Install out-of-tree AMD GPU Drivers with the Operator. <ins> WORK IN PROGRESS .... </INS>
 
 To build a container driver on the worker node, use the following steps:
 
