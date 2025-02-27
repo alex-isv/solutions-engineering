@@ -27,7 +27,7 @@ Test case:
  ![image](https://github.com/user-attachments/assets/3b859427-04ec-4500-aecf-9a279591e467)
 
 
-Please review [AMD GPU-Operator deployment](https://dcgpu.docs.amd.com/projects/gpu-operator/en/latest/installation/kubernetes-helm.html#kubernetes-helm).
+Please review [AMD GPU-Operator deployment](https://instinct.docs.amd.com/projects/gpu-operator/en/latest/).
 
 **Intall AMD Rocm on the worker node**
 
