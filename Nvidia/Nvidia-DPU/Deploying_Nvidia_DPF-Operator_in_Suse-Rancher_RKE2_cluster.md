@@ -20,7 +20,9 @@ managed by a Rancher server.
 Follow these [steps](https://github.com/alex-isv/solutions-engineering/blob/main/Rancher/RKE2_cluster_deployment.md) to install a Rancher with RKE2.
 
 For this particular test, add 2 control-plane nodes to the cluster and 1 node with all roles assigned to complete a cluster creation.
-Use, <ins> multus,cilium cli combo </ins> during the cluster creation.
+
+Use, <ins> multus,cilium CLI combo </ins> during the cluster creation.
+
 Don't add worker nodes with BF-3 cards installed to the cluster at the beginning.
 
 
