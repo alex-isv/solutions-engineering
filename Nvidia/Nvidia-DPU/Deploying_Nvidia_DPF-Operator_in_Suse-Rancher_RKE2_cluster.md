@@ -23,9 +23,90 @@ For this particular test, add 2 control-plane nodes to the cluster and 1 node wi
 
 Use, <ins> multus,cilium CLI combo </ins> during the cluster creation.
 
+![image](https://github.com/user-attachments/assets/ca2a816f-01e4-43db-840f-7a9fd1666388)
+
+
 Don't add worker nodes with BF-3 cards installed to the cluster at the beginning.
 
 Setup a networking for worker nodes as described [here](https://github.com/NVIDIA/doca-platform/blob/release-v25.1/docs/guides/usecases/host-network-configuration-prerequisite.md).
+
+Create a variables file on the admin node <ins> export_vars.env </ins> as described [here](https://github.com/NVIDIA/doca-platform/tree/release-v25.1/docs/guides/usecases/hbn_only#0-required-variables) and source the file as
+
+````
+source export_vars.env
+````
+
+### DPF Operator installation
+
+````
+kubectl create namespace dpf-operator-system
+````
+
+Clone dpf-operator registry.
+
+````
+git clone https://github.com/NVIDIA/doca-platform.git
+````
+
+````
+cd ..doca-platform/docs/guides/usecases/hbn_only
+````
+
+**Install cert-manager**
+
+````
+helm repo add jetstack https://charts.jetstack.io --force-update
+````
+
+
+````
+helm upgrade --install --create-namespace --namespace cert-manager cert-manager jetstack/cert-manager --version v1.16.1 -f ./manifests/01-dpf-operator-installation/helm-values/cert-manager.yml
+````
+
+**Install a CSI to back the DPUCluster etcd**
+
+````
+curl https://codeload.github.com/rancher/local-path-provisioner/tar.gz/v0.0.30 | tar -xz --strip=3 local-path-provisioner-0.0.30/deploy/chart/local-path-provisioner/
+
+kubectl create ns local-path-provisioner
+
+helm install -n local-path-provisioner local-path-provisioner ./local-path-provisioner --version 0.0.30 -f ./manifests/01-dpf-operator-installation/helm-values/local-path-provisioner.yml
+````
+
+**Create secrets and storage required by the DPF Operator**
+
+````
+cat manifests/01-dpf-operator-installation/*.yaml | envsubst | kubectl apply -f -
+````
+
+**Deploy the DPF Operator**
+
+````
+envsubst < ./manifests/01-dpf-operator-installation/helm-values/dpf-operator.yml | helm upgrade --install -n dpf-operator-system dpf-operator $REGISTRY --version=$TAG --values -
+````
+
+Verify workloads and pods deployed:
+
+
+![image](https://github.com/user-attachments/assets/2b57ec56-8002-4e60-be0e-18d5f66a92d8)
+
+
+![image](https://github.com/user-attachments/assets/32bd4a46-b05e-4071-a0ad-b9131f559249)
+
+
+![image](https://github.com/user-attachments/assets/85b4546b-532d-42a1-b1e5-ab12947a3722)
+
+
+### DPF system installation
+
+
+
+````
+kubectl create ns dpu-cplane-tenant1
+
+cat manifests/02-dpf-system-installation/*.yaml | envsubst | kubectl apply -f -
+````
+
 
 
 
