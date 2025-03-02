@@ -1,5 +1,9 @@
 # Deploying Nvidia DPU-operator in Suse/Rancher cluster.
 
+> [!NOTE]
+> Work in progress. Don't use as a reference.
+> 
+
 ## Use case
 
 [**Host based networking.**](https://github.com/NVIDIA/doca-platform/tree/release-v25.1/docs/guides/usecases/hbn_only#deploy-test-pods)
@@ -107,6 +111,50 @@ kubectl create ns dpu-cplane-tenant1
 cat manifests/02-dpf-system-installation/*.yaml | envsubst | kubectl apply -f -
 ````
 
+![image](https://github.com/user-attachments/assets/f0268f3f-d276-452b-aef1-cab3f3bc7127)
 
+### Enable accelerated interfaces
+
+**Install Multus and SRIOV Network Operator using NVIDIA Network Operator**
+
+````
+helm repo add nvidia https://helm.ngc.nvidia.com/nvidia --force-update
+
+helm upgrade --no-hooks --install --create-namespace --namespace nvidia-network-operator network-operator nvidia/network-operator --version 24.7.0 -f ./manifests/03-enable-accelerated-interfaces/helm-values/network-operator.yml
+````
+
+**Apply the NICClusterConfiguration and SriovNetworkNodePolicy**
+
+````
+cat manifests/03-enable-accelerated-interfaces/*.yaml | envsubst | kubectl apply -f -
+````
+
+Verify installation.
+
+#### DPU Provisioning and Service Installation
+
+**With DPUDeployment**
+
+````
+cat manifests/04.2-dpudeployment-installation/*.yaml | envsubst | kubectl apply -f -
+````
+
+**Verify with:**
+
+````
+kubectl wait --for=condition=ApplicationsReconciled --namespace dpf-operator-system  dpuservices hbn-only-doca-hbn
+````
+
+Add DPU worker nodes to the cluster.
+
+**Test traffic**
+
+````
+kubectl apply -f manifests/05-test-traffic
+````
+
+That will deploy 2 test pods.
+
+Use iperf3 to test networking between two pods.
 
 
