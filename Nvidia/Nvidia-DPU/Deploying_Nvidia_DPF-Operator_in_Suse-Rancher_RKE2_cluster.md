@@ -166,11 +166,11 @@ kubectl wait --for=condition=ApplicationsReconciled --namespace dpf-operator-sys
 
 At this point NFS server should list <ins> .bfb file </ins>.
 
-<ins>
-nv-2:/mnt/dpf_share/bfb # ls
+*nv-2:/mnt/dpf_share/bfb # ls
   
-dpf-operator-system-bf-bundle.bfb
-</ins>
+dpf-operator-system-bf-bundle.bfb*
+
+
 
 
 Add DPU worker nodes to the cluster.
