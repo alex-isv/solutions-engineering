@@ -149,6 +149,10 @@ kubectl wait --for=condition=ApplicationsReconciled --namespace dpf-operator-sys
 
 Add DPU worker nodes to the cluster.
 
+![image](https://github.com/user-attachments/assets/ba2a8dbe-0001-4b93-93f9-40693a55ffd5)
+
+
+
 **Test traffic**
 
 ````
