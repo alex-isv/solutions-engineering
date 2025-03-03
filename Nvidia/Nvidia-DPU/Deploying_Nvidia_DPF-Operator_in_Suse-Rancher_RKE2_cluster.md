@@ -166,9 +166,9 @@ kubectl wait --for=condition=ApplicationsReconciled --namespace dpf-operator-sys
 
 At this point NFS server should list <ins> .bfb file </ins>.
 
-*nv-2:/mnt/dpf_share/bfb # ls
+*nv-2:/mnt/dpf_share/bfb # ls*
   
-dpf-operator-system-bf-bundle.bfb*
+*dpf-operator-system-bf-bundle.bfb*
 
 
 
