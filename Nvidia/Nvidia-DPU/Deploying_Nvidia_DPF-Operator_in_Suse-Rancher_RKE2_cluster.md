@@ -123,7 +123,7 @@ kubectl rollout status deployment --namespace dpf-operator-system dpf-provisioni
 ````
 
 
-![image](https://github.com/user-attachments/assets/74250019-c862-4eb2-9454-50c156b9a50f)
+![image](https://github.com/user-attachments/assets/f0e0d5a3-4cd4-48bf-a56d-61e7470b40a0)
 
 
 
