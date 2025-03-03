@@ -145,6 +145,9 @@ cat manifests/03-enable-accelerated-interfaces/*.yaml | envsubst | kubectl apply
 
 Verify installation.
 
+![image](https://github.com/user-attachments/assets/1d634722-0c0e-4f50-91ad-a5738f548f13)
+
+
 #### DPU Provisioning and Service Installation
 
 **With DPUDeployment**
@@ -158,6 +161,16 @@ cat manifests/04.2-dpudeployment-installation/*.yaml | envsubst | kubectl apply 
 ````
 kubectl wait --for=condition=ApplicationsReconciled --namespace dpf-operator-system  dpuservices hbn-only-doca-hbn
 ````
+
+![image](https://github.com/user-attachments/assets/9b2b7468-9dd2-488c-b595-b37228789a1a)
+
+At this point NFS server should list <ins> .bfb file </ins>.
+
+<ins>
+nv-2:/mnt/dpf_share/bfb # ls
+dpf-operator-system-bf-bundle.bfb
+</ins>
+
 
 Add DPU worker nodes to the cluster.
 
