@@ -168,6 +168,7 @@ At this point NFS server should list <ins> .bfb file </ins>.
 
 <ins>
 nv-2:/mnt/dpf_share/bfb # ls
+  
 dpf-operator-system-bf-bundle.bfb
 </ins>
 
