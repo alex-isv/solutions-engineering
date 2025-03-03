@@ -115,6 +115,18 @@ cat manifests/02-dpf-system-installation/*.yaml | envsubst | kubectl apply -f -
 ![image](https://github.com/user-attachments/assets/1ece073d-ebd6-4a08-881c-872600ad5950)
 
 
+Validate with:
+
+````
+kubectl rollout status deployment --namespace dpf-operator-system dpf-provisioning-controller-manager dpuservice-controller-manager
+
+````
+
+
+![image](https://github.com/user-attachments/assets/74250019-c862-4eb2-9454-50c156b9a50f)
+
+
+
 ### Enable accelerated interfaces
 
 **Install Multus and SRIOV Network Operator using NVIDIA Network Operator**
