@@ -111,7 +111,9 @@ kubectl create ns dpu-cplane-tenant1
 cat manifests/02-dpf-system-installation/*.yaml | envsubst | kubectl apply -f -
 ````
 
-![image](https://github.com/user-attachments/assets/f0268f3f-d276-452b-aef1-cab3f3bc7127)
+
+![image](https://github.com/user-attachments/assets/1ece073d-ebd6-4a08-881c-872600ad5950)
+
 
 ### Enable accelerated interfaces
 
