@@ -31,7 +31,7 @@ Use, <ins> cilium CLI </ins> during the cluster creation.
 
 
 
-![image](https://github.com/user-attachments/assets/ca2a816f-01e4-43db-840f-7a9fd1666388)
+![image](https://github.com/user-attachments/assets/5dfa95f1-6a71-4a31-95e3-85b8e6fe023c)
 
 
 Don't add worker nodes with BF-3 cards installed to the cluster at the beginning.
