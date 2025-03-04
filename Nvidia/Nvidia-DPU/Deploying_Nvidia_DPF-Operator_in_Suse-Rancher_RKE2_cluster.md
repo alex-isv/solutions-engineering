@@ -178,6 +178,26 @@ At this point NFS server should list <ins> .bfb file </ins>.
 
 Add DPU worker nodes to the cluster.
 
+Modify label with empty for the worker role and
+
+
+Run command to check the DPU installation status:
+
+````
+watch -d "kubectl describe dpu -n dpf-operator-system | grep 'Node Name\|Type\|Last\|Phase'"
+
+````
+
+
+![image](https://github.com/user-attachments/assets/417d9302-8db6-44c3-be35-5f37789b7c49)
+
+Node should be rebooted upon successfull installation.
+
+You can also check dms pod logs if it's ready.
+
+![image](https://github.com/user-attachments/assets/792c9857-5859-4a63-ac30-8cf0891e8b4a)
+
+
 ![image](https://github.com/user-attachments/assets/ba2a8dbe-0001-4b93-93f9-40693a55ffd5)
 
 
