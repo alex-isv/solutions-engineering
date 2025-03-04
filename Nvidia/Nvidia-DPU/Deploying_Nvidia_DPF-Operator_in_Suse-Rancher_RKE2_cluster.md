@@ -115,7 +115,7 @@ cat manifests/02-dpf-system-installation/*.yaml | envsubst | kubectl apply -f -
 ````
 
 
-![image](https://github.com/user-attachments/assets/1ece073d-ebd6-4a08-881c-872600ad5950)
+![image](https://github.com/user-attachments/assets/8badbb61-07d7-40fe-b3d8-ac00c53f216c)
 
 
 Validate with:
