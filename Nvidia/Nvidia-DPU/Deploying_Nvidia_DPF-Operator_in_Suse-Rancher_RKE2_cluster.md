@@ -198,7 +198,7 @@ You can also check dms pod logs if it's ready.
 ![image](https://github.com/user-attachments/assets/792c9857-5859-4a63-ac30-8cf0891e8b4a)
 
 
-![image](https://github.com/user-attachments/assets/ba2a8dbe-0001-4b93-93f9-40693a55ffd5)
+![image](https://github.com/user-attachments/assets/5445bbbd-3131-4192-987b-af2727bd5a9b)
 
 
 
