@@ -25,7 +25,7 @@ Follow these [steps](https://github.com/alex-isv/solutions-engineering/blob/main
 
 For this particular test, add 2 control-plane nodes to the cluster and 1 node with all roles assigned to complete a cluster creation.
 
-Use, <ins> cilium CLI </ins> during the cluster creation.
+Use, <ins> multus/cilium CLI combo </ins> during the cluster creation.
 
 ![image](https://github.com/user-attachments/assets/3d71fcbe-89e2-4406-b319-30950801259e)
 
