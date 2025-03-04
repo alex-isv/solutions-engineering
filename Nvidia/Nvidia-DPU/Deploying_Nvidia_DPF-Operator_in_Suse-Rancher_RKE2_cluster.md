@@ -176,12 +176,13 @@ At this point NFS server should list <ins> .bfb file </ins>.
 
 
 
-Add DPU worker nodes to the cluster.
+**Add DPU worker nodes to the cluster.**
 
 > [!NOTE]
 > For this Demo test.
 > Add a label *feature.node.kubernetes.io/dpu-oob-bridge-configured*
-> and *node-role.kubernetes.io/worker* with the empty values in the worker node.
+> and *node-role.kubernetes.io/worker* with the **empty** values in the worker node.
+> That is needed due to the conflict on how RKE2 labeling nodes with a 'true' value by default and values in the config yaml files.
 
 
 Run command to check the DPU installation status:
