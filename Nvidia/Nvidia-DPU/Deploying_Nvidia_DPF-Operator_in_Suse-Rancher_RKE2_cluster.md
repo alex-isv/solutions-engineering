@@ -27,7 +27,7 @@ For this particular test, add 2 control-plane nodes to the cluster and 1 node wi
 
 Use, <ins> multus/cilium CLI combo </ins> during the cluster creation.
 
-![image](https://github.com/user-attachments/assets/3d71fcbe-89e2-4406-b319-30950801259e)
+![image](https://github.com/user-attachments/assets/e22172e5-3005-42b9-bab5-95c917063cd3)
 
 
 
