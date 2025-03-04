@@ -178,7 +178,10 @@ At this point NFS server should list <ins> .bfb file </ins>.
 
 Add DPU worker nodes to the cluster.
 
-Modify label with empty for the worker role and
+> [!NOTE]
+> For this Demo test.
+> Add a label *feature.node.kubernetes.io/dpu-oob-bridge-configured*
+> and *node-role.kubernetes.io/worker* with the empty values in the worker node.
 
 
 Run command to check the DPU installation status:
