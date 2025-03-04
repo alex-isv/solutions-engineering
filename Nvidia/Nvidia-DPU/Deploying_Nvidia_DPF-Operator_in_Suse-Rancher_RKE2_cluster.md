@@ -96,10 +96,9 @@ envsubst < ./manifests/01-dpf-operator-installation/helm-values/dpf-operator.yml
 Verify workloads and pods deployed:
 
 
-![image](https://github.com/user-attachments/assets/2b57ec56-8002-4e60-be0e-18d5f66a92d8)
+![image](https://github.com/user-attachments/assets/fedb3529-78a0-4fda-8d65-7a58acdeb077)
 
 
-![image](https://github.com/user-attachments/assets/32bd4a46-b05e-4071-a0ad-b9131f559249)
 
 
 ![image](https://github.com/user-attachments/assets/85b4546b-532d-42a1-b1e5-ab12947a3722)
