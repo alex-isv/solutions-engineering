@@ -184,6 +184,8 @@ At this point NFS server should list <ins> .bfb file </ins>.
 > and *node-role.kubernetes.io/worker* with the **empty** values in the worker node.
 > That is needed due to the conflict on how RKE2 labeling nodes with a 'true' value by default and values in the config yaml files.
 
+![image](https://github.com/user-attachments/assets/b4cb883b-fd9f-44d6-9045-f091b8890762)
+
 
 Run command to check the DPU installation status:
 
