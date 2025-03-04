@@ -204,6 +204,13 @@ You can also check dms pod logs if it's ready.
 
 ![image](https://github.com/user-attachments/assets/5445bbbd-3131-4192-987b-af2727bd5a9b)
 
+Verify DPUServiceInterfaces:
+
+![image](https://github.com/user-attachments/assets/8e1a5c02-627b-4f7a-bd48-188f7888e859)
+
+Worker node should list newly created *VF* interfaces:
+
+![image](https://github.com/user-attachments/assets/cea6534d-64dc-47d4-83d8-6d654e765838)
 
 
 **Test traffic**
