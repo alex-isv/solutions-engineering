@@ -216,6 +216,11 @@ Worker node should list newly created *VF* interfaces:
 ![image](https://github.com/user-attachments/assets/cea6534d-64dc-47d4-83d8-6d654e765838)
 
 
+Add the 2nd worker and make sure that the 2nd DPU provisioned.
+
+![image](https://github.com/user-attachments/assets/b25b26c9-49cd-4f15-9ee6-c3b3ecbff11a)
+
+
 **Test traffic**
 
 ````
