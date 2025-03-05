@@ -6,7 +6,7 @@
 
 ## Use case
 
-[**Host based networking.**](https://github.com/NVIDIA/doca-platform/tree/release-v25.1/docs/guides/usecases/hbn_only#deploy-test-pods)
+Nvidia DOCA platform operator for [**Host based networking.**](https://github.com/NVIDIA/doca-platform/tree/release-v25.1/docs/guides/usecases/hbn_only#deploy-test-pods) usecase.
 
 For SUSE TELCO/ATIP review [SUSE Edge for Telco Architecture](https://documentation.suse.com/suse-edge/3.2/single-html/edge/#atip-architecture).
 
