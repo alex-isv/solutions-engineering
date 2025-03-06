@@ -140,18 +140,19 @@ helm repo add nvidia https://helm.ngc.nvidia.com/nvidia --force-update
 
 helm upgrade --no-hooks --install --create-namespace --namespace nvidia-network-operator network-operator nvidia/network-operator --version 24.7.0 -f ./manifests/03-enable-accelerated-interfaces/helm-values/network-operator.yml
 ````
+
 > [!NOTE]
 > Since RKE2 cluster created initially with Multus, the section in nic_cluster_policy.yaml file should remove multus option from upstream and
 >  include only:
 > 
 > ````
-apiVersion: mellanox.com/v1alpha1
-kind: NicClusterPolicy
-metadata:
-  name: nic-cluster-policy
-spec:
-  secondaryNetwork:
-````
+> apiVersion: mellanox.com/v1alpha1
+> kind: NicClusterPolicy
+> metadata:
+>  name: nic-cluster-policy
+> spec:
+>  secondaryNetwork:
+> ````
 >
 
 **Apply the NICClusterConfiguration and SriovNetworkNodePolicy**
