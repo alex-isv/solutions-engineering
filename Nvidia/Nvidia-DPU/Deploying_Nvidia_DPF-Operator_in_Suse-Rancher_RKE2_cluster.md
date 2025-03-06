@@ -12,11 +12,11 @@ For SUSE TELCO/ATIP concept review [SUSE Edge for Telco Architecture](https://do
 
 ### Prerequisites ###
 
-RKE2 cluster description here...
 
-<diagram>
+![image](https://github.com/user-attachments/assets/b0429626-095b-4252-9875-d8e6311e2a1d)
 
-<ins> 3 SLES 15sp6 admin nodes </ins> 
+
+<ins> 3 admin nodes (SLES-15sp6 based) </ins> 
 
 <ins> 2 worker nodes hosting BF-3 cards connected to a high-speed switch. </ins> 
 
