@@ -193,8 +193,10 @@ helm upgrade --no-hooks --install --create-namespace --namespace nvidia-network-
 >
 > *sriov_network_operator_polity.yaml* should have the following setting based on the device names on the worker nodes:
 
+
 <details><summary>Expand for detailed helm values</summary>
-````
+  
+````yml
 ---
 apiVersion: sriovnetwork.openshift.io/v1
 kind: SriovNetworkNodePolicy
