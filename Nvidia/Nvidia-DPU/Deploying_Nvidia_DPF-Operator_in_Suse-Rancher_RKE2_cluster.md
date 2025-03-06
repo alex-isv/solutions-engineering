@@ -16,11 +16,13 @@ For SUSE TELCO/ATIP concept review [SUSE Edge for Telco Architecture](https://do
 ![image](https://github.com/user-attachments/assets/b0429626-095b-4252-9875-d8e6311e2a1d)
 
 
+Demo RKE2 cluster with:
+
 <ins> 3 admin nodes (SLES-15sp6 based) </ins> 
 
 <ins> 2 worker nodes hosting BF-3 cards connected to a high-speed switch. </ins> 
 
-managed by a Rancher server.
+provisioned and managed by a Rancher server.
 
 Follow these [steps](https://github.com/alex-isv/solutions-engineering/blob/main/Rancher/RKE2_cluster_deployment.md) to install a Rancher with RKE2.
 
