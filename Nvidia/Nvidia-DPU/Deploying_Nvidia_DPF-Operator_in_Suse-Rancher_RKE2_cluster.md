@@ -234,6 +234,10 @@ kubectl apply -f manifests/05-test-traffic
 
 That will deploy 2 test pods.
 
-Use iperf3 to test networking between two pods.
+Use iperf to test networking between two pods.
+
+![image](https://github.com/user-attachments/assets/942af4de-9857-45e0-b01f-b7cb82603faf)
+
+In this test case 180 Gbits/sec was achieved on pcie4 without any tuning on pods and HW side.
 
 
