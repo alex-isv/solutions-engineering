@@ -95,7 +95,9 @@ nv set vrf default router bgp peer-group hbn remote-as external
 Create a variables file on the admin node <ins> export_vars.env </ins> as described [here](https://github.com/NVIDIA/doca-platform/tree/release-v25.1/docs/guides/usecases/hbn_only#0-required-variables) and source the file as
 
 <details><summary>Expand for detailed variables values</summary>
+ 
 ````yml
+---
 ## IP Address for the Kubernetes API server of the target cluster on which DPF is installed.
 ## This should never include a scheme or a port.
 ## e.g. 10.10.10.10
