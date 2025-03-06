@@ -620,10 +620,10 @@ spec:
             cpu: 16
             memory: 6Gi
 ````
-<details/>
+</details>
 
 
-
+Apply the above yaml files to create test pods.
 
 ````
 kubectl apply -f manifests/05-test-traffic
