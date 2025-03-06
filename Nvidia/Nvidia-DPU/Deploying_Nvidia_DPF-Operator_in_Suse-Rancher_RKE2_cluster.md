@@ -94,6 +94,62 @@ nv set vrf default router bgp peer-group hbn remote-as external
 
 Create a variables file on the admin node <ins> export_vars.env </ins> as described [here](https://github.com/NVIDIA/doca-platform/tree/release-v25.1/docs/guides/usecases/hbn_only#0-required-variables) and source the file as
 
+<details><summary>Expand for detailed helm values</summary>
+````
+## IP Address for the Kubernetes API server of the target cluster on which DPF is installed.
+## This should never include a scheme or a port.
+## e.g. 10.10.10.10
+export TARGETCLUSTER_API_SERVER_HOST=192.168.143.22
+ # where 192.168.143.22 is a control-plane node
+
+## Port for the Kubernetes API server of the target cluster on which DPF is installed.
+export TARGETCLUSTER_API_SERVER_PORT=6443
+  
+## Virtual IP used by the load balancer for the DPU Cluster. Must be a reserved IP from the management subnet and should not be allocated by DHCP.
+export DPUCLUSTER_VIP=192.168.143.100
+ # any available IP from the management 1gb network.
+
+## DPU_P0 is the name of the first port of the DPU. This name must be the same on all worker nodes.
+export DPU_P0=p2p1
+ 
+ 
+## Interface on which the DPUCluster load balancer will listen. Should be the management interface of the control plane node.
+export DPUCLUSTER_INTERFACE=eth0
+ 
+# IP address to the NFS server used as storage for the BFB.
+export NFS_SERVER_IP=192.168.143.4
+# above if the nv-2 node which is part of the cluster, 2nd control-plane/etcd node
+#
+
+## The repository URL for the NVIDIA Helm chart registry.
+## Usually this is the NVIDIA Helm NGC registry. For development purposes, this can be set to a different repository.
+export NGC_HELM_REGISTRY_REPO_URL=https://helm.ngc.nvidia.com/nvidia/doca
+
+
+## The repository URL for the HBN container image.
+## Usually this is the NVIDIA NGC registry. For development purposes, this can be set to a different repository.
+export HBN_NGC_IMAGE_URL=nvcr.io/nvidia/doca/doca_hbn
+
+
+# API key for accessing containers and helm charts from the NGC private repository.
+export NGC_API_KEY=YOUR-NGC-KEY-generated-from-NGC-accounnt
+ 
+ 
+## The DPF REGISTRY is the Helm repository URL for the DPF Operator.
+## Usually this is the GHCR registry. For development purposes, this can be set to a different repository.
+export REGISTRY=oci://ghcr.io/nvidia/dpf-operator
+
+
+## The DPF TAG is the version of the DPF components which will be deployed in this guide.
+export TAG=v25.1.0
+
+
+## URL to the BFB used in the `bfb.yaml` and linked by the DPUSet.
+export BLUEFIELD_BITSTREAM="https://content.mellanox.com/BlueField/BFBs/Ubuntu22.04/bf-bundle-2.9.1-40_24.11_ubuntu-22.04_prod.bfb"
+````
+</details>
+
+
 ````
 source export_vars.env
 ````
