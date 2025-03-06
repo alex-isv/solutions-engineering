@@ -39,6 +39,43 @@ Don't add worker nodes with BF-3 cards installed to the cluster at the beginning
 
 Setup a networking for worker nodes as described [here](https://github.com/NVIDIA/doca-platform/blob/release-v25.1/docs/guides/usecases/host-network-configuration-prerequisite.md).
 
+Cumulus 200Gb/s switch configuration example:
+
+Ports: 11, 12, 13, 14 are used to connect DPUs.
+
+````
+nv set evpn enable on
+nv set interface lo ip address 11.0.0.101/32
+nv set interface lo type loopback
+nv set interface swp11-14 type swp
+nv set nve vxlan enable on
+nv set qos roce enable on
+nv set qos roce mode lossless
+nv set router bgp autonomous-system 65001
+nv set router bgp enable on
+nv set router bgp graceful-restart mode full
+nv set router bgp router-id 11.0.0.101
+nv set vrf default router bgp address-family ipv4-unicast enable on
+nv set vrf default router bgp address-family ipv4-unicast redistribute connected enable on
+nv set vrf default router bgp address-family ipv4-unicast redistribute static enable on
+nv set vrf default router bgp address-family ipv6-unicast enable on
+nv set vrf default router bgp address-family ipv6-unicast redistribute connected enable on
+nv set vrf default router bgp address-family l2vpn-evpn enable on
+nv set vrf default router bgp enable on
+nv set vrf default router bgp neighbor swp11 peer-group hbn
+nv set vrf default router bgp neighbor swp11 type unnumbered
+nv set vrf default router bgp neighbor swp12 peer-group hbn
+nv set vrf default router bgp neighbor swp12 type unnumbered
+nv set vrf default router bgp neighbor swp13 peer-group hbn
+nv set vrf default router bgp neighbor swp13 type unnumbered
+nv set vrf default router bgp neighbor swp14 peer-group hbn
+nv set vrf default router bgp neighbor swp14 type unnumbered
+nv set vrf default router bgp path-selection multipath aspath-ignore on
+nv set vrf default router bgp peer-group hbn address-family l2vpn-evpn enable on
+nv set vrf default router bgp peer-group hbn remote-as external
+
+````
+
 Create a variables file on the admin node <ins> export_vars.env </ins> as described [here](https://github.com/NVIDIA/doca-platform/tree/release-v25.1/docs/guides/usecases/hbn_only#0-required-variables) and source the file as
 
 ````
@@ -142,18 +179,46 @@ helm upgrade --no-hooks --install --create-namespace --namespace nvidia-network-
 ````
 
 > [!NOTE]
-> Since RKE2 cluster created initially with Multus, the section in nic_cluster_policy.yaml file should remove multus option from upstream and
+> Since RKE2 cluster created initially with Multus, the section in *nic_cluster_policy.yaml* file should remove multus option from upstream and
 >  include only:
 > 
 > ````
 > apiVersion: mellanox.com/v1alpha1
 > kind: NicClusterPolicy
 > metadata:
->  name: nic-cluster-policy
+>   name: nic-cluster-policy
 > spec:
->  secondaryNetwork:
+>   secondaryNetwork:
 > ````
 >
+> *sriov_network_operator_polity.yaml* should have the following setting based on the device names on the worker nodes:
+
+````
+---
+apiVersion: sriovnetwork.openshift.io/v1
+kind: SriovNetworkNodePolicy
+metadata:
+  name: bf3-p0-vfs
+  namespace: nvidia-network-operator
+spec:
+  mtu: 1500
+  nicSelector:
+    deviceID: "a2dc"
+    vendor: "15b3"
+    pfNames:
+    - p2p1#2-45
+    - p5p1#2-45
+  nodeSelector:
+    node-role.kubernetes.io/worker: ""
+  numVfs: 46
+  resourceName: bf3-p0-vfs
+  isRdma: true
+  externallyManaged: true
+  deviceType: netdevice
+  linkType: eth
+````
+>
+
 
 **Apply the NICClusterConfiguration and SriovNetworkNodePolicy**
 
@@ -235,12 +300,317 @@ Add the 2nd worker and make sure that the 2nd DPU provisioned.
 ![image](https://github.com/user-attachments/assets/b25b26c9-49cd-4f15-9ee6-c3b3ecbff11a)
 
 
-> [!NOTE]
-> Need to redeploy sr-iov, since multus should be used from rke2 intergrated as part of the *kube-system* ns.
-> Need to figure out how to rename VF interface since HW nodes are different, so VF created with diff. names on both workers.
-> 
 
 **Test traffic**
+
+> [!NOTE]
+> NAD-hostdev.yaml file should be created with the following settings:
+>
+````
+apiVersion: "k8s.cni.cncf.io/v1"
+kind: NetworkAttachmentDefinition
+metadata:
+  name: hostdev-pf0vf10-worker1
+spec:
+  config: '{
+    "cniVersion": "0.3.1",
+    "name": "hostpf0vf10",
+    "type": "host-device",
+    "device": "p2p1_10",
+    "ipam": {
+        "type": "static",
+        "addresses": [
+          {
+            "address": "10.0.121.9/29"
+          }
+        ],
+        "routes": [
+          {
+            "dst": "10.0.121.0/29",
+            "gw": "10.0.121.10"
+          }
+        ]
+    }
+  }'
+---
+apiVersion: "k8s.cni.cncf.io/v1"
+kind: NetworkAttachmentDefinition
+metadata:
+  name: hostdev-pf1vf10-worker1
+spec:
+  config: '{
+    "cniVersion": "0.3.1",
+    "name": "hostpf1vf10",
+    "type": "host-device",
+    "device": "p2p2_10",
+    "ipam": {
+        "type": "static",
+        "addresses": [
+          {
+            "address": "10.0.122.9/29"
+          }
+        ],
+        "routes": [
+          {
+            "dst": "10.0.122.0/29",
+            "gw": "10.0.122.10"
+          }
+        ]
+    }
+  }'
+---
+apiVersion: "k8s.cni.cncf.io/v1"
+kind: NetworkAttachmentDefinition
+metadata:
+  name: hostdev-pf0vf10-worker2
+spec:
+  config: '{
+    "cniVersion": "0.3.1",
+    "name": "hostpf0vf10",
+    "type": "host-device",
+    "device": "p5p1_10",
+    "ipam": {
+        "type": "static",
+        "addresses": [
+          {
+            "address": "10.0.121.1/29"
+          }
+        ],
+        "routes": [
+          {
+            "dst": "10.0.121.8/29",
+            "gw": "10.0.121.2"
+          }
+        ]
+    }
+  }'
+---
+apiVersion: "k8s.cni.cncf.io/v1"
+kind: NetworkAttachmentDefinition
+metadata:
+  name: hostdev-pf1vf10-worker2
+spec:
+  config: '{
+    "cniVersion": "0.3.1",
+    "name": "hostpf1vf10",
+    "type": "host-device",
+    "device": "p5p2_10",
+    "ipam": {
+        "type": "static",
+        "addresses": [
+          {
+            "address": "10.0.122.1/29"
+          }
+        ],
+        "routes": [
+          {
+            "dst": "10.0.122.8/29",
+            "gw": "10.0.122.2"
+          }
+        ]
+    }
+  }'
+````
+
+together with test-hostdev-pods.yaml
+
+````
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sriov-hostdev-pf0vf10-test-worker1
+  labels:
+    app: sriov-hostdev-pf0vf10-test-worker1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sriov-hostdev-pf0vf10-test-worker1
+  template:
+    metadata:
+      labels:
+        app: sriov-hostdev-pf0vf10-test-worker1
+      annotations:
+        k8s.v1.cni.cncf.io/networks: hostdev-pf0vf10-worker1
+    spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app: sriov-test-worker
+      nodeSelector:
+        feature.node.kubernetes.io/dpu-enabled: "true"
+        kubernetes.io/hostname: "r750-a"
+      containers:
+      - name: nginx
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+            - NET_ADMIN
+        image: nicolaka/netshoot
+        command: ["nc", "-kl", "5000"]
+        ports:
+        - containerPort: 5000
+          name: tcp-server
+        resources:
+          requests:
+            cpu: 16
+            memory: 6Gi
+          limits:
+            cpu: 16
+            memory: 6Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sriov-hostdev-pf1vf10-test-worker1
+  labels:
+    app: sriov-hostdev-pf1vf10-test-worker1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sriov-hostdev-pf1vf10-test-worker1
+  template:
+    metadata:
+      labels:
+        app: sriov-hostdev-pf1vf10-test-worker1
+      annotations:
+        k8s.v1.cni.cncf.io/networks: hostdev-pf1vf10-worker1
+    spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app: sriov-test-worker
+      nodeSelector:
+        feature.node.kubernetes.io/dpu-enabled: "true"
+        kubernetes.io/hostname: "r750-a"
+      containers:
+      - name: nginx
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+            - NET_ADMIN
+        image: nicolaka/netshoot
+        command: ["nc", "-kl", "5000"]
+        ports:
+        - containerPort: 5000
+          name: tcp-server
+        resources:
+          requests:
+            cpu: 16
+            memory: 6Gi
+          limits:
+            cpu: 16
+            memory: 6Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sriov-hostdev-pf0vf10-test-worker2
+  labels:
+    app: sriov-hostdev-pf0vf10-test-worker2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sriov-hostdev-pf0vf10-test-worker2
+  template:
+    metadata:
+      labels:
+        app: sriov-hostdev-pf0vf10-test-worker2
+      annotations:
+        k8s.v1.cni.cncf.io/networks: hostdev-pf0vf10-worker2
+    spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app: sriov-test-worker
+      nodeSelector:
+        feature.node.kubernetes.io/dpu-enabled: "true"
+        kubernetes.io/hostname: "r7525-a"
+      containers:
+      - name: nginx
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+            - NET_ADMIN
+        image: nicolaka/netshoot
+        command: ["nc", "-kl", "5000"]
+        ports:
+        - containerPort: 5000
+          name: tcp-server
+        resources:
+          requests:
+            cpu: 16
+            memory: 6Gi
+          limits:
+            cpu: 16
+            memory: 6Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sriov-hostdev-pf1vf10-test-worker2
+  labels:
+    app: sriov-hostdev-pf1vf10-test-worker2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sriov-hostdev-pf1vf10-test-worker2
+  template:
+    metadata:
+      labels:
+        app: sriov-hostdev-pf1vf10-test-worker2
+      annotations:
+        k8s.v1.cni.cncf.io/networks: hostdev-pf1vf10-worker2
+    spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app: sriov-test-worker
+      nodeSelector:
+        feature.node.kubernetes.io/dpu-enabled: "true"
+        kubernetes.io/hostname: "r7525-a"
+      containers:
+      - name: nginx
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+            - NET_ADMIN
+        image: nicolaka/netshoot
+        command: ["nc", "-kl", "5000"]
+        ports:
+        - containerPort: 5000
+          name: tcp-server
+        resources:
+          requests:
+            cpu: 16
+            memory: 6Gi
+          limits:
+            cpu: 16
+            memory: 6Gi
+````
+
+
+
+
 
 ````
 kubectl apply -f manifests/05-test-traffic
