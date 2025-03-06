@@ -41,7 +41,7 @@ Any, Multus/CNI combo can be used during the cluster creation.
 >
 > 
 
-Don't add worker nodes with BF-3 cards installed to the cluster at the beginning.
+<ins> Don't add worker nodes with BF-3 cards installed to the cluster at this point, as they should be added after all configuration complete.</ins>
 
 Setup a networking for worker nodes as described [here](https://github.com/NVIDIA/doca-platform/blob/release-v25.1/docs/guides/usecases/host-network-configuration-prerequisite.md).
 
