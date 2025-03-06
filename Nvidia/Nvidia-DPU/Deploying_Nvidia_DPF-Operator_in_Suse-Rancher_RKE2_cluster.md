@@ -53,6 +53,7 @@ and the bridge routing should go through default gateway:
 
 ![image](https://github.com/user-attachments/assets/270ba10b-a467-4bbd-a121-262921948eeb)
 
+Fast speed interfaces should be set to DHCP.
 
 Cumulus 200Gb/s switch configuration example:
 
