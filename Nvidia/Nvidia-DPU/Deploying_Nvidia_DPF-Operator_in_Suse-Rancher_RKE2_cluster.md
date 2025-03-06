@@ -34,6 +34,10 @@ Any, Multus/CNI combo can be used during the cluster creation.
 
 ![image](https://github.com/user-attachments/assets/5dfa95f1-6a71-4a31-95e3-85b8e6fe023c)
 
+> [!NOTE]
+> If using *cilium/multus* combo cni from Rancher deployment, you need to set cni option to *exclusive: false* in the cilium config.
+>
+> 
 
 Don't add worker nodes with BF-3 cards installed to the cluster at the beginning.
 
