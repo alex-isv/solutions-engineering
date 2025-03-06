@@ -1,7 +1,7 @@
 # Deploying Nvidia DPU-operator in Suse/Rancher cluster.
 
 > [!NOTE]
-> Work in progress. Don't use as a reference.
+> Proof of concept. Don't use as a reference.
 > 
 
 ## Use case
