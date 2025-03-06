@@ -309,8 +309,11 @@ Add the 2nd worker and make sure that the 2nd DPU provisioned.
 
 > [!NOTE]
 > NAD-hostdev.yaml file should be created with the following settings:
->
-````
+
+<details><summary>Expand for detailed helm values</summary>
+  
+````yml
+
 apiVersion: "k8s.cni.cncf.io/v1"
 kind: NetworkAttachmentDefinition
 metadata:
@@ -415,10 +418,16 @@ spec:
     }
   }'
 ````
+</details>
 
-together with test-hostdev-pods.yaml
 
-````
+together with *test-hostdev-pods.yaml*
+
+
+
+<details><summary>Expand for detailed helm values</summary>
+  
+````yml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -611,7 +620,7 @@ spec:
             cpu: 16
             memory: 6Gi
 ````
-
+<details/>
 
 
 
