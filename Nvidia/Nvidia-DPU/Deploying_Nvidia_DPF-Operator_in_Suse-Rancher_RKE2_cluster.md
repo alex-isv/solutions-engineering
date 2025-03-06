@@ -45,6 +45,15 @@ Don't add worker nodes with BF-3 cards installed to the cluster at the beginning
 
 Setup a networking for worker nodes as described [here](https://github.com/NVIDIA/doca-platform/blob/release-v25.1/docs/guides/usecases/host-network-configuration-prerequisite.md).
 
+For ex. worker node should have a bridge configured throgh the management interface:
+
+![image](https://github.com/user-attachments/assets/13061249-a0de-47cb-b201-5caec1fd2763)
+
+and the bridge routing should go through default gateway:
+
+![image](https://github.com/user-attachments/assets/270ba10b-a467-4bbd-a121-262921948eeb)
+
+
 Cumulus 200Gb/s switch configuration example:
 
 Ports: 11, 12, 13, 14 are used to connect DPUs.
