@@ -26,7 +26,7 @@ Follow these [steps](https://github.com/alex-isv/solutions-engineering/blob/main
 
 For this particular test, add 2 control-plane nodes to the cluster and 1 node with all roles assigned to complete a cluster creation.
 
-Use, <ins> multus/cilium CLI combo </ins> during the cluster creation.
+Any, Multus/CNI combo can be used during the cluster creation.
 
 ![image](https://github.com/user-attachments/assets/e22172e5-3005-42b9-bab5-95c917063cd3)
 
@@ -133,13 +133,26 @@ kubectl rollout status deployment --namespace dpf-operator-system dpf-provisioni
 
 ### Enable accelerated interfaces
 
-**Install Multus and SRIOV Network Operator using NVIDIA Network Operator**
+**Install SRIOV using NVIDIA Network Operator**
 
 ````
 helm repo add nvidia https://helm.ngc.nvidia.com/nvidia --force-update
 
 helm upgrade --no-hooks --install --create-namespace --namespace nvidia-network-operator network-operator nvidia/network-operator --version 24.7.0 -f ./manifests/03-enable-accelerated-interfaces/helm-values/network-operator.yml
 ````
+> [!NOTE]
+> Since RKE2 cluster created initially with Multus, the section in nic_cluster_policy.yaml file should remove multus option from upstream and
+>  include only:
+> 
+> ````
+apiVersion: mellanox.com/v1alpha1
+kind: NicClusterPolicy
+metadata:
+  name: nic-cluster-policy
+spec:
+  secondaryNetwork:
+````
+>
 
 **Apply the NICClusterConfiguration and SriovNetworkNodePolicy**
 
