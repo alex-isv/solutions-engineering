@@ -22,28 +22,28 @@ Some of the benefits of using BF-3 DPU cards are:
     Offloading workloads from the CPU to DPUs frees up CPU resources for application processing and accelerating stateless functions improves efficiency and maximizes ROI.
     Low-latency and high-throughput networking are optimized for AI, HPC, and cloud-native workloads.
 
-**Host and Network Isolation**
+- Host and Network Isolation
 
     Offloads networking, security, and storage functions from the host CPU to the DPU, improving performance and security.
     Enables zero-trust security by isolating workloads and enforcing strict access controls at the hardware level.
 
-**Enhanced Security and Workload Protection**
+- Enhanced Security and Workload Protection
 
     DPUs enforce security policies at the hardware level, protecting VMs, containers, and applications from threats.
     Reduces attack surface by offloading and acceleration security functions like (distributed) firewalling, encryption, and microsegmentation to the DPU.
 
-**Scalable and Cloud-Native Infrastructure**
+- Scalable and Cloud-Native Infrastructure
 
     Supports software-defined networking (SDN), storage virtualization, and containerized workloads for modern cloud environments.
     Works with Kubernetes orchestration platforms.
 
-**Provisioning Cumulus Switch Configuration as a Container on DPUs**
+- Provisioning Cumulus Switch Configuration as a Container on DPUs
 
     Enabling programmable, distributed networking at the hardware level.
     DPUs can run Cumulus Linux as a container, allowing flexible and scalable switch configuration.
     Provides centralized network management while reducing the dependency on traditional switch hardware.
 
-**Eliminates the Need for Real-Time OS on Host for Telco based infrastructure**
+- Eliminates the Need for Real-Time OS on Host for Telco based infrastructure
 
     DPUs handle packet processing, storage management, and security tasks, reducing the need for a real-time OS on the main server.
     Allows enterprises to use standard Linux distributions while benefiting from deterministic, high-performance networking.
