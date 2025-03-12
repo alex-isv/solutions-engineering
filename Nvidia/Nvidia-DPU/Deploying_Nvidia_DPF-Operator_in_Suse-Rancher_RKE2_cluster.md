@@ -7,7 +7,9 @@
 ## Use case
 
 In this particular Demo case Nvidia Doca Platform operator deployed from SUSE/Rancher RKE2 cluster.
-BlueField-3 DPUs are used as part of the worker nodes for network accelleration. The main benefits of using BF-3 DPU cards are:
+BlueField-3 DPUs are used as part of the worker nodes for network accelleration.
+
+Some of the benefits of using BF-3 DPU cards are:
 
  **BlueField DPU is one of the three Pillars of Zero-Trust Accelerated Computing along with CPU and GPU.**
 
