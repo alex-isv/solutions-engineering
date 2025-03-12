@@ -13,11 +13,11 @@ For more details about Nvidia DPU review [BlueField Networking Platform](https:/
 
 Some of the benefits of using BF-3 DPU cards are:
 
- **BlueField DPU is one of the three Pillars of Zero-Trust Accelerated Computing along with CPU and GPU.**
+- BlueField DPU is one of the three Pillars of Zero-Trust Accelerated Computing along with CPU and GPU.
 
     Modern data centers require more than just CPU and GPU power. They also need efficient data movement, security, and workload isolation. NVIDIA’s BlueField DPUs bridge the gap, making accelerated computing more scalable, secure, and efficient.
 
-**Improved Performance and Efficiency**
+- Improved Performance and Efficiency
 
     Offloading workloads from the CPU to DPUs frees up CPU resources for application processing and accelerating stateless functions improves efficiency and maximizes ROI.
     Low-latency and high-throughput networking are optimized for AI, HPC, and cloud-native workloads.
