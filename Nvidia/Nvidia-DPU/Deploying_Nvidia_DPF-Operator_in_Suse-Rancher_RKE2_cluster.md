@@ -6,7 +6,45 @@
 
 ## Use case
 
-Review Nvidia DOCA platform operator (DPF) for [**Host based networking**](https://github.com/NVIDIA/doca-platform/tree/release-v25.1/docs/guides/usecases/hbn_only#deploy-test-pods) usecase.
+In this particular Demo case Nvidia Doca Platform operator deployed from SUSE/Rancher RKE2 cluster.
+BlueField-3 DPUs are used as part of the worker nodes for network accelleration. The main benefits of using BF-3 DPU cards are:
+
+ **BlueField DPU is one of the three Pillars of Zero-Trust Accelerated Computing along with CPU and GPU.**
+
+    Modern data centers require more than just CPU and GPU power. They also need efficient data movement, security, and workload isolation. NVIDIA’s BlueField DPUs bridge the gap, making accelerated computing more scalable, secure, and efficient.
+
+**Improved Performance and Efficiency**
+
+    Offloading workloads from the CPU to DPUs frees up CPU resources for application processing and accelerating stateless functions improves efficiency and maximizes ROI.
+    Low-latency and high-throughput networking are optimized for AI, HPC, and cloud-native workloads.
+
+**Host and Network Isolation**
+
+    Offloads networking, security, and storage functions from the host CPU to the DPU, improving performance and security.
+    Enables zero-trust security by isolating workloads and enforcing strict access controls at the hardware level.
+
+**Enhanced Security and Workload Protection**
+
+    DPUs enforce security policies at the hardware level, protecting VMs, containers, and applications from threats.
+    Reduces attack surface by offloading and acceleration security functions like (distributed) firewalling, encryption, and microsegmentation to the DPU.
+
+**Scalable and Cloud-Native Infrastructure**
+
+    Supports software-defined networking (SDN), storage virtualization, and containerized workloads for modern cloud environments.
+    Works with Kubernetes orchestration platforms.
+
+**Provisioning Cumulus Switch Configuration as a Container on DPUs**
+
+    Enabling programmable, distributed networking at the hardware level.
+    DPUs can run Cumulus Linux as a container, allowing flexible and scalable switch configuration.
+    Provides centralized network management while reducing the dependency on traditional switch hardware.
+
+**Eliminates the Need for Real-Time OS on Host for Telco based infrastructure**
+
+    DPUs handle packet processing, storage management, and security tasks, reducing the need for a real-time OS on the main server.
+    Allows enterprises to use standard Linux distributions while benefiting from deterministic, high-performance networking.
+
+For more details, review Nvidia DOCA platform operator (DPF) for [**Host based networking**](https://github.com/NVIDIA/doca-platform/tree/release-v25.1/docs/guides/usecases/hbn_only#deploy-test-pods) usecase.
 
 For SUSE TELCO/ATIP concept review [SUSE Edge for Telco Architecture](https://documentation.suse.com/suse-edge/3.2/single-html/edge/#atip-architecture).
 
@@ -16,13 +54,15 @@ For SUSE TELCO/ATIP concept review [SUSE Edge for Telco Architecture](https://do
 ![image](https://github.com/user-attachments/assets/b0429626-095b-4252-9875-d8e6311e2a1d)
 
 
-Demo RKE2 cluster with:
+Demo RKE2 cluster (SLES-15sp6 based) provisioned and managed by a Rancher server.
 
-<ins> 3 admin nodes (SLES-15sp6 based) </ins> 
+<ins> 3 admin nodes </ins> 
 
 <ins> 2 worker nodes hosting BF-3 cards connected to a high-speed switch. </ins> 
 
-provisioned and managed by a Rancher server.
+
+For more details about Nvidia DPU review [BlueField Networking Platform](https://www.nvidia.com/en-us/networking/products/data-processing-unit/).
+
 
 Follow these [steps](https://github.com/alex-isv/solutions-engineering/blob/main/Rancher/RKE2_cluster_deployment.md) to install a Rancher with RKE2.
 
