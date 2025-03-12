@@ -6,8 +6,10 @@
 
 ## Use case
 
-In this particular Demo case Nvidia Doca Platform operator deployed from SUSE/Rancher RKE2 cluster.
-BlueField-3 DPUs are used as part of the worker nodes for network accelleration.
+In this particular Demo case Nvidia Doca Platform operator deployed on SUSE/Rancher RKE2 cluster.
+BlueField-3 DPUs installed on the worker nodes for network accelleration.
+
+For more details about Nvidia DPU review [BlueField Networking Platform](https://www.nvidia.com/en-us/networking/products/data-processing-unit/).
 
 Some of the benefits of using BF-3 DPU cards are:
 
@@ -58,15 +60,12 @@ For SUSE TELCO/ATIP concept review [SUSE Edge for Telco Architecture](https://do
 
 Demo RKE2 cluster (SLES-15sp6 based) provisioned and managed by a Rancher server.
 
-<ins> 3 admin nodes </ins> 
+<ins> 3 admin nodes. </ins> 
 
-<ins> 2 worker nodes hosting BF-3 cards connected to a high-speed switch. </ins> 
-
-
-For more details about Nvidia DPU review [BlueField Networking Platform](https://www.nvidia.com/en-us/networking/products/data-processing-unit/).
+<ins> 2 worker nodes hosting BF-3 cards connected to a high-speed 200 Gb/s switch. </ins> 
 
 
-Follow these [steps](https://github.com/alex-isv/solutions-engineering/blob/main/Rancher/RKE2_cluster_deployment.md) to install a Rancher with RKE2.
+Deploye an RKE2 cluster as described in these [steps](https://github.com/alex-isv/solutions-engineering/blob/main/Rancher/RKE2_cluster_deployment.md).
 
 For this particular test, add 2 control-plane nodes to the cluster and 1 node with all roles assigned to complete a cluster creation.
 
