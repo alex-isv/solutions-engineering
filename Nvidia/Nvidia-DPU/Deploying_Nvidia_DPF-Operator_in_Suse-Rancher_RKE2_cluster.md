@@ -19,7 +19,7 @@ Some of the benefits of using BF-3 DPU cards are:
 
 - Improved Performance and Efficiency
 
-    Offloading workloads from the CPU to DPUs frees up CPU resources for application processing and accelerating stateless functions improves efficiency and maximizes ROI.
+    Offloading workloads from the CPU to DPUs frees up CPU resources for application processing and accelerating stateless functions improves efficiency.
     Low-latency and high-throughput networking are optimized for AI, HPC, and cloud-native workloads.
 
 - Host and Network Isolation
