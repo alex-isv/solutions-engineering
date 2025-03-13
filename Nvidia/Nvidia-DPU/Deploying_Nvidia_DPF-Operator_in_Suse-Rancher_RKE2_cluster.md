@@ -86,7 +86,7 @@ Any, Multus/CNI combo can be used during the cluster creation.
 
 Setup a networking for worker nodes as described [here](https://github.com/NVIDIA/doca-platform/blob/release-v25.1/docs/guides/usecases/host-network-configuration-prerequisite.md).
 
-For ex. worker node should have a bridge configured throgh the management interface:
+For ex. worker node should have a bridge configured through the management interface:
 
 ![image](https://github.com/user-attachments/assets/13061249-a0de-47cb-b201-5caec1fd2763)
 
