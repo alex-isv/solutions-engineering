@@ -65,7 +65,9 @@ Demo RKE2 cluster (SLES-15sp6 based) provisioned and managed by a Rancher server
 <ins> 2 worker nodes hosting BF-3 cards connected to a high-speed 200 Gb/s switch. </ins> 
 
 
-Deploye an RKE2 cluster as described in these [steps](https://github.com/alex-isv/solutions-engineering/blob/main/Rancher/RKE2_cluster_deployment.md).
+Deploy an RKE2 cluster as described in these [steps](https://github.com/alex-isv/solutions-engineering/blob/main/Rancher/RKE2_cluster_deployment.md).
+
+For the DPF cluster logical design review these [diagram](https://docs.nvidia.com/networking/display/public/sol/rdg+for+dpf+with+ovn-kubernetes+and+hbn+services#src-3543225807_RDGforDPFwithOVNKubernetesandHBNServices-K8sClusterLogicalDesign).
 
 For this particular test, add 2 control-plane nodes to the cluster and 1 node with all roles assigned to complete a cluster creation.
 
