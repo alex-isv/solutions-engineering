@@ -750,8 +750,8 @@ That will deploy 2 test pods.
 
 Use iperf to test networking between two pods.
 
-![image](https://github.com/user-attachments/assets/942af4de-9857-45e0-b01f-b7cb82603faf)
+![image](https://github.com/user-attachments/assets/315f9d97-8276-43ce-9b40-9f2ee9e43e01)
 
-In this test case 180 Gbits/sec was achieved on pcie4 without any tuning on pods and HW side.
+In this test case 193 Gbits/sec was achieved on pcie4 without any tuning on pods and HW side.
 
 
