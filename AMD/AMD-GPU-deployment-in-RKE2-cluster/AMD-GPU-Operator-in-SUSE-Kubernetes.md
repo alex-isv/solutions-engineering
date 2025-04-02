@@ -237,7 +237,7 @@ podman tag ghcr.io/alex-isv/amdgpu-driver:latest ghcr.io/alex-isv/amdgpu-driver:
 
 Push to your local registry: (Github in my test case)
 ````
-podman push ghcr.io/alex-isv/amdgpu-driver:sles-15.6-6.4.0-150600.23.38-default-6.3.2
+podman push ghcr.io/alex-isv/amdgpu-driver:sles-15sp6-6.4.0-150600.23.38-default-6.3.2
 ````
 
 If using a GPU-operator to install drivers, you need to set <ins> spec.driver.blacklist=true </ins> and use the following CRD:
