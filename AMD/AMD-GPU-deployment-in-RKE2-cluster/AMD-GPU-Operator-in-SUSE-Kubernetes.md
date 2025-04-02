@@ -226,14 +226,13 @@ Review attached Dockerfile.
 To build a container driver on the worker node, use the following steps:
 
 ````
-podman build -t ghcr.io/alex-isv/amdgpu-driver --build-arg KERNEL_FULL_VERSION=$(uname -r) --build-arg DRIVER
-S_VERSION=6.3.2 .
+podman build -t ghcr.io/alex-isv/amdgpu-driver --build-arg KERNEL_FULL_VERSION=$(uname -r) --build-arg DRIVERS_VERSION=6.3.2 .
 ````
 
 Tag it with:
 
 ````
-podman tag ghcr.io/alex-isv/amdgpu-driver:latest ghcr.io/alex-isv/amdgpu-driver:sles-15.6-6.4.0-150600.23.38-default-6.3.2
+podman tag ghcr.io/alex-isv/amdgpu-driver:latest ghcr.io/alex-isv/amdgpu-driver:sles-15sp6-6.4.0-150600.23.38-default-6.3.2
 ````
 
 Push to your local registry: (Github in my test case)
