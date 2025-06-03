@@ -65,7 +65,7 @@ sudo zypper install doca-ofed
 
 Review [Installation files section](https://docs.nvidia.com/doca/sdk/nvidia+doca+installation+guide+for+linux/index.html#installation-files) for a proper doca package.
 
-For SLES 15 sp6 and DOCA 3 [doca-ofed](https://developer.nvidia.com/doca-downloads?deployment_platform=Host-Server&deployment_package=DOCA-Host&target_os=Linux&Architecture=x86_64&Profile=doca-ofed&Distribution=SLES&version=15sp6&installer_type=rpm_online) with Online Repository example.
+For SLES 15 sp6 use DOCA 3 [doca-ofed](https://developer.nvidia.com/doca-downloads?deployment_platform=Host-Server&deployment_package=DOCA-Host&target_os=Linux&Architecture=x86_64&Profile=doca-ofed&Distribution=SLES&version=15sp6&installer_type=rpm_online) with Online Repository example.
 
 ````
 
