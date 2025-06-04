@@ -223,6 +223,7 @@ or from the admin node:
 
 Review attached Dockerfile.
 
+<!--
 To build a container driver on the worker node, use the following steps:
 
 ````
@@ -290,7 +291,7 @@ Import CRD to install Rocm by the operator:
 
 ![image](https://github.com/user-attachments/assets/0e926930-10a8-4119-8f8e-c827fb677835)
 
-
+-->
 
 Work in progress..
 
