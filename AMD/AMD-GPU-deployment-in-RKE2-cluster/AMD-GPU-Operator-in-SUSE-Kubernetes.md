@@ -222,6 +222,22 @@ or from the admin node:
 ###  <ins> WORK IN PROGRESS .... </INS> Install out-of-tree AMD GPU Drivers with the Operator. <ins> WORK IN PROGRESS .... </INS>
 
 Review attached Dockerfile.
+From your worker file build a driver container and push to your registry.
+
+For example in this test case for SLES15 sp6:
+
+uname -r
+6.4.0-150600.23.53-default
+
+````
+podman build -t ghcr.io/alex-isv/amdgpu-driver --build-arg KERNEL_FULL_VERSION=$(uname -r) --build-arg DRIVERS_VERSION=6.4.0 .
+````
+````
+podman tag ghcr.io/alex-isv/amdgpu-driver:latest ghcr.io/alex-isv/amdgpu-driver:sles-15sp6-6.4.0-150600.23.53-default-6.4.0
+````
+````
+podman push ghcr.io/alex-isv/amdgpu-driver:sles-15sp6-6.4.0-150600.23.53-default-6.4.0
+````
 
 <!--
 To build a container driver on the worker node, use the following steps:
@@ -240,6 +256,15 @@ Push to your local registry: (Github in my test case)
 ````
 podman push ghcr.io/alex-isv/amdgpu-driver:sles-15sp6-6.4.0-150600.23.38-default-6.3.2
 ````
+In this POC modified AMD gpu-operator repo was used:
+
+[https://github.com/alex-isv/rocm-operator-sles.git](https://github.com/alex-isv/rocm-operator-sles)
+
+which is a modified fork from [https://github.com/ROCm/gpu-operator](https://github.com/ROCm/gpu-operator).
+
+
+
+
 
 If using a GPU-operator to install drivers, you need to set <ins> spec.driver.blacklist=true </ins> and use the following CRD:
 
