@@ -243,6 +243,12 @@ podman tag ghcr.io/alex-isv/amdgpu-driver:latest ghcr.io/alex-isv/amdgpu-driver:
 podman push ghcr.io/alex-isv/amdgpu-driver:sles-15sp6-6.4.0-150600.23.53-default-6.4.0
 ````
 
+When preparing a deviceconfig.yaml file, the pre-build repo with a driver version should be listed there. In my case: 
+
+<ins> image: ghcr.io/alex-isv/amdgpu-driver </ins>
+
+<ins> version: "6.4.0" </ins>
+
 
 Clone modified rocm/operator repo.
 
