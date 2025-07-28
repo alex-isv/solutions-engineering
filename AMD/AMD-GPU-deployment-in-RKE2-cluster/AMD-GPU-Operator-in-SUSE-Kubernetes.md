@@ -253,6 +253,7 @@ https://github.com/alex-isv/rocm-operator-sles.git
 
 > [!NOTE]
 > *rocm-operator 1.2.0 and driver 6.4.0 in use for this test.*
+> 
 > rocm-operator was modified to recognize SLES as a worker node.
 > For the future version, it will be merged with AMD main repo to provide SLES support.
 > 
@@ -263,22 +264,6 @@ Go to
 
 ````
 helm upgrade --install amd-gpu-operator-sles . --namespace kube-amd-gpu --create-namespace --version=v1.2.0
-````
-
-
-
-
-
-and pushed to the registry as well.
-
-
-From ..rocm-operator-sles/helm-charts-k8s
-
-
-Install a gpu-operator with:
-
-````
-helm install amd-gpu-operator-sles . --namespace kube-amd-gpu --create-namespace --version=v1.2.0
 ````
 
 If using a GPU-operator to install drivers, you need to set <ins> spec.driver.blacklist=true </ins> and use the following CRD:
