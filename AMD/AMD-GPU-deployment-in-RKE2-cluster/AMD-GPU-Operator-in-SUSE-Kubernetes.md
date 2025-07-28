@@ -321,6 +321,7 @@ Example of deployed operator with deviceconfig:
 
 <img width="1890" height="734" alt="image" src="https://github.com/user-attachments/assets/fc36cc70-ec9d-4050-8d3e-fceff6e7bf20" />
 
+For Ollama AI workload example see [Installing Open WebUI with AMD + ROCm for Ollama in SUSE/Rancher RKE2 Kubernetes cluster](https://github.com/alex-isv/solutions-engineering/blob/main/AMD/AI/Deploying_open-webui-ollama_in_AMD-based_RKE2-cluster.md#install-open-webui-with-helm).
 
 
 
