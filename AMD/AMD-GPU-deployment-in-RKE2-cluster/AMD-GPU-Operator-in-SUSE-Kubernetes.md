@@ -214,7 +214,9 @@ or from the admin node:
 
 ![image](https://github.com/user-attachments/assets/8140f76e-2535-415f-be54-296836a08522)
 .
-
+> [!NOTE]
+> *Latest validation on rocm-operator 1.2.0 and driver 6.4.0.*
+> 
 
 **Option2**
 
@@ -223,41 +225,50 @@ or from the admin node:
 
 Review attached Dockerfile.
 
-From your worker file build a driver container and push to your registry.
+From your worker file build a rocm driver container and push to your registry.
 
 For example in this test case for SLES15 sp6:
 
 uname -r
 
 6.4.0-150600.23.53-default
-
 ````
 podman build -t ghcr.io/alex-isv/amdgpu-driver --build-arg KERNEL_FULL_VERSION=$(uname -r) --build-arg DRIVERS_VERSION=6.4.0 .
 ````
 ````
 podman tag ghcr.io/alex-isv/amdgpu-driver:latest ghcr.io/alex-isv/amdgpu-driver:sles-15sp6-6.4.0-150600.23.53-default-6.4.0
 ````
+
 ````
 podman push ghcr.io/alex-isv/amdgpu-driver:sles-15sp6-6.4.0-150600.23.53-default-6.4.0
 ````
 
-In this POC modified AMD gpu-operator repo was used:
 
-[https://github.com/alex-isv/rocm-operator-sles.git](https://github.com/alex-isv/rocm-operator-sles)
-
-which is a modified fork from [https://github.com/ROCm/gpu-operator](https://github.com/ROCm/gpu-operator).
-
-Kernel module management with modified version for SLES should also be used - https://github.com/alex-isv/sles-kernel-module-management
- which is a clone from https://github.com/pensando/kernel-module-management  
- 
- 
-In my case build is located in deusventorum/rocm-gpu-operator-sles:v1.1
-
- Note: It should be build with
+Clone modified rocm/operator repo.
 
 ````
-make docker build
+https://github.com/alex-isv/rocm-operator-sles.git
+
 ````
+
+> [!NOTE]
+> *rocm-operator 1.2.0 and driver 6.4.0 in use for this test.*
+> rocm-operator was modified to recognize SLES as a worker node.
+> For the future version, it will be merged with AMD main repo to provide SLES support.
+> 
+
+Go to 
+
+<ins> ..rocm-operator-sles/helm-charts-k8s </ins> directory from your admin node and install AMD gpu-operator with:
+
+````
+helm upgrade --install amd-gpu-operator-sles . --namespace kube-amd-gpu --create-namespace --version=v1.2.0
+````
+
+
+
+
+
 and pushed to the registry as well.
 
 
@@ -269,32 +280,6 @@ Install a gpu-operator with:
 ````
 helm install amd-gpu-operator-sles . --namespace kube-amd-gpu --create-namespace --version=v1.2.0
 ````
-
-
-
-
-<!--
-To build a container driver on the worker node, use the following steps:
-
-````
-podman build -t ghcr.io/alex-isv/amdgpu-driver --build-arg KERNEL_FULL_VERSION=$(uname -r) --build-arg DRIVERS_VERSION=6.3.2 .
-````
-
-Tag it with:
-
-````
-podman tag ghcr.io/alex-isv/amdgpu-driver:latest ghcr.io/alex-isv/amdgpu-driver:sles-15sp6-6.4.0-150600.23.38-default-6.3.2
-````
-
-Push to your local registry: (Github in my test case)
-````
-podman push ghcr.io/alex-isv/amdgpu-driver:sles-15sp6-6.4.0-150600.23.38-default-6.3.2
-````
-
-
-
-
-
 
 If using a GPU-operator to install drivers, you need to set <ins> spec.driver.blacklist=true </ins> and use the following CRD:
 
@@ -319,7 +304,7 @@ spec:
     # kubectl create secret docker-registry mysecret -n kmm-namespace --docker-username=xxx --docker-password=xxx
     # Make sure you created the secret within the namespace that KMM operator is running
     # Specify the driver version by using ROCm version
-    version: "6.3.2"
+    version: "6.4.0"
 
   devicePlugin:
     devicePluginImage: rocm/k8s-device-plugin:latest
@@ -341,14 +326,17 @@ spec:
 
 Import CRD to install Rocm by the operator:
 
+````
+kubectl apply -f test-deviceconfig.yaml
+````
+
+
 ![image](https://github.com/user-attachments/assets/22d0de6e-1cd5-4789-987c-2eccffbfa6e1)
 
 
 ![image](https://github.com/user-attachments/assets/0e926930-10a8-4119-8f8e-c827fb677835)
 
--->
 
-Work in progress..
 
 
 
