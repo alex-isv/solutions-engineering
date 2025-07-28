@@ -315,15 +315,11 @@ Import CRD to install Rocm by the operator:
 kubectl apply -f test-deviceconfig.yaml
 ````
 
+Example of deployed operator with deviceconfig:
 
-![image](https://github.com/user-attachments/assets/22d0de6e-1cd5-4789-987c-2eccffbfa6e1)
+<img width="1445" height="551" alt="image" src="https://github.com/user-attachments/assets/c5cfe2fb-7ee7-48a4-8ef0-d102d8e1e150" />
 
-
-![image](https://github.com/user-attachments/assets/0e926930-10a8-4119-8f8e-c827fb677835)
-
-
-
-
+<img width="1890" height="734" alt="image" src="https://github.com/user-attachments/assets/fc36cc70-ec9d-4050-8d3e-fceff6e7bf20" />
 
 
 
