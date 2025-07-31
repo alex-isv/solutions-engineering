@@ -329,7 +329,227 @@ Example of deployed operator with deviceconfig:
 
 For Ollama AI workload example see [Installing Open WebUI with AMD + ROCm for Ollama in SUSE/Rancher RKE2 Kubernetes cluster](https://github.com/alex-isv/solutions-engineering/blob/main/AMD/AI/Deploying_open-webui-ollama_in_AMD-based_RKE2-cluster.md#install-open-webui-with-helm).
 
+Latest Ollama tested 7.0.1
 
+<details><summary>Expand for detailed Ollama helm chart values</summary>
+````yml
+---
+affinity: {}
+annotations: {}
+args: []
+clusterDomain: cluster.local
+command: []
+commonEnvVars: []
+containerSecurityContext: {}
+copyAppData:
+  args: []
+  command: []
+  resources: {}
+databaseUrl: ''
+enableOpenaiApi: true
+extraEnvFrom: []
+extraEnvVars:
+  - name: OPENAI_API_KEY
+    value: 0p3n-w3bu!
+extraInitContainers: []
+extraResources: []
+hostAliases: []
+image:
+  pullPolicy: IfNotPresent
+  repository: ghcr.io/open-webui/open-webui
+  tag: ''
+imagePullSecrets: []
+ingress:
+  additionalHosts: []
+  annotations: {}
+  class: ''
+  enabled: true
+  existingSecret: ''
+  extraLabels: {}
+  host: ollama.isv.suse
+  tls: false
+livenessProbe: {}
+logging:
+  components:
+    audio: ''
+    comfyui: ''
+    config: ''
+    db: ''
+    images: ''
+    main: ''
+    models: ''
+    ollama: ''
+    openai: ''
+    rag: ''
+    webhook: ''
+  level: ''
+managedCertificate:
+  domains:
+    - chat.example.com
+  enabled: false
+  name: mydomain-chat-cert
+nameOverride: ''
+namespaceOverride: ''
+nodeSelector: {}
+ollama:
+  enabled: true
+  fullnameOverride: open-webui-ollama
+  ollama:
+    gpu:
+      enabled: true
+      number: 1
+      type: amd
+  persistentVolume:
+    enabled: true
+ollamaUrls: []
+ollamaUrlsFromExtraEnv: false
+openaiBaseApiUrl: open-webui-ollama.ollama.svc.cluster.local
+openaiBaseApiUrls: []
+persistence:
+  accessModes:
+    - ReadWriteOnce
+  annotations: {}
+  azure:
+    container: ''
+    endpointUrl: ''
+    key: ''
+    keyExistingSecret: ''
+    keyExistingSecretKey: ''
+  enabled: true
+  existingClaim: ''
+  gcs:
+    appCredentialsJson: ''
+    appCredentialsJsonExistingSecret: ''
+    appCredentialsJsonExistingSecretKey: ''
+    bucket: ''
+  provider: local
+  s3:
+    accessKey: ''
+    accessKeyExistingAccessKey: ''
+    accessKeyExistingSecret: ''
+    bucket: ''
+    endpointUrl: ''
+    keyPrefix: ''
+    region: ''
+    secretKey: ''
+    secretKeyExistingSecret: ''
+    secretKeyExistingSecretKey: ''
+  selector: {}
+  size: 2Gi
+  storageClass: local-path
+  subPath: ''
+pipelines:
+  enabled: true
+  extraEnvVars: []
+podAnnotations: {}
+podLabels: {}
+podSecurityContext: {}
+priorityClassName: ''
+readinessProbe: {}
+replicaCount: 1
+resources: {}
+revisionHistoryLimit: 10
+runtimeClassName: ''
+service:
+  annotations: {}
+  containerPort: 8080
+  labels: {}
+  loadBalancerClass: ''
+  nodePort: ''
+  port: 80
+  type: ClusterIP
+serviceAccount:
+  annotations: {}
+  automountServiceAccountToken: false
+  enable: true
+  name: ''
+sso:
+  enableGroupManagement: false
+  enableRoleManagement: false
+  enableSignup: false
+  enabled: false
+  github:
+    clientExistingSecret: ''
+    clientExistingSecretKey: ''
+    clientId: ''
+    clientSecret: ''
+    enabled: false
+  google:
+    clientExistingSecret: ''
+    clientExistingSecretKey: ''
+    clientId: ''
+    clientSecret: ''
+    enabled: false
+  groupManagement:
+    groupsClaim: groups
+  mergeAccountsByEmail: false
+  microsoft:
+    clientExistingSecret: ''
+    clientExistingSecretKey: ''
+    clientId: ''
+    clientSecret: ''
+    enabled: false
+    tenantId: ''
+  oidc:
+    clientExistingSecret: ''
+    clientExistingSecretKey: ''
+    clientId: ''
+    clientSecret: ''
+    enabled: false
+    providerName: SSO
+    providerUrl: ''
+    scopes: openid email profile
+  roleManagement:
+    adminRoles: ''
+    allowedRoles: ''
+    rolesClaim: roles
+  trustedHeader:
+    emailHeader: ''
+    enabled: false
+    nameHeader: ''
+startupProbe: {}
+strategy: {}
+tika:
+  enabled: false
+tolerations: []
+topologySpreadConstraints: []
+volumeMounts:
+  container: []
+  initContainer: []
+volumes: []
+websocket:
+  enabled: false
+  manager: redis
+  nodeSelector: {}
+  redis:
+    affinity: {}
+    annotations: {}
+    args: []
+    command: []
+    enabled: true
+    image:
+      pullPolicy: IfNotPresent
+      repository: redis
+      tag: 7.4.2-alpine3.21
+    labels: {}
+    name: open-webui-redis
+    pods:
+      annotations: {}
+      labels: {}
+    resources: {}
+    securityContext: {}
+    service:
+      annotations: {}
+      containerPort: 6379
+      labels: {}
+      nodePort: ''
+      port: 6379
+      type: ClusterIP
+    tolerations: []
+  url: redis://open-webui-redis:6379/0
+
+````
+</details>
 
 
 
