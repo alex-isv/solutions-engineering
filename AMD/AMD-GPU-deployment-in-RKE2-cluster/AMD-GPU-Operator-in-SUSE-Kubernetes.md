@@ -332,6 +332,7 @@ For Ollama AI workload example see [Installing Open WebUI with AMD + ROCm for Ol
 Latest Ollama tested 7.0.1
 
 <details><summary>Expand for detailed Ollama helm chart values</summary>
+ 
 ````yml
 ---
 affinity: {}
@@ -547,8 +548,8 @@ websocket:
       type: ClusterIP
     tolerations: []
   url: redis://open-webui-redis:6379/0
-
 ````
+
 </details>
 
 
