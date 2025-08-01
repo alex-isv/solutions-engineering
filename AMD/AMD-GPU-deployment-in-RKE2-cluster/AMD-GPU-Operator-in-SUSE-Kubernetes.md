@@ -323,7 +323,9 @@ kubectl apply -f test-deviceconfig.yaml
 
 Example of deployed operator with deviceconfig:
 
-<img width="1445" height="551" alt="image" src="https://github.com/user-attachments/assets/c5cfe2fb-7ee7-48a4-8ef0-d102d8e1e150" />
+
+<img width="1765" height="695" alt="image" src="https://github.com/user-attachments/assets/b128c32a-4ac4-4b65-adde-7e686d982f43" />
+
 
 <img width="1890" height="734" alt="image" src="https://github.com/user-attachments/assets/fc36cc70-ec9d-4050-8d3e-fceff6e7bf20" />
 
@@ -551,6 +553,11 @@ websocket:
 ````
 
 </details>
+
+<img width="1790" height="417" alt="image" src="https://github.com/user-attachments/assets/b0ecc09d-ee4d-406a-9bce-856e3cf68def" />
+
+
+
 
 
 
