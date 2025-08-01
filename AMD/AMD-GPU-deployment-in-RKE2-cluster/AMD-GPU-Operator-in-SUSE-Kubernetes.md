@@ -556,7 +556,9 @@ websocket:
 
 <img width="1790" height="417" alt="image" src="https://github.com/user-attachments/assets/b0ecc09d-ee4d-406a-9bce-856e3cf68def" />
 
+For the operator monitoring setup review [Prometheus Integration with Metrics Exporter](https://instinct.docs.amd.com/projects/gpu-operator/en/latest/metrics/prometheus.html#)
 
+Rancher Monitoring already has an integrated Prometheus and Grafana Dashboards.
 
 
 
