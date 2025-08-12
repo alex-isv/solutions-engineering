@@ -9,7 +9,7 @@
 In this particular Demo case Nvidia Doca Platform operator deployed on SUSE/Rancher RKE2 cluster.
 BlueField-3 DPUs installed on the worker nodes for network accelleration.
 
-For more details about Nvidia DPU review [BlueField Networking Platform](https://www.nvidia.com/en-us/networking/products/data-processing-unit/).
+For more details about Nvidia DPU review [BlueField Networking Platform](https://www.nvidia.com/en-us/networking/products/data-processing-unit/) and [Reference Deployment Guide](https://docs.nvidia.com/networking/display/public/sol/rdg+for+dpf+with+hbn+dpu+service#).
 
 Some of the benefits of using BF-3 DPU cards are:
 
