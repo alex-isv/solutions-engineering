@@ -234,6 +234,12 @@ or from the admin node:
 
 ###   Install out-of-tree AMD GPU Drivers with the Operator. <ins> Can be used for some specific custom configurations. </INS>
 
+> [!NOTE]
+> *These steps are not needed if using default SLES 15 OS as it has included ROCM as part of the kernel.
+> It can be used when extra tools and libraries are needed from AMD upstream ROCM repo.
+> 
+> Latest validation on rocm-operator 1.2.0 and driver 6.4.0.*
+> 
 Review attached Dockerfile.
 
 From your worker file build a rocm driver container and push to your registry.
@@ -271,8 +277,8 @@ https://github.com/alex-isv/rocm-operator-sles.git
 > [!NOTE]
 > *rocm-operator 1.2.0 and driver 6.4.0 in use for this test.*
 > 
-> rocm-operator was modified to recognize SLES as a worker node.
-> For the future version, it will be merged with AMD main repo to provide SLES support.
+> In this case, AMD upstream rocm-operator was modified to recognize SLES as a worker node for custom deployments.
+> 
 > 
 
 Go to 
