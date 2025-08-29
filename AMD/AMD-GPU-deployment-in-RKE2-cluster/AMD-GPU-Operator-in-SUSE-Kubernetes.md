@@ -29,12 +29,24 @@ Test case:
 
 Please review [AMD GPU-Operator deployment](https://instinct.docs.amd.com/projects/gpu-operator/en/latest/).
 
-**Intall AMD Rocm on the worker node**
+**Intall AMD Rocm on the worker node if needed**
 
-That can be done either with a locally installed Rocm driver on the worker node or with the help of the AMD gpu-operator and pre-compiled container based drivers on the registry (work in progress).
+> [!NOTE]
+> *ROCM is included in SLES kernel, so no needs to install it separately from AMD upstream, unless some additional tools or libraries are needed* AMD gpu-operator should work out of the box with SLES 15. The only path which should be followed is setting the driver to false in the configuration:
+> ````
+> spec:
+  driver:
+    # disable the installation of our-of-tree amdgpu kernel module
+    enable: false
+  ````
+as listed in [Inbox or Pre-Installed AMD GPU Drivers](https://instinct.docs.amd.com/projects/gpu-operator/en/latest/installation/kubernetes-helm.html#inbox-or-pre-installed-amd-gpu-drivers)
+> 
+
+
+If ROCM needs to be installed locally on the worker node from AMD upstream repo or with the help of the AMD gpu-operator and pre-compiled container based drivers on the registry, follow the below steps.
 
 **Option 1.**
-Locally installed driver.
+Locally installed driver from AMD upstream repo.
 
 Please review [Rocm installation doc for SLES15](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/install/install-methods/package-manager/package-manager-sles.html).
 
@@ -221,7 +233,7 @@ or from the admin node:
 **Option2**
 
 
-###  <ins> WORK IN PROGRESS .... </INS> Install out-of-tree AMD GPU Drivers with the Operator. <ins> WORK IN PROGRESS .... </INS>
+###   Install out-of-tree AMD GPU Drivers with the Operator. <ins> Can be used for some specific custom configurations. </INS>
 
 Review attached Dockerfile.
 
