@@ -1,7 +1,7 @@
 # Deploying AMD GPU-Operator in SUSE RKE2 cluster
 
 > [!NOTE]
-> *WORK IN PROGRESS. Don't use as a reference.*
+> *Validation steps.*
 > 
 ## Purpose 
 These steps outlines installation of AMD GPU-Operator in SUSE RKE2 Kubernetes cluster and managed by a Rancher server.
