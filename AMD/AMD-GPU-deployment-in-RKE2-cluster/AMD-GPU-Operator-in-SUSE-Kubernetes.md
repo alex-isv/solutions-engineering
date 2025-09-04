@@ -32,7 +32,7 @@ Please review [AMD GPU-Operator deployment](https://instinct.docs.amd.com/projec
 **Intall AMD Rocm on the worker node if needed**
 
 > [!NOTE]
-> *ROCM is included in SLES kernel, so no needs to install it separately from AMD upstream, unless some additional tools or libraries are needed* AMD gpu-operator should work out of the box with SLES 15. The only path which should be followed is setting the driver to false in the configuration:
+> *AMDGPU driver is included in SLES kernel, so no needs to install it separately from AMD upstream, unless some additional tools or libraries are needed* AMD gpu-operator should work out of the box with SLES 15. The only path which should be followed is setting the driver to false in the configuration:
 > ````
 > spec:
 >  driver:
@@ -235,7 +235,7 @@ or from the admin node:
 ###   Install out-of-tree AMD GPU Drivers with the Operator. <ins> Can be used for some specific custom configurations. </INS>
 
 > [!NOTE]
-> *These steps are not needed if using default SLES 15 OS as it has included ROCM as part of the kernel.
+> *These steps are not needed if using default SLES 15 OS as it has included amdgpu driver as part of the kernel.
 > It can be used when extra tools and libraries are needed from AMD upstream ROCM repo.
 > 
 > Latest validation on rocm-operator 1.2.0 and driver 6.4.0.*
