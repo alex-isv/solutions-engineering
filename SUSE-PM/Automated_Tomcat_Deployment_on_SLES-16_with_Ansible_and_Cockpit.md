@@ -266,13 +266,13 @@ systemcstl disable tomcat.service
 
 **Summary:**
 
-Advantages of Native Package: Simpler, auto-updates via zypper update tomcat, SUSE-maintained security patches.
+- Advantages of Native Package: Simpler, auto-updates via zypper update tomcat, SUSE-maintained security patches.
 
-Customization: Questionnaire passes to Ansible for flexible configs.
+- Customization: Questionnaire passes to Ansible for flexible configs.
 
-Troubleshooting: If Tomcat not in repo, run sudo SUSEConnect -p sle-module-legacy-applications/16/x86_64 or check zypper search tomcat. For Java issues, confirm path with readlink -f $(which java).
+- Troubleshooting: If Tomcat not in repo, run sudo SUSEConnect -p sle-module-legacy-applications/16/x86_64 or check zypper search tomcat. For Java issues, confirm path with readlink -f $(which java).
 
-Security: Change default password immediately; enable HTTPS for production.
+- Security: Change default password immediately; enable HTTPS for production.
 
 This provides a streamlined, repo-based deployment fully integrated with Cockpit.
 
@@ -282,15 +282,15 @@ This provides a streamlined, repo-based deployment fully integrated with Cockpit
 Run these commands to remove any old playbook files or plugin attempts.
 Bash
 
-## Remove old Ansible project
+**Remove old Ansible project**
 ````
 sudo rm -rf /opt/ansible/tomcat-playbook
 ````
-## Remove old wrapper script
+**Remove old wrapper script**
 ````
 sudo rm -f /usr/local/bin/deploy-tomcat
 ````
-## Remove old Cockpit plugins
+**Remove old Cockpit plugins**
 
 ````
 sudo rm -rf /usr/share/cockpit/tomcat-deployer
