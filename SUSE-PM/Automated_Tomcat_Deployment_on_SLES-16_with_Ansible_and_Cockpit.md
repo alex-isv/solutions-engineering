@@ -5,10 +5,15 @@
 Key Changes from Upstream Download:
 
 Repository: No need for extra repos beyond base SLES (Tomcat 11 is in the default Application:Web module or OSS repo).
+
 Paths: Tomcat at /usr/share/tomcat (not /opt/tomcat); configs in /usr/share/tomcat/conf/.
+
 Service: Uses package-provided /usr/lib/systemd/system/tomcat.service; we reload and enable it.
+
 Java: Still OpenJDK 17 (SLES 16 default).
+
 Customizations: Ansible templates for server.xml (port) and tomcat-users.xml (manager user/password) post-install.
+
 Enable Web Module: If not already, activate via SUSEConnect for web apps.
 
 The Cockpit plugin with upfront questionnaire (for port, username, password) remains integrated for one-click deployment under Tools.
