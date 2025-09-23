@@ -166,7 +166,7 @@ sudo firewall-cmd --reload
 ````
 Access: <ins>http://<your_server_ip>:8080</ins> (Tomcat welcome page). For manager: <ins>http://<ip>:8080/manager/html</ins> (login with customs).
 
-Integrating "deploy-tomcat" into Cockpit for SLES 16 under Tools
+## Integrating "deploy-tomcat" into Cockpit for SLES 16 under Tools
 
 Same as before: Wrapper script and plugin for one-click with questionnaire.
 
