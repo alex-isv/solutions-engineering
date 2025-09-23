@@ -1,6 +1,8 @@
 # Automated Tomcat Deployment on SLES 16 with Ansible and Cockpit (Using Native Zypper Package)
 
-<ins> This guide adapts the previous steps for SUSE Linux Enterprise Server (SLES) 16, leveraging the native Tomcat 11 package available in the SLES repositories (as of September 18, 2025). This eliminates the need to download and unpack from upstream Apache archives, making the deployment faster, more secure, and aligned with SUSE's packaging standards. The tomcat package installs Tomcat 11 to /usr/share/tomcat, creates the tomcat user/group automatically, and provides a pre-configured systemd service (tomcat.service). We'll use Ansible to install via zypper, apply custom configurations (e.g., port, manager user), and integrate with Cockpit.</ins>
+## Purpose
+
+ This guide adapts the previous steps for SUSE Linux Enterprise Server (SLES) 16, leveraging the native Tomcat 11 package available in the SLES repositories (as of September 18, 2025). This eliminates the need to download and unpack from upstream Apache archives, making the deployment faster, more secure, and aligned with SUSE's packaging standards. The tomcat package installs Tomcat 11 to /usr/share/tomcat, creates the tomcat user/group automatically, and provides a pre-configured systemd service (tomcat.service). We'll use Ansible to install via zypper, apply custom configurations (e.g., port, manager user), and integrate with Cockpit.
 
 Key Changes from Upstream Download:
 
