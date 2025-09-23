@@ -19,6 +19,7 @@ Enable Web Module: If not already, activate via SUSEConnect for web apps.
 The Cockpit plugin with upfront questionnaire (for port, username, password) remains integrated for one-click deployment under Tools.
 
 **Step 1:** Install Cockpit from the SUSE Package Hub
+
 Enable SUSE Package Hub for SLES 16:
 ````
 sudo SUSEConnect -p PackageHub/16/x86_64
@@ -42,6 +43,7 @@ sudo firewall-cmd --reload
 Access Cockpit at https://<your_server_ip>:9090.
 
 **Step 2:** Install Ansible
+
 Enable Systems Management Module for SLES 16:
 ````
 sudo SUSEConnect -p sle-module-systems-management/16/x86_64
@@ -54,6 +56,7 @@ sudo zypper install ansible
 Verify: ansible --version (expect 2.14+).
 
 **Step 3:** Create the Ansible Project
+
 Create the directory structure:
 ````
 mkdir -p ~/ansible/tomcat-playbook/templates
@@ -137,6 +140,7 @@ EOF
 ````
 
 **Step 4:** Execute the Playbook
+
 From ~/ansible/tomcat-playbook:
 
 ````
@@ -145,6 +149,7 @@ ansible-playbook -i hosts deploy_tomcat.yml
 For customs: ansible-playbook -i hosts deploy_tomcat.yml -e tomcat_port=8081 -e tomcat_username=admin -e tomcat_password=securepass
 
 **Step 5:** Verify the Deployment
+
 Check Status:
 ````
 sudo systemctl status tomcat.service
@@ -157,15 +162,20 @@ sudo firewall-cmd --add-port=8080/tcp --permanent
 sudo firewall-cmd --reload
 ````
 Access: <ins>http://<your_server_ip>:8080</ins> (Tomcat welcome page). For manager: <ins>http://<ip>:8080/manager/html</ins> (login with customs).
+
 Integrating "deploy-tomcat" into Cockpit for SLES 16 under Tools
+
 Same as before: Wrapper script and plugin for one-click with questionnaire.
 
 **Step 1:** Move the Playbook to a Permanent Location
+
 ````
 sudo mkdir -p /opt/ansible
 sudo mv ~/ansible/tomcat-playbook /opt/ansible/
 ````
+
 **Step 2:** Create the Wrapper Script
+
 Updated for native paths and vars.
 
 ````
@@ -208,6 +218,7 @@ sudo chmod +x /usr/local/bin/deploy-tomcat
 ````
 
 **Step 3:** Install the Cockpit Plugin
+
 Same files as before (manifest.json, deploy.html, deploy.js from prior steps)—they work unchanged, as the script handles vars.
 
 Copy if needed:
@@ -216,6 +227,7 @@ sudo mkdir -p /usr/share/cockpit/deploy-tomcat
 ````
 
 <ins>Assuming you have the files from before; copy them here</ins>
+
 ````
 sudo cp manifest.json deploy.html deploy.js /usr/share/cockpit/deploy-tomcat/  # Adjust path
 sudo chown -R root:root /usr/share/cockpit/deploy-tomcat/
@@ -224,11 +236,12 @@ sudo systemctl restart cockpit
 ````
 
 **Step 4:** Run from Cockpit under Tools
-Log in to Cockpit.
-Tools > Deploy Tomcat.
-Check "Use custom settings", fill form (port, username, password).
-Click Deploy Tomcat—runs native install with customs.
-Output shows progress; verify in browser.
+
+1.Log in to Cockpit.
+2.Tools > Deploy Tomcat.
+3.Check "Use custom settings", fill form (port, username, password).
+4.Click Deploy Tomcat—runs native install with customs.
+5.Output shows progress; verify in browser.
 
 Check the status by running:
 
@@ -245,15 +258,20 @@ systemcstl disable tomcat.service
 
 
 **Summary:**
+
 Advantages of Native Package: Simpler, auto-updates via zypper update tomcat, SUSE-maintained security patches.
+
 Customization: Questionnaire passes to Ansible for flexible configs.
+
 Troubleshooting: If Tomcat not in repo, run sudo SUSEConnect -p sle-module-legacy-applications/16/x86_64 or check zypper search tomcat. For Java issues, confirm path with readlink -f $(which java).
+
 Security: Change default password immediately; enable HTTPS for production.
 
 This provides a streamlined, repo-based deployment fully integrated with Cockpit.
 
 
 ### Cleanup
+
 Run these commands to remove any old playbook files or plugin attempts.
 Bash
 
@@ -266,6 +284,7 @@ sudo rm -rf /opt/ansible/tomcat-playbook
 sudo rm -f /usr/local/bin/deploy-tomcat
 ````
 ## Remove old Cockpit plugins
+
 ````
 sudo rm -rf /usr/share/cockpit/tomcat-deployer
 sudo rm -rf /usr/share/cockpit/hello
