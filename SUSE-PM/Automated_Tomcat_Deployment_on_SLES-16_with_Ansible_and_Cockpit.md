@@ -241,9 +241,13 @@ sudo systemctl restart cockpit
 **Step 4:** Run from Cockpit under Tools
 
 1.Log in to Cockpit.
+
 2.Tools > Deploy Tomcat.
+
 3.Check "Use custom settings", fill form (port, username, password).
+
 4.Click Deploy Tomcat—runs native install with customs.
+
 5.Output shows progress; verify in browser.
 
 Check the status by running:
