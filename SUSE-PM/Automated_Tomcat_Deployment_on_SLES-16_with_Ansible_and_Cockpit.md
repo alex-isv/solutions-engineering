@@ -146,7 +146,10 @@ From ~/ansible/tomcat-playbook:
 ````
 ansible-playbook -i hosts deploy_tomcat.yml
 ````
-For customs: ansible-playbook -i hosts deploy_tomcat.yml -e tomcat_port=8081 -e tomcat_username=admin -e tomcat_password=securepass
+For customs:
+````
+ansible-playbook -i hosts deploy_tomcat.yml -e tomcat_port=8081 -e tomcat_username=admin -e tomcat_password=securepass
+````
 
 **Step 5:** Verify the Deployment
 
