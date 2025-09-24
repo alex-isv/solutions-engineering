@@ -323,14 +323,67 @@ sudo chmod +x /usr/local/bin/deploy-tomcat
 
 **Step 3:** Install the Cockpit Plugin
 
-Same files as before (manifest.json, deploy.html, deploy.js from prior steps)—they work unchanged, as the script handles vars.
 
-Copy if needed:
 ````
 sudo mkdir -p /usr/share/cockpit/deploy-tomcat
 ````
 
-<ins>Assuming you have the files from before; copy them here</ins>
+````
+mkdir -p ~/cockpit-deploy-tomcat
+cd ~/cockpit-deploy-tomcat
+touch manifest.json deploy.html deploy.js
+````
+
+
+Create <ins>deploy.html</ins>
+
+````
+sudo cat <<EOF > /usr/share/cockpit/deploy-tomcat/deploy.html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Deploy Tomcat</title>
+    <meta charset="utf-8">
+    <script src="../base1/cockpit.js"></script>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        button { padding: 10px 20px; font-size: 16px; margin: 5px 0; }
+        input, select { padding: 5px; margin: 5px 0; width: 200px; }
+        #form { display: none; border: 1px solid #ccc; padding: 10px; margin: 10px 0; }
+        #output { background: #f0f0f0; padding: 10px; max-height: 300px; overflow-y: auto; }
+        #result { font-weight: bold; margin: 10px 0; }
+        label { display: block; margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <main tabindex="-1">
+        <section>
+            <h1>Tomcat Deployment Tool</h1>
+            <p>Deploy Tomcat with optional custom settings.</p>
+            <div>
+                <label><input type="checkbox" id="customize"> Use custom settings</label>
+                <button id="deploy" disabled>Deploy Tomcat</button>
+                <span id="result"></span>
+            </div>
+            <div id="form">
+                <h3>Custom Settings:</h3>
+                <label>Tomcat Port (default: 8080): <input type="number" id="port" value="8080" min="1024" max="65535"></label>
+                <label>Manager Username: <input type="text" id="username" placeholder="e.g., admin"></label>
+                <label>Manager Password: <input type="password" id="password" placeholder="Secure password"></label>
+            </div>
+            <div>
+                <h3>Output:</h3>
+                <pre id="output"></pre>
+            </div>
+        </section>
+    </main>
+    <script src="deploy.js"></script>
+</body>
+</html>
+EOF
+````
+
+copy them here</ins>
 
 ````
 sudo cp manifest.json deploy.html deploy.js /usr/share/cockpit/deploy-tomcat/  # Adjust path
@@ -338,6 +391,111 @@ sudo chown -R root:root /usr/share/cockpit/deploy-tomcat/
 sudo chmod -R 755 /usr/share/cockpit/deploy-tomcat/
 sudo systemctl restart cockpit
 ````
+Create <ins>deploy.js</ins>
+
+````
+sudo cat <<EOF > /usr/share/cockpit/deploy-tomcat/deploy.js
+const button = document.getElementById("deploy");
+const output = document.getElementById("output");
+const result = document.getElementById("result");
+const customize = document.getElementById("customize");
+const form = document.getElementById("form");
+const portField = document.getElementById("port");
+const usernameField = document.getElementById("username");
+const passwordField = document.getElementById("password");
+
+function updateButton() {
+    button.disabled = !customize.checked || (form.style.display !== 'none' && !validateForm());
+}
+
+function validateForm() {
+    // Basic validation (extend as needed)
+    return portField.value >= 1024 && portField.value <= 65535 && usernameField.value.trim() !== '' && passwordField.value.trim() !== '';
+}
+
+// Toggle form visibility and button state
+customize.addEventListener("change", () => {
+    form.style.display = customize.checked ? 'block' : 'none';
+    updateButton();
+});
+
+// Listen for form changes
+[portField, usernameField, passwordField].forEach(field => field.addEventListener("input", updateButton));
+
+function deploy_run() {
+    // Collect args from form
+    const args = ["/usr/local/bin/deploy-tomcat"];
+    if (customize.checked) {
+        args.push("--port", portField.value);
+        args.push("--username", usernameField.value);
+        args.push("--password", passwordField.value);
+    }
+
+    // Disable button during execution
+    button.disabled = true;
+    button.textContent = "Deploying...";
+
+    // Spawn with arguments and stream output (use PTY for better compatibility)
+    const process = cockpit.spawn(args, { superuser: "try", pty: true })
+        .stream(deploy_output)
+        .then(deploy_success)
+        .catch(deploy_fail)
+        .finally(() => {
+            button.disabled = false;
+            button.textContent = "Deploy Tomcat";
+        });
+
+    result.innerHTML = "";
+    output.innerHTML = "";
+}
+
+function deploy_success() {
+    result.style.color = "green";
+    result.innerHTML = "Deployment successful!";
+}
+
+function deploy_fail(error) {
+    result.style.color = "red";
+    result.innerHTML = "Deployment failed: " + (error.problem || error.message || "Unknown error");
+}
+
+function deploy_output(data) {
+    output.append(document.createTextNode(data));
+    output.scrollTop = output.scrollHeight;
+}
+
+// Connect button
+button.addEventListener("click", deploy_run);
+
+// Initialize
+cockpit.transport.wait(function() { });
+updateButton();  // Initial state
+EOF
+````
+
+Create <ins>manifest.json</ins>
+````
+cat <<EOF > manifest.json
+{
+    "version": 0,
+    "tools": {
+        "deploy-tomcat": {
+            "label": "Deploy Tomcat",
+            "path": "deploy.html",
+            "icon": "applications-engineering"
+        }
+    }
+}
+EOF
+````
+
+````
+sudo cp manifest.json deploy.html deploy.js /usr/share/cockpit/deploy-tomcat/  # Adjust path
+sudo chown -R root:root /usr/share/cockpit/deploy-tomcat/
+sudo chmod -R 755 /usr/share/cockpit/deploy-tomcat/
+sudo systemctl restart cockpit
+````
+
 
 **Step 4:** Run from Cockpit under Tools
 
