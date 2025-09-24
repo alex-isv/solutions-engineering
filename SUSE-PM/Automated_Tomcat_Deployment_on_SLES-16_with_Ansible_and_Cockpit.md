@@ -78,12 +78,8 @@ cat <<EOF > deploy_tomcat.yml
 - hosts: tomcat_servers
   become: yes
   vars:
-    # Defaults for questionnaire
-    tomcat_port: "{{ tomcat_port | default('8080') }}"
-    tomcat_username: "{{ tomcat_username | default('admin') }}"
-    tomcat_password: "{{ tomcat_password | default('changeme') }}"
-    # SLES 16 Java path
     java_home_path: /usr/lib64/jvm/java-17-openjdk-17
+    tomcat_config_dir: /etc/tomcat11
   tasks:
     - name: Install Java
       zypper:
@@ -91,53 +87,156 @@ cat <<EOF > deploy_tomcat.yml
         state: present
         update_cache: yes
 
-    - name: Install Tomcat 11 from SLES repo
+    - name: Install Tomcat 11 and related packages
       zypper:
-        name: tomcat
+        name:
+          - tomcat11
+          - tomcat11-webapps
+          - tomcat11-admin-webapps
+          - tomcat11-lib
         state: present
         update_cache: yes
 
-    - name: Ensure Tomcat directories have correct ownership (post-install)
+    - name: Ensure JAVA_HOME in Tomcat environment
+      lineinfile:
+        path: /etc/tomcat11/tomcat.conf
+        regexp: '^JAVA_HOME='
+        line: "JAVA_HOME={{ java_home_path }}"
+        create: yes
+        owner: tomcat
+        group: tomcat
+        mode: '0644'
+      notify: restart tomcat
+
+    - name: Ensure Tomcat config directory exists
       file:
-        path: /usr/share/tomcat
+        path: "{{ tomcat_config_dir }}"
+        state: directory
+        owner: tomcat
+        group: tomcat
+        mode: '0755'
+
+    - name: Check if server.xml exists
+      stat:
+        path: "{{ tomcat_config_dir }}/server.xml"
+      register: server_xml_stat
+
+    - name: Ensure server.xml exists
+      copy:
+        content: |
+          <?xml version="1.0" encoding="UTF-8"?>
+          <Server port="8005" shutdown="SHUTDOWN">
+            <Service name="Catalina">
+              <Connector port="8080" protocol="HTTP/1.1" connectionTimeout="20000" redirectPort="8443" />
+              <Connector protocol="AJP/1.3" port="8009" redirectPort="8443" secretRequired="false" />
+              <Engine name="Catalina" defaultHost="localhost">
+                <Host name="localhost" appBase="webapps" unpackWARs="true" autoDeploy="true"/>
+              </Engine>
+            </Service>
+          </Server>
+        dest: "{{ tomcat_config_dir }}/server.xml"
+        owner: tomcat
+        group: tomcat
+        mode: '0644'
+        force: no
+      when: not server_xml_stat.stat.exists
+
+    - name: Check if tomcat-users.xml exists
+      stat:
+        path: "{{ tomcat_config_dir }}/tomcat-users.xml"
+      register: tomcat_users_stat
+
+    - name: Ensure tomcat-users.xml exists
+      copy:
+        content: |
+          <?xml version="1.0" encoding="UTF-8"?>
+          <tomcat-users xmlns="http://tomcat.apache.org/xml"
+                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                        xsi:schemaLocation="http://tomcat.apache.org/xml tomcat-users.xsd"
+                        version="1.0">
+          </tomcat-users>
+        dest: "{{ tomcat_config_dir }}/tomcat-users.xml"
+        owner: tomcat
+        group: tomcat
+        mode: '0644'
+        force: no
+      when: not tomcat_users_stat.stat.exists
+
+    - name: Check if Tomcat installation directory exists
+      stat:
+        path: /usr/share/tomcat11
+      register: tomcat_install_stat
+
+    - name: Ensure Tomcat ownership for installation directory
+      file:
+        path: /usr/share/tomcat11
         state: directory
         owner: tomcat
         group: tomcat
         recurse: yes
+      when: tomcat_install_stat.stat.exists
 
-    - name: Configure Tomcat port in server.xml
+    - name: Configure HTTP port in server.xml
       lineinfile:
-        path: /usr/share/tomcat/conf/server.xml
+        path: "{{ tomcat_config_dir }}/server.xml"
         regexp: '<Connector port="8080" protocol="HTTP/1.1"'
-        line: '<Connector port="{{ tomcat_port }}" protocol="HTTP/1.1" connectionTimeout="20000" redirectPort="8443" />'
+        line: "<Connector port=\"{{ tomcat_http_port | default('8080') }}\" protocol=\"HTTP/1.1\" connectionTimeout=\"20000\" redirectPort=\"8443\" />"
         backup: yes
       notify: restart tomcat
 
-    - name: Add manager user to tomcat-users.xml
+    - name: Configure shutdown port in server.xml
+      lineinfile:
+        path: "{{ tomcat_config_dir }}/server.xml"
+        regexp: '<Server port="8005"'
+        line: "<Server port=\"{{ tomcat_shutdown_port | default('8005') }}\" shutdown=\"SHUTDOWN\">"
+        backup: yes
+      notify: restart tomcat
+
+    - name: Configure AJP port in server.xml
+      lineinfile:
+        path: "{{ tomcat_config_dir }}/server.xml"
+        regexp: '<Connector protocol="AJP/1.3" port="8009"'
+        line: "<Connector protocol=\"AJP/1.3\" port=\"{{ tomcat_ajp_port | default('8009') }}\" redirectPort=\"8443\" secretRequired=\"false\" />"
+        backup: yes
+      notify: restart tomcat
+
+    - name: Add user and role to tomcat-users.xml
       blockinfile:
-        path: /usr/share/tomcat/conf/tomcat-users.xml
+        path: "{{ tomcat_config_dir }}/tomcat-users.xml"
         marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
         block: |
-          <role rolename="manager-gui"/>
-          <user username="{{ tomcat_username }}" password="{{ tomcat_password }}" roles="manager-gui"/>
+          <role rolename="{{ tomcat_user_role | default('manager-gui') }}"/>
+          <user username="{{ tomcat_username | default('admin') }}" password="{{ tomcat_password | default('changeme') }}" roles="{{ tomcat_user_role | default('manager-gui') }}"/>
         backup: yes
-      notify: restart tomcat
+      notify: reload tomcat
 
-    - name: Reload systemd to apply changes
+    - name: Reload systemd
       systemd:
         daemon_reload: yes
 
-    - name: Start and enable Tomcat service
+    - name: Start and enable Tomcat
       systemd:
         name: tomcat
         state: started
         enabled: yes
+
+    - name: Open firewall for HTTP port
+      firewalld:
+        port: "{{ tomcat_http_port | default('8080') }}/tcp"
+        permanent: yes
+        state: enabled
+        immediate: yes
 
   handlers:
     - name: restart tomcat
       systemd:
         name: tomcat
         state: restarted
+
+    - name: reload tomcat
+      systemd:
+        name: tomcat
+        state: reloaded
 EOF
 ````
 
