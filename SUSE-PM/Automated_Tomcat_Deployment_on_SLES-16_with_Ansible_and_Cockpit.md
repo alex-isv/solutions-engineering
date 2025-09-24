@@ -68,9 +68,8 @@ Create the hosts Inventory File:
 ````
 echo -e "[tomcat_servers]\nlocalhost ansible_connection=local" > hosts
 ````
-Create the <ins>tomcat.service.j2</ins> Template File: Not needed, as the package provides the service. Skip this.
 
-Create the Final deploy_tomcat.yml Playbook: Updated for native install. Includes post-install templates for customs.
+## Create the final <ins>deploy_tomcat.yml</ins> Playbook: Updated for native install. Includes post-install templates for customs.
 
 ````
 cat <<EOF > deploy_tomcat.yml
