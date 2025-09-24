@@ -405,8 +405,8 @@ Below are screenshots examples from SLES 16.
 
 <img width="1023" height="579" alt="image" src="https://github.com/user-attachments/assets/7d254110-05d1-4da3-87d4-477ac66f9e32" />
 
+<img width="1096" height="959" alt="image" src="https://github.com/user-attachments/assets/abe09969-7595-4eb1-80c1-b443e2ffe807" />
 
-<img width="1237" height="887" alt="image" src="https://github.com/user-attachments/assets/790bdea0-adfa-41e5-9770-74668d001929" />
 
 
 ========
