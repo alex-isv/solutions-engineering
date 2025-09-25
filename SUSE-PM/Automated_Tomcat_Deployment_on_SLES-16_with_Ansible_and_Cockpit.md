@@ -1,78 +1,225 @@
-# Automated Tomcat Deployment on SLES 16 with Ansible and Cockpit (Using Native Zypper Package)
 
-## Purpose
 
- This guide adapts the previous steps for SUSE Linux Enterprise Server (SLES) 16, leveraging the native Tomcat 11 package available in the SLES repositories (as of September 18, 2025). This eliminates the need to download and unpack from upstream Apache archives, making the deployment faster, more secure, and aligned with SUSE's packaging standards. The tomcat package installs Tomcat 11 to /usr/share/tomcat, creates the tomcat user/group automatically, and provides a pre-configured systemd service (tomcat.service). We'll use Ansible to install via zypper, apply custom configurations (e.g., port, manager user), and integrate with Cockpit.
+# 🚀 Cockpit Ansible Extension – Tomcat 11 Deployment (SLES16)
 
-Key Changes from Upstream Download:
+This guide installs a Cockpit extension that allows deploying and configuring **Apache Tomcat 11** via Ansible.
 
-- Repository: No need for extra repos beyond base SLES (Tomcat 11 is in the default Application:Web module or OSS repo).
+---
 
-- Paths: Tomcat at /usr/share/tomcat (not /opt/tomcat); configs in /usr/share/tomcat/conf/.
+## 1. Prerequisites
 
-- Service: Uses package-provided /usr/lib/systemd/system/tomcat.service; we reload and enable it.
+On a clean SLES16 server:
 
-- Java: Still OpenJDK 17 (SLES 16 default).
-
-- Customizations: Ansible templates for server.xml (port) and tomcat-users.xml (manager user/password) post-install.
-
-- Enable Web Module: If not already, activate via SUSEConnect for web apps.
-
-The Cockpit plugin with upfront questionnaire (for port, username, password) remains integrated for one-click deployment under Tools.
-
-**Step 1:** Install Cockpit from the SUSE Package Hub
-
-Enable SUSE Package Hub for SLES 16:
-````
-sudo SUSEConnect -p PackageHub/16/x86_64
-````
-
-Refresh Repositories and Install Cockpit:
-````
+```bash
 sudo zypper refresh
-sudo zypper install cockpit
-````
-Enable and Start Cockpit Service:
-````
-sudo systemctl enable --now cockpit.socket
-````
-Open Firewall Port for Cockpit:
+sudo zypper install -y cockpit cockpit-ws ansible firewalld jq tree
+sudo systemctl enable --now cockpit.socket firewalld
+```
 
-````
-sudo firewall-cmd --add-service=cockpit --permanent
-sudo firewall-cmd --reload
-````
-Access Cockpit at https://<your_server_ip>:9090.
+Then open Cockpit in your browser:
+👉 `https://<server-ip>:9090`
 
-**Step 2:** Install Ansible
+---
 
-Enable Systems Management Module for SLES 16:
-````
-sudo SUSEConnect -p sle-module-systems-management/16/x86_64
-````
-Refresh Repositories and Install Ansible:
-````
-sudo zypper refresh
-sudo zypper install ansible
-````
-Verify: ansible --version (expect 2.14+).
+## 2. Create Cockpit Extension Directory
 
-**Step 3:** Create the Ansible Project
+```bash
+sudo mkdir -p /usr/share/cockpit/ansible-playbook/{bin,ansible}
+```
 
-Create the directory structure:
-````
-mkdir -p ~/ansible/tomcat-playbook/templates
-cd ~/ansible/tomcat-playbook
-````
-Create the hosts Inventory File:
-````
-echo -e "[tomcat_servers]\nlocalhost ansible_connection=local" > hosts
-````
+---
 
-## Create the final <ins>deploy_tomcat.yml</ins> Playbook: Updated for native install. Includes post-install templates for customs.
+## 3. `manifest.json`
 
-````
-cat <<EOF > deploy_tomcat.yml
+Minimal manifest (Cockpit doesn’t support deep nested menus – we build the hierarchy in the page UI):
+
+```bash
+sudo tee /usr/share/cockpit/ansible-playbook/manifest.json > /dev/null <<'EOF'
+{
+  "version": 0,
+  "tools": {
+    "ansible-playbook": {
+      "label": "Ansible Playbook",
+      "icon": "applications-engineering",
+      "path": "index.html"
+    }
+  }
+}
+EOF
+```
+
+---
+
+## 4. `index.html`
+
+UI page with hierarchical selection and deployment form:
+
+```bash
+sudo tee /usr/share/cockpit/ansible-playbook/index.html > /dev/null <<'EOF'
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Ansible Playbook</title>
+  <style>
+    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; padding: 18px; }
+    .panel { max-width: 900px; }
+    label { display:block; margin-top:10px; }
+    input, select { padding:6px; width:260px; }
+    button { margin-top:12px; padding:8px 12px; }
+    pre#output { background:#111; color:#eee; padding:10px; height:320px; overflow:auto; white-space:pre-wrap; margin-top:12px; }
+    .small { font-size:0.9em; color:#666; }
+  </style>
+</head>
+<body>
+  <div class="panel">
+    <h2>Ansible Playbook Cockpit Extension</h2>
+    <p class="small">Select a playbook and configure settings, then click <strong>Deploy Tomcat 11</strong>.</p>
+
+    <label>Category
+      <select id="category">
+        <option value="apache-tomcat-11">Apache Tomcat 11</option>
+      </select>
+    </label>
+
+    <label>Playbook
+      <select id="playbook">
+        <option value="tomcat-11-deployment">Tomcat 11 Deployment (Use custom settings)</option>
+      </select>
+    </label>
+
+    <fieldset style="border:1px solid #ddd; padding:10px; margin-top:12px;">
+      <legend>Custom settings</legend>
+
+      <label>HTTP port
+        <input id="http_port" type="number" value="8080" />
+      </label>
+
+      <label>Shutdown port
+        <input id="shutdown_port" type="number" value="8005" />
+      </label>
+
+      <label>AJP port
+        <input id="ajp_port" type="number" value="8009" />
+      </label>
+
+      <label>Manager username
+        <input id="username" type="text" value="admin" />
+      </label>
+
+      <label>Manager password
+        <input id="password" type="password" value="changeme" />
+      </label>
+    </fieldset>
+
+    <div style="margin-top:12px;">
+      <button id="deploy">Deploy Tomcat 11</button>
+      <button id="clear">Clear Output</button>
+    </div>
+
+    <pre id="output" aria-live="polite"></pre>
+  </div>
+
+  <script src="../base1/cockpit.js"></script>
+  <script src="index.js"></script>
+</body>
+</html>
+EOF
+```
+
+---
+
+## 5. `index.js`
+
+Logic for running the deploy script via `cockpit.spawn`:
+
+```bash
+sudo tee /usr/share/cockpit/ansible-playbook/index.js > /dev/null <<'EOF'
+(function () {
+  'use strict';
+
+  function appendOutput(text) {
+    const out = document.getElementById('output');
+    out.textContent += text;
+    out.scrollTop = out.scrollHeight;
+  }
+
+  function clearOutput() {
+    document.getElementById('output').textContent = '';
+  }
+
+  function disableForm(disabled) {
+    document.getElementById('deploy').disabled = disabled;
+    document.getElementById('clear').disabled = disabled;
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const deployBtn = document.getElementById('deploy');
+    const clearBtn  = document.getElementById('clear');
+
+    clearBtn.addEventListener('click', function () { clearOutput(); });
+
+    deployBtn.addEventListener('click', function () {
+      clearOutput();
+      disableForm(true);
+      appendOutput('Preparing Tomcat 11 deployment...\\n');
+
+      const httpPort    = document.getElementById('http_port').value || '8080';
+      const shutdownPort= document.getElementById('shutdown_port').value || '8005';
+      const ajpPort     = document.getElementById('ajp_port').value || '8009';
+      const username    = document.getElementById('username').value || 'admin';
+      const password    = document.getElementById('password').value || 'changeme';
+
+      const scriptPath = '/usr/share/cockpit/ansible-playbook/bin/deploy-tomcat';
+      const args = [
+        scriptPath,
+        '--http-port', String(httpPort),
+        '--shutdown-port', String(shutdownPort),
+        '--ajp-port', String(ajpPort),
+        '--username', String(username),
+        '--password', String(password)
+      ];
+
+      appendOutput('Running: ' + args.join(' ') + '\\n\\n');
+
+      try {
+        const proc = cockpit.spawn(args, {
+          err: 'out',
+          directory: '/usr/share/cockpit/ansible-playbook/ansible',
+          superuser: true
+        });
+
+        proc.stream(function (data) {
+          appendOutput(String(data));
+        });
+
+        proc.done(function () {
+          appendOutput('\\n== Process finished successfully ==\\n');
+          disableForm(false);
+        });
+
+        proc.fail(function (err) {
+          appendOutput('\\n== Process failed ==\\n' + JSON.stringify(err) + '\\n');
+          disableForm(false);
+        });
+      } catch (e) {
+        appendOutput('\\nException starting process: ' + e + '\\n');
+        disableForm(false);
+      }
+    });
+  });
+})();
+EOF
+```
+
+---
+
+## 6. `deploy_tomcat.yml`
+
+The Ansible playbook (with **restart only**, no reload):
+
+```bash
+sudo tee /usr/share/cockpit/ansible-playbook/ansible/deploy_tomcat.yml > /dev/null <<'EOF'
 ---
 - hosts: tomcat_servers
   become: yes
@@ -115,11 +262,6 @@ cat <<EOF > deploy_tomcat.yml
         group: tomcat
         mode: '0755'
 
-    - name: Check if server.xml exists
-      stat:
-        path: "{{ tomcat_config_dir }}/server.xml"
-      register: server_xml_stat
-
     - name: Ensure server.xml exists
       copy:
         content: |
@@ -138,12 +280,7 @@ cat <<EOF > deploy_tomcat.yml
         group: tomcat
         mode: '0644'
         force: no
-      when: not server_xml_stat.stat.exists
-
-    - name: Check if tomcat-users.xml exists
-      stat:
-        path: "{{ tomcat_config_dir }}/tomcat-users.xml"
-      register: tomcat_users_stat
+      when: not lookup('file', '{{ tomcat_config_dir }}/server.xml', errors='ignore')
 
     - name: Ensure tomcat-users.xml exists
       copy:
@@ -159,21 +296,7 @@ cat <<EOF > deploy_tomcat.yml
         group: tomcat
         mode: '0644'
         force: no
-      when: not tomcat_users_stat.stat.exists
-
-    - name: Check if Tomcat installation directory exists
-      stat:
-        path: /usr/share/tomcat11
-      register: tomcat_install_stat
-
-    - name: Ensure Tomcat ownership for installation directory
-      file:
-        path: /usr/share/tomcat11
-        state: directory
-        owner: tomcat
-        group: tomcat
-        recurse: yes
-      when: tomcat_install_stat.stat.exists
+      when: not lookup('file', '{{ tomcat_config_dir }}/tomcat-users.xml', errors='ignore')
 
     - name: Configure HTTP port in server.xml
       lineinfile:
@@ -207,7 +330,7 @@ cat <<EOF > deploy_tomcat.yml
           <role rolename="{{ tomcat_user_role | default('manager-gui') }}"/>
           <user username="{{ tomcat_username | default('admin') }}" password="{{ tomcat_password | default('changeme') }}" roles="{{ tomcat_user_role | default('manager-gui') }}"/>
         backup: yes
-      notify: reload tomcat
+      notify: restart tomcat
 
     - name: Reload systemd
       systemd:
@@ -231,340 +354,108 @@ cat <<EOF > deploy_tomcat.yml
       systemd:
         name: tomcat
         state: restarted
-
-    - name: reload tomcat
-      systemd:
-        name: tomcat
-        state: reloaded
 EOF
-````
+```
 
-**Step 4:** Execute the Playbook
+---
 
-From ~/ansible/tomcat-playbook:
+## 7. `hosts` file
 
-````
-ansible-playbook -i hosts deploy_tomcat.yml
-````
-For customs:
-````
-ansible-playbook -i hosts deploy_tomcat.yml -e tomcat_port=8080 -e tomcat_username=admin -e tomcat_password=securepass
-````
+Define local host group:
 
-**Step 5:** Verify the Deployment
+```bash
+sudo tee /usr/share/cockpit/ansible-playbook/ansible/hosts > /dev/null <<'EOF'
+[tomcat_servers]
+localhost ansible_connection=local
+EOF
+```
 
-Check Status:
-````
-sudo systemctl status tomcat.service
-````
-(Expect Active: active (running).)
+---
 
-Open Firewall:
-````
-sudo firewall-cmd --add-port=8080/tcp --permanent
-sudo firewall-cmd --reload
-````
-Access: <ins>http://<your_server_ip>:8080</ins> (Tomcat welcome page). For manager: <ins>http://<ip>:8080/manager/html</ins> (login with customs).
+## 8. `deploy-tomcat` wrapper script
 
-## Integrating "deploy-tomcat" into Cockpit for SLES 16 under Tools
-
-Same as before: Wrapper script and plugin for one-click with questionnaire.
-
-**Step 1:** Move the Playbook to a Permanent Location
-
-````
-sudo mkdir -p /opt/ansible
-sudo mv ~/ansible/tomcat-playbook /opt/ansible/
-````
-
-**Step 2:** Create the Wrapper Script
-
-Updated for native paths and vars.
-
-````
-sudo cat <<EOF > /usr/local/bin/deploy-tomcat
+```bash
+sudo tee /usr/share/cockpit/ansible-playbook/bin/deploy-tomcat > /dev/null <<'EOF'
 #!/bin/bash
-
-# Parse arguments
-PORT=8080
+HTTP_PORT=8080
+SHUTDOWN_PORT=8005
+AJP_PORT=8009
 USERNAME="admin"
 PASSWORD="changeme"
+USER_ROLE="manager-gui"
 
-while [[ \$# -gt 0 ]]; do
-    case \$1 in
-        --port) PORT="\$2"; shift 2 ;;
-        --username) USERNAME="\$2"; shift 2 ;;
-        --password) PASSWORD="\$2"; shift 2 ;;
-        *) echo "Unknown option: \$1"; exit 1 ;;
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --http-port) HTTP_PORT="$2"; shift 2 ;;
+        --shutdown-port) SHUTDOWN_PORT="$2"; shift 2 ;;
+        --ajp-port) AJP_PORT="$2"; shift 2 ;;
+        --username) USERNAME="$2"; shift 2 ;;
+        --password) PASSWORD="$2"; shift 2 ;;
+        --user-role) USER_ROLE="$2"; shift 2 ;;
+        *) echo "Unknown option: $1"; exit 1 ;;
     esac
 done
 
-echo "==============================================="
-echo "Starting Tomcat 11 Deployment (Native SLES Package)..."
-echo "Port: \$PORT | User: \$USERNAME"
-echo "==============================================="
-echo ""
+echo "Starting Tomcat 11 Deployment..."
+echo "Ports: HTTP $HTTP_PORT, Shutdown $SHUTDOWN_PORT, AJP $AJP_PORT | User: $USERNAME ($USER_ROLE)"
 
-cd /opt/ansible/tomcat-playbook
+cd /usr/share/cockpit/ansible-playbook/ansible || exit 1
+ansible-playbook -i hosts deploy_tomcat.yml \
+  -e tomcat_http_port="$HTTP_PORT" \
+  -e tomcat_shutdown_port="$SHUTDOWN_PORT" \
+  -e tomcat_ajp_port="$AJP_PORT" \
+  -e tomcat_username="$USERNAME" \
+  -e tomcat_password="$PASSWORD" \
+  -e tomcat_user_role="$USER_ROLE"
 
-# Pass to Ansible
-ansible-playbook -i hosts deploy_tomcat.yml -e tomcat_port="\$PORT" -e tomcat_username="\$USERNAME" -e tomcat_password="\$PASSWORD"
-
-echo ""
-echo "==============================================="
-echo "Deployment Finished. Verify: sudo systemctl status tomcat.service"
-echo "==============================================="
+if [[ $? -eq 0 ]]; then
+  echo "Deployment Finished."
+  echo "Verify: sudo systemctl status tomcat.service"
+  echo "Access Tomcat at http://<server_ip>:$HTTP_PORT and Manager at http://<server_ip>:$HTTP_PORT/manager/html"
+else
+  echo "Deployment Failed. Check logs: journalctl -u tomcat.service or /var/log/tomcat/catalina.out"
+  exit 1
+fi
 EOF
-````
-````
-sudo chmod +x /usr/local/bin/deploy-tomcat
-````
 
-**Step 3:** Install the Cockpit Plugin
+sudo chmod +x /usr/share/cockpit/ansible-playbook/bin/deploy-tomcat
+```
 
+---
 
-````
-sudo mkdir -p /usr/share/cockpit/deploy-tomcat
-````
+## 9. Fix Permissions
 
-````
-mkdir -p ~/cockpit-deploy-tomcat
-cd ~/cockpit-deploy-tomcat
-touch manifest.json deploy.html deploy.js
-````
+```bash
+sudo chmod -R a+rX /usr/share/cockpit/ansible-playbook
+```
 
+---
 
-Create <ins>deploy.html</ins>
+## 10. Restart Cockpit
 
-````
-sudo cat <<EOF > /usr/share/cockpit/deploy-tomcat/deploy.html
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Deploy Tomcat</title>
-    <meta charset="utf-8">
-    <script src="../base1/cockpit.js"></script>
-    <style>
-        body { font-family: sans-serif; padding: 20px; }
-        button { padding: 10px 20px; font-size: 16px; margin: 5px 0; }
-        input, select { padding: 5px; margin: 5px 0; width: 200px; }
-        #form { display: none; border: 1px solid #ccc; padding: 10px; margin: 10px 0; }
-        #output { background: #f0f0f0; padding: 10px; max-height: 300px; overflow-y: auto; }
-        #result { font-weight: bold; margin: 10px 0; }
-        label { display: block; margin: 5px 0; }
-    </style>
-</head>
-<body>
-    <main tabindex="-1">
-        <section>
-            <h1>Tomcat Deployment Tool</h1>
-            <p>Deploy Tomcat with optional custom settings.</p>
-            <div>
-                <label><input type="checkbox" id="customize"> Use custom settings</label>
-                <button id="deploy" disabled>Deploy Tomcat</button>
-                <span id="result"></span>
-            </div>
-            <div id="form">
-                <h3>Custom Settings:</h3>
-                <label>Tomcat Port (default: 8080): <input type="number" id="port" value="8080" min="1024" max="65535"></label>
-                <label>Manager Username: <input type="text" id="username" placeholder="e.g., admin"></label>
-                <label>Manager Password: <input type="password" id="password" placeholder="Secure password"></label>
-            </div>
-            <div>
-                <h3>Output:</h3>
-                <pre id="output"></pre>
-            </div>
-        </section>
-    </main>
-    <script src="deploy.js"></script>
-</body>
-</html>
-EOF
-````
-
-copy them here</ins>
-
-````
-sudo cp manifest.json deploy.html deploy.js /usr/share/cockpit/deploy-tomcat/  # Adjust path
-sudo chown -R root:root /usr/share/cockpit/deploy-tomcat/
-sudo chmod -R 755 /usr/share/cockpit/deploy-tomcat/
+```bash
 sudo systemctl restart cockpit
-````
-Create <ins>deploy.js</ins>
+```
 
-````
-sudo cat <<EOF > /usr/share/cockpit/deploy-tomcat/deploy.js
-const button = document.getElementById("deploy");
-const output = document.getElementById("output");
-const result = document.getElementById("result");
-const customize = document.getElementById("customize");
-const form = document.getElementById("form");
-const portField = document.getElementById("port");
-const usernameField = document.getElementById("username");
-const passwordField = document.getElementById("password");
+Open Cockpit in your browser → **Tools → Ansible Playbook**
+You’ll see the **Deploy Tomcat 11** form.
+Run it and watch Ansible output stream in real time.
 
-function updateButton() {
-    button.disabled = !customize.checked || (form.style.display !== 'none' && !validateForm());
-}
+---
 
-function validateForm() {
-    // Basic validation (extend as needed)
-    return portField.value >= 1024 && portField.value <= 65535 && usernameField.value.trim() !== '' && passwordField.value.trim() !== '';
-}
+## ✅ Result
 
-// Toggle form visibility and button state
-customize.addEventListener("change", () => {
-    form.style.display = customize.checked ? 'block' : 'none';
-    updateButton();
-});
+* Installs Java 17 + Tomcat 11
+* Configures ports and admin user from UI
+* Starts Tomcat service and opens firewall
+* Accessible at:
 
-// Listen for form changes
-[portField, usernameField, passwordField].forEach(field => field.addEventListener("input", updateButton));
+  * `http://<server-ip>:8080`
+  * `http://<server-ip>:8080/manager/html`
 
-function deploy_run() {
-    // Collect args from form
-    const args = ["/usr/local/bin/deploy-tomcat"];
-    if (customize.checked) {
-        args.push("--port", portField.value);
-        args.push("--username", usernameField.value);
-        args.push("--password", passwordField.value);
-    }
+---
 
-    // Disable button during execution
-    button.disabled = true;
-    button.textContent = "Deploying...";
-
-    // Spawn with arguments and stream output (use PTY for better compatibility)
-    const process = cockpit.spawn(args, { superuser: "try", pty: true })
-        .stream(deploy_output)
-        .then(deploy_success)
-        .catch(deploy_fail)
-        .finally(() => {
-            button.disabled = false;
-            button.textContent = "Deploy Tomcat";
-        });
-
-    result.innerHTML = "";
-    output.innerHTML = "";
-}
-
-function deploy_success() {
-    result.style.color = "green";
-    result.innerHTML = "Deployment successful!";
-}
-
-function deploy_fail(error) {
-    result.style.color = "red";
-    result.innerHTML = "Deployment failed: " + (error.problem || error.message || "Unknown error");
-}
-
-function deploy_output(data) {
-    output.append(document.createTextNode(data));
-    output.scrollTop = output.scrollHeight;
-}
-
-// Connect button
-button.addEventListener("click", deploy_run);
-
-// Initialize
-cockpit.transport.wait(function() { });
-updateButton();  // Initial state
-EOF
-````
-
-Create <ins>manifest.json</ins>
-````
-cat <<EOF > manifest.json
-{
-    "version": 0,
-    "tools": {
-        "deploy-tomcat": {
-            "label": "Deploy Tomcat",
-            "path": "deploy.html",
-            "icon": "applications-engineering"
-        }
-    }
-}
-EOF
-````
-
-````
-sudo cp manifest.json deploy.html deploy.js /usr/share/cockpit/deploy-tomcat/  # Adjust path
-sudo chown -R root:root /usr/share/cockpit/deploy-tomcat/
-sudo chmod -R 755 /usr/share/cockpit/deploy-tomcat/
-sudo systemctl restart cockpit
-````
-
-
-**Step 4:** Run from Cockpit under Tools
-
-1.Log in to Cockpit.
-
-2.Tools > Deploy Tomcat.
-
-3.Check "Use custom settings", fill form (port, username, password).
-
-4.Click Deploy Tomcat—runs native install with customs.
-
-5.Output shows progress; verify in browser.
-
-Check the status by running:
-
-````
-systemctl status tomcat.service
-````
-
-To stop Tomcat run:
-
-````
-systemctl stop tomcat.service
-systemcstl disable tomcat.service
-````
-
-
-**Summary:**
-
-- Advantages of Native Package: Simpler, auto-updates via zypper update tomcat, SUSE-maintained security patches.
-
-- Customization: Questionnaire passes to Ansible for flexible configs.
-
-- Troubleshooting: If Tomcat not in repo, run sudo SUSEConnect -p sle-module-legacy-applications/16/x86_64 or check zypper search tomcat. For Java issues, confirm path with readlink -f $(which java).
-
-- Security: Change default password immediately; enable HTTPS for production.
-
-This provides a streamlined, repo-based deployment fully integrated with Cockpit.
-
-
-### Cleanup
-
-Run these commands to remove any old playbook files or plugin attempts.
-Bash
-
-**Remove old Ansible project**
-````
-sudo rm -rf /opt/ansible/tomcat-playbook
-````
-**Remove old wrapper script**
-````
-sudo rm -f /usr/local/bin/deploy-tomcat
-````
-**Remove old Cockpit plugins**
-
-````
-sudo rm -rf /usr/share/cockpit/tomcat-deployer
-sudo rm -rf /usr/share/cockpit/hello
-sudo rm -rf /usr/share/cockpit/test
-````
-
-Below are screenshots examples from SLES 16.
-
-<img width="646" height="579" alt="image" src="https://github.com/user-attachments/assets/66c75c43-f640-4677-8199-33ff804d818b" />
-
-<img width="1023" height="579" alt="image" src="https://github.com/user-attachments/assets/7d254110-05d1-4da3-87d4-477ac66f9e32" />
-
-<img width="1096" height="959" alt="image" src="https://github.com/user-attachments/assets/abe09969-7595-4eb1-80c1-b443e2ffe807" />
-
-
-
-========
+<img width="1270" height="916" alt="image" src="https://github.com/user-attachments/assets/a20c0553-7419-4109-93a0-88b5b62d175a" />
+<img width="865" height="189" alt="image" src="https://github.com/user-attachments/assets/212fed14-9a0a-4df2-9b21-e5fe7915054c" />
+<img width="1069" height="883" alt="image" src="https://github.com/user-attachments/assets/f7d7d296-2aff-4e1b-9c28-d2b11b338ad6" />
 
