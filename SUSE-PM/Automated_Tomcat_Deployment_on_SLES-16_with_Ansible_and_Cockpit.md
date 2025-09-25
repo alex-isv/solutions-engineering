@@ -23,6 +23,7 @@ Then open Cockpit in your browser:
 
 ## 2. Create Cockpit Extension Directory
 
+  
 ```bash
 sudo mkdir -p /usr/share/cockpit/ansible-playbook/{bin,ansible}
 ```
@@ -32,6 +33,8 @@ sudo mkdir -p /usr/share/cockpit/ansible-playbook/{bin,ansible}
 ## 3. `manifest.json`
 
 Minimal manifest (Cockpit doesn’t support deep nested menus – we build the hierarchy in the page UI):
+
+<details><summary>Expand for detailed values</summary>
 
 ```bash
 sudo tee /usr/share/cockpit/ansible-playbook/manifest.json > /dev/null <<'EOF'
@@ -47,12 +50,14 @@ sudo tee /usr/share/cockpit/ansible-playbook/manifest.json > /dev/null <<'EOF'
 }
 EOF
 ```
-
+</details>
 ---
 
 ## 4. `index.html`
 
 UI page with hierarchical selection and deployment form:
+
+<details><summary>Expand for detailed values</summary>
 
 ```bash
 sudo tee /usr/share/cockpit/ansible-playbook/index.html > /dev/null <<'EOF'
@@ -126,12 +131,15 @@ sudo tee /usr/share/cockpit/ansible-playbook/index.html > /dev/null <<'EOF'
 </html>
 EOF
 ```
+</details>
 
 ---
 
 ## 5. `index.js`
 
 Logic for running the deploy script via `cockpit.spawn`:
+
+<details><summary>Expand for detailed values</summary>
 
 ```bash
 sudo tee /usr/share/cockpit/ansible-playbook/index.js > /dev/null <<'EOF'
@@ -211,12 +219,15 @@ sudo tee /usr/share/cockpit/ansible-playbook/index.js > /dev/null <<'EOF'
 })();
 EOF
 ```
+</details>
 
 ---
 
 ## 6. `deploy_tomcat.yml`
 
 The Ansible playbook (with **restart only**, no reload):
+
+<details><summary>Expand for detailed values</summary>
 
 ```bash
 sudo tee /usr/share/cockpit/ansible-playbook/ansible/deploy_tomcat.yml > /dev/null <<'EOF'
@@ -356,6 +367,7 @@ sudo tee /usr/share/cockpit/ansible-playbook/ansible/deploy_tomcat.yml > /dev/nu
         state: restarted
 EOF
 ```
+</details>
 
 ---
 
@@ -373,6 +385,8 @@ EOF
 ---
 
 ## 8. `deploy-tomcat` wrapper script
+
+<details><summary>Expand for detailed values</summary>
 
 ```bash
 sudo tee /usr/share/cockpit/ansible-playbook/bin/deploy-tomcat > /dev/null <<'EOF'
@@ -417,7 +431,10 @@ else
   exit 1
 fi
 EOF
+```
+</details>
 
+```
 sudo chmod +x /usr/share/cockpit/ansible-playbook/bin/deploy-tomcat
 ```
 
