@@ -466,7 +466,13 @@ Open Cockpit → **Tools → Ansible Playbook** → choose **Invoke MCP Client**
   * model dropdown (fetched via host-side wrapper)
   * simple **Prompt** field
   * streaming and nicely **wrapped** response text
+
+ From a command prompt:
  
+ <img width="942" height="675" alt="image" src="https://github.com/user-attachments/assets/298e3816-3c05-4c90-8148-373d38025234" />
+
+From Cockpit Ansible:
+
 <img width="1725" height="887" alt="image" src="https://github.com/user-attachments/assets/d03612e7-6e59-4f9e-8225-631394c69704" />
 
 
