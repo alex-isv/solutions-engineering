@@ -270,6 +270,10 @@ Folder layout:
 
 ### 2.3 index.js (full working file)
 
+<details><summary>Expand for detailed values</summary>
+
+```bash
+
 ```js
 (function () {
   'use strict';
@@ -372,6 +376,8 @@ Folder layout:
   });
 })();
 ```
+</details>
+---
 
 ### 2.4 MCP client wrapper (host-side)
 
