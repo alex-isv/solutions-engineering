@@ -381,7 +381,11 @@ Folder layout:
 
 ### 2.4 MCP client wrapper (host-side)
 
+Create:
+
 `/usr/share/cockpit/ansible-playbook/bin/deploy-mcpclient`
+
+<details><summary>Expand for detailed values</summary>
 
 ```bash
 #!/bin/bash
@@ -456,6 +460,8 @@ except Exception as e:
     sys.exit(1)
 PYCODE
 ```
+</details>
+---
 
 ```bash
 sudo chmod +x /usr/share/cockpit/ansible-playbook/bin/deploy-mcpclient
