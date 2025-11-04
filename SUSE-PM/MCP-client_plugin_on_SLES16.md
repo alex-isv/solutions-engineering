@@ -384,7 +384,7 @@ Folder layout:
 Create `deploy-mcpclient`:
 
 ````
-mkdir /usr/share/cockpit/ansible-playbook/bin/deploy-mcpclient`
+mkdir /usr/share/cockpit/ansible-playbook/bin/deploy-mcpclient
 ````
 
 <details><summary>Expand for detailed values</summary>
