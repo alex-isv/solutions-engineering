@@ -27,11 +27,14 @@ sudo python3 -m pip install requests fastapi uvicorn
 
 ### 1.1 Create folder and server code
 
-```bash
+````
 sudo mkdir -p /opt/mcp-server
+````
 
 Create a server.py config:
+
 <details><summary>Expand for detailed values</summary>
+    
 ```bash
 
 sudo tee /opt/mcp-server/server.py > /dev/null <<'PY'
