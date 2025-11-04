@@ -137,6 +137,10 @@ PY
 
 Create `/opt/ollama-compose/docker-compose.yml`:
 
+<details><summary>Expand for detailed values</summary>
+
+```bash
+
 ```yaml
 services:
   ollama-llama3-8b:
@@ -168,6 +172,8 @@ volumes:
   ollama_mistral_7b:
   ollama_deepseek_r1_14b:
 ```
+</details>
+---
 
 Bring it up:
 
