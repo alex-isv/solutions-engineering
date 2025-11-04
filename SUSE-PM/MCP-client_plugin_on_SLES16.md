@@ -29,6 +29,11 @@ sudo python3 -m pip install requests fastapi uvicorn
 
 ```bash
 sudo mkdir -p /opt/mcp-server
+
+Create a server.py config:
+<details><summary>Expand for detailed values</summary>
+```bash
+
 sudo tee /opt/mcp-server/server.py > /dev/null <<'PY'
 #!/usr/bin/env python3
 """
@@ -122,6 +127,8 @@ if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8787)
 PY
 ```
+</details>
+---
 
 ### 1.2 (Optional) Run Ollama models as containers
 
