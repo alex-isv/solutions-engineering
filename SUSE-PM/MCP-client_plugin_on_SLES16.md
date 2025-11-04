@@ -381,13 +381,16 @@ Folder layout:
 
 ### 2.4 MCP client wrapper (host-side)
 
-Create:
+Create `deploy-mcpclient`:
 
-`/usr/share/cockpit/ansible-playbook/bin/deploy-mcpclient`
+````
+mkdir /usr/share/cockpit/ansible-playbook/bin/deploy-mcpclient`
+````
 
 <details><summary>Expand for detailed values</summary>
 
 ```bash
+
 #!/bin/bash
 # Cockpit wrapper to call MCP server REST API or list available tools
 
