@@ -549,7 +549,15 @@ Open Cockpit in your browser → Tools → Ansible Playbook. You’ll see the De
  
   ### For automatic build use the following script:
 
- /usr/local/bin/build-rpm.sh
+````
+vim /usr/local/bin/build-rpm.sh
+````
+and paste the following:
+
+
+<details><summary>Expand for detailed values</summary>
+    
+```bash
 
 #!/bin/bash
 #
@@ -640,6 +648,10 @@ else
   echo "❌ Build failed — RPM not found."
   exit 1
 fi
+
+```
+</details>
+---
 
 
 Make it executable.
