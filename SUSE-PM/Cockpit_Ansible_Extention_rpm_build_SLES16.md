@@ -546,3 +546,122 @@ Open Cockpit in your browser → Tools → Ansible Playbook. You’ll see the De
 - Accessible at:
   - http://<server-ip>:8080
   - http://<server-ip>:8080/manager/html
+ 
+  ### For automatic build use the following script:
+
+ /usr/local/bin/build-rpm.sh
+
+#!/bin/bash
+#
+# build-rpm.sh — Build Cockpit Ansible Playbook RPM (Tomcat, PostgreSQL, MariaDB, MCP)
+# For SUSE Linux Enterprise Server 16
+#
+# Usage:
+#   sudo /usr/local/bin/build-rpm.sh
+#
+
+set -e
+
+PKGNAME="ansible-playbook-extension"
+VERSION="1.0"
+RELEASE="1"
+SUMMARY="Cockpit Ansible Playbook extension with Tomcat, PostgreSQL, MariaDB, and MCP client"
+LICENSE="MIT"
+MAINTAINER="ChatGPT Builder <builder@example.com>"
+BUILDDIR="/usr/src/packages"
+SRCDIR="$BUILDDIR/SOURCES/${PKGNAME}"
+TARBALL="${PKGNAME}-${VERSION}.tar.gz"
+SPECDIR="$BUILDDIR/SPECS"
+RPM_OUTPUT="$BUILDDIR/RPMS/noarch"
+
+echo "==> Preparing source tree..."
+sudo rm -rf "$SRCDIR"
+sudo mkdir -p "$SRCDIR"
+sudo cp -r /usr/share/cockpit/ansible-playbook/* "$SRCDIR"/
+
+echo "==> Creating source tarball..."
+cd "$BUILDDIR/SOURCES"
+sudo tar czf "$TARBALL" "$PKGNAME"
+
+echo "==> Creating SPEC file..."
+sudo tee "$SPECDIR/${PKGNAME}.spec" > /dev/null <<SPEC
+Name:           ${PKGNAME}
+Version:        ${VERSION}
+Release:        ${RELEASE}%{?dist}
+Summary:        ${SUMMARY}
+License:        ${LICENSE}
+URL:            https://github.com/example/ansible-on-cockpit
+Source0:        ${TARBALL}
+BuildArch:      noarch
+Requires:       cockpit ansible python3 python3-requests
+BuildRequires:  rpm-build
+
+%description
+This package provides a Cockpit extension for running Ansible Playbooks directly from the web UI.
+It includes deployment playbooks for Apache Tomcat 11, PostgreSQL 17, MariaDB 11, and an integrated MCP Client.
+
+%prep
+%setup -q -n ${PKGNAME}
+
+%build
+# Nothing to build
+
+%install
+mkdir -p %{buildroot}/usr/share/cockpit/${PKGNAME}
+cp -a * %{buildroot}/usr/share/cockpit/${PKGNAME}/
+find %{buildroot}/usr/share/cockpit/${PKGNAME}/bin -type f -exec chmod 755 {} \\;
+
+%files
+/usr/share/cockpit/${PKGNAME}
+
+%post
+echo "Cockpit Ansible Playbook extension installed."
+systemctl restart cockpit || true
+
+%changelog
+* $(date +"%a %b %d %Y") ${MAINTAINER} - ${VERSION}-${RELEASE}
+- Initial release for SLES16 with Tomcat, PostgreSQL, MariaDB, and MCP integration.
+SPEC
+
+echo "==> Building RPM..."
+cd "$SPECDIR"
+sudo rpmbuild -ba "${PKGNAME}.spec"
+
+RPM_FILE=$(find "$RPM_OUTPUT" -name "${PKGNAME}-${VERSION}-${RELEASE}*.rpm" | head -n 1)
+
+if [ -f "$RPM_FILE" ]; then
+  echo
+  echo "✅ Build complete!"
+  echo "RPM generated at: $RPM_FILE"
+  echo
+  echo "Install using:"
+  echo "  sudo zypper install $RPM_FILE"
+else
+  echo "❌ Build failed — RPM not found."
+  exit 1
+fi
+
+
+Make it executable.
+
+````
+sudo chmod +x /usr/local/bin/build-rpm.sh
+````
+
+To build your RPM:
+
+````
+sudo /usr/local/bin/build-rpm.sh
+````
+Test Installation:
+
+````
+sudo zypper install /usr/src/packages/RPMS/noarch/ansible-playbook-extension-1.0-1.noarch.rpm
+sudo systemctl restart cockpit
+````
+Then open Cockpit → Tools → Ansible Playbook and check.
+
+
+
+
+ 
