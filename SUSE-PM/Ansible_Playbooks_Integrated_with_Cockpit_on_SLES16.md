@@ -701,6 +701,9 @@ Invoke MCP Client
 
 ---
 
+<img width="1675" height="730" alt="image" src="https://github.com/user-attachments/assets/731d8032-c8b9-417e-b7fe-c7be9ad1cc6d" />
+
+
 ## ✅ Summary
 
 | Component               | Purpose                                                  |
