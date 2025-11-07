@@ -5,7 +5,7 @@ covering complete playbook integration for **Apache Tomcat 11**, **PostgreSQL 17
 
 ---
 
-# 📘 Ansible Playbooks Integrated with Cockpit on SLES 16
+#  Ansible Playbooks Integrated with Cockpit on SLES 16
 
 This document provides **end-to-end steps** to:
 
@@ -16,7 +16,7 @@ This document provides **end-to-end steps** to:
 
 ---
 
-## 🧩 0. System Prerequisites
+##  System Prerequisites
 
 Ensure your SLES 16 system has base tools and Python ready.
 
@@ -27,7 +27,7 @@ sudo python3 -m pip install --upgrade pip setuptools wheel requests fastapi uvic
 
 ---
 
-## 🧱 1. Install Cockpit and Ansible Environment
+## 1. Install Cockpit and Ansible Environment
 
 ```bash
 sudo zypper install -y cockpit cockpit-ws ansible firewalld jq tree
@@ -42,7 +42,7 @@ https://<your_server_ip>:9090
 
 ---
 
-## 📁 2. Directory Layout
+##  2. Directory Layout
 
 All Cockpit-related files will reside under:
 
@@ -65,7 +65,7 @@ All Cockpit-related files will reside under:
 
 ---
 
-## 🧰 3. manifest.json
+##  3. manifest.json
 
 Defines the Cockpit module.
 
@@ -86,11 +86,11 @@ Save as `/usr/share/cockpit/ansible-playbook/manifest.json`.
 
 ---
 
-## 🧾 4. Ansible Playbooks
+##  4. Ansible Playbooks
 
 Each playbook lives under `/usr/share/cockpit/ansible-playbook/ansible/`.
 
-### 🟦 4.1 Apache Tomcat 11
+###  4.1 Apache Tomcat 11
 
 **File:** `/usr/share/cockpit/ansible-playbook/ansible/deploy_tomcat.yml`
 
@@ -172,7 +172,7 @@ Each playbook lives under `/usr/share/cockpit/ansible-playbook/ansible/`.
 
 ---
 
-### 🟩 4.2 PostgreSQL 17
+###  4.2 PostgreSQL 17
 
 **File:** `/usr/share/cockpit/ansible-playbook/ansible/deploy_postgres.yml`
 
@@ -206,7 +206,7 @@ Each playbook lives under `/usr/share/cockpit/ansible-playbook/ansible/`.
 
 ---
 
-### 🟨 4.3 MariaDB 11
+### 4.3 MariaDB 11
 
 **File:** `/usr/share/cockpit/ansible-playbook/ansible/deploy_mariadb.yml`
 
@@ -241,7 +241,7 @@ Each playbook lives under `/usr/share/cockpit/ansible-playbook/ansible/`.
 
 ---
 
-## 🔵 5. MCP Client Integration
+##  5. MCP Client Integration
 
 **Wrapper script:** `/usr/share/cockpit/ansible-playbook/bin/deploy-mcpclient`
 
@@ -316,13 +316,13 @@ PYCODE
 
 ---
 
-## ⚙️ 6. Cockpit UI Integration
+##  6. Cockpit UI Integration
 
 **index.html** and **index.js** define Cockpit interaction —
 They include all four modules (Tomcat, PostgreSQL, MariaDB, MCP Client)
 with dropdown-based playbook selection and a shared deploy button.
 
-index.html
+`index.html`
 
 <details><summary>Expand for detailed values</summary>
   
@@ -421,7 +421,7 @@ index.html
 ---
 
 
-index.js
+`index.js`
 
 <details><summary>Expand for detailed values</summary>
   
@@ -558,7 +558,7 @@ index.js
 
 ---
 
-## 🚀 7. Build the RPM Package
+##  7. Build the RPM Package
 
 ### 7.1 Build Script: `/usr/local/bin/build-rpm.sh`
 
@@ -679,7 +679,7 @@ RPM located at: /usr/src/packages/RPMS/noarch/ansible-playbook-extension-1.0-1.n
 
 ---
 
-## 📦 8. Install & Verify
+##  8. Install & Verify
 
 ```bash
 sudo zypper install /usr/src/packages/RPMS/noarch/ansible-playbook-extension-1.0-1.noarch.rpm
