@@ -561,38 +561,61 @@ and paste the following:
 
 #!/bin/bash
 #
-# build-rpm.sh — Build Cockpit Ansible Playbook RPM (Tomcat, PostgreSQL, MariaDB, MCP)
-# For SUSE Linux Enterprise Server 16
+# build-rpm.sh — Build Cockpit Ansible Playbook RPM for SLES 16
+# Includes all dependencies: cockpit, cockpit-ws, ansible, firewalld, jq, tree
 #
 # Usage:
-#   sudo /usr/local/bin/build-rpm.sh
+#   sudo /usr/local/bin/build-rpm.sh [VERSION]
 #
 
 set -e
 
+# --- Configuration ---
 PKGNAME="ansible-playbook-extension"
-VERSION="1.0"
+VERSION="${1:-1.0}"         # Version passed as first argument, default 1.0
 RELEASE="1"
-SUMMARY="Cockpit Ansible Playbook extension with Tomcat, PostgreSQL, MariaDB, and MCP client"
+SUMMARY="Cockpit Ansible Playbook extension (Tomcat, PostgreSQL, MariaDB, MCP)"
 LICENSE="MIT"
 MAINTAINER="ChatGPT Builder <builder@example.com>"
-BUILDDIR="/usr/src/packages"
-SRCDIR="$BUILDDIR/SOURCES/${PKGNAME}"
+TOPDIR="/usr/src/packages"
+SRCDIR="${TOPDIR}/SOURCES/${PKGNAME}"
 TARBALL="${PKGNAME}-${VERSION}.tar.gz"
-SPECDIR="$BUILDDIR/SPECS"
-RPM_OUTPUT="$BUILDDIR/RPMS/noarch"
+SPECDIR="${TOPDIR}/SPECS"
+RPM_OUTPUT="${TOPDIR}/RPMS/noarch"
 
-echo "==> Preparing source tree..."
-sudo rm -rf "$SRCDIR"
-sudo mkdir -p "$SRCDIR"
-sudo cp -r /usr/share/cockpit/ansible-playbook/* "$SRCDIR"/
+# --- Step 1. Ensure prerequisites ---
+echo "==> Installing prerequisites..."
+zypper --non-interactive install -y \
+    python313 python313-pip git curl unzip tar gzip make \
+    cockpit cockpit-ws ansible firewalld jq tree rpm-build
 
+# Enable Cockpit and Firewalld services
+echo "==> Enabling services..."
+systemctl enable --now cockpit.socket firewalld || true
+
+# --- Step 2. Setup RPM build structure ---
+echo "==> Preparing RPM build environment..."
+mkdir -p "${TOPDIR}"/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS}
+mkdir -p "${SRCDIR}"
+
+# --- Step 3. Copy source files ---
+echo "==> Copying Cockpit extension source..."
+if [ ! -d /usr/share/cockpit/ansible-playbook ]; then
+  echo "❌ ERROR: Cockpit extension directory /usr/share/cockpit/ansible-playbook not found!"
+  exit 1
+fi
+
+rm -rf "${SRCDIR:?}"/*
+cp -a /usr/share/cockpit/ansible-playbook/* "${SRCDIR}/"
+
+# --- Step 4. Create source tarball ---
 echo "==> Creating source tarball..."
-cd "$BUILDDIR/SOURCES"
-sudo tar czf "$TARBALL" "$PKGNAME"
+cd "${TOPDIR}/SOURCES"
+tar czf "${TARBALL}" "${PKGNAME}"
 
-echo "==> Creating SPEC file..."
-sudo tee "$SPECDIR/${PKGNAME}.spec" > /dev/null <<SPEC
+# --- Step 5. Generate SPEC file ---
+echo "==> Generating SPEC file..."
+cat > "${SPECDIR}/${PKGNAME}.spec" <<SPEC
 Name:           ${PKGNAME}
 Version:        ${VERSION}
 Release:        ${RELEASE}%{?dist}
@@ -601,11 +624,11 @@ License:        ${LICENSE}
 URL:            https://github.com/example/ansible-on-cockpit
 Source0:        ${TARBALL}
 BuildArch:      noarch
-Requires:       cockpit ansible python3 python3-requests
+Requires:       cockpit cockpit-ws ansible firewalld jq tree python3 python3-requests
 BuildRequires:  rpm-build
 
 %description
-This package provides a Cockpit extension for running Ansible Playbooks directly from the web UI.
+This package provides a Cockpit extension for running Ansible Playbooks directly from the Cockpit web UI.
 It includes deployment playbooks for Apache Tomcat 11, PostgreSQL 17, MariaDB 11, and an integrated MCP Client.
 
 %prep
@@ -623,31 +646,35 @@ find %{buildroot}/usr/share/cockpit/${PKGNAME}/bin -type f -exec chmod 755 {} \\
 /usr/share/cockpit/${PKGNAME}
 
 %post
-echo "Cockpit Ansible Playbook extension installed."
+echo "✅ Cockpit Ansible Playbook extension installed successfully."
+echo "Restarting cockpit service..."
 systemctl restart cockpit || true
 
 %changelog
 * $(date +"%a %b %d %Y") ${MAINTAINER} - ${VERSION}-${RELEASE}
-- Initial release for SLES16 with Tomcat, PostgreSQL, MariaDB, and MCP integration.
+- Initial build for SLES16 with Tomcat, PostgreSQL, MariaDB, and MCP integration.
 SPEC
 
-echo "==> Building RPM..."
-cd "$SPECDIR"
-sudo rpmbuild -ba "${PKGNAME}.spec"
+# --- Step 6. Build the RPM ---
+echo "==> Building RPM package..."
+cd "${SPECDIR}"
+rpmbuild -ba "${PKGNAME}.spec"
 
-RPM_FILE=$(find "$RPM_OUTPUT" -name "${PKGNAME}-${VERSION}-${RELEASE}*.rpm" | head -n 1)
+RPM_FILE=$(find "${RPM_OUTPUT}" -name "${PKGNAME}-${VERSION}-${RELEASE}*.rpm" | head -n 1)
 
-if [ -f "$RPM_FILE" ]; then
+if [ -f "${RPM_FILE}" ]; then
   echo
   echo "✅ Build complete!"
-  echo "RPM generated at: $RPM_FILE"
+  echo "RPM generated at: ${RPM_FILE}"
   echo
-  echo "Install using:"
-  echo "  sudo zypper install $RPM_FILE"
+  echo "To install it now, run:"
+  echo "  sudo zypper install -y ${RPM_FILE}"
+  echo
 else
   echo "❌ Build failed — RPM not found."
   exit 1
 fi
+
 
 ```
 </details>
