@@ -700,6 +700,8 @@ sudo systemctl restart cockpit
 ````
 Then open Cockpit → Tools → Ansible Playbook and check.
 
+<img width="1675" height="754" alt="image" src="https://github.com/user-attachments/assets/c41db831-34f4-4abb-b4ad-913880088d34" />
+
 
 
 
