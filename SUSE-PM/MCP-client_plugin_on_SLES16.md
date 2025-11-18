@@ -501,7 +501,7 @@ Open Cockpit → **Tools → Ansible Playbook** → choose **Invoke MCP Client**
 
   * model dropdown (fetched via host-side wrapper)
   * simple **Prompt** field
-  * streaming and nicely **wrapped** response text
+  * streaming and **wrapped** response text
 
  From a command prompt:
  
