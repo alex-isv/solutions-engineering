@@ -24,8 +24,11 @@ Ensure your SLES 16 system has base tools and Python ready.
 sudo zypper install -y python313 python313-pip git curl unzip tar gzip make
 sudo python3 -m pip install --upgrade pip setuptools wheel requests fastapi uvicorn
 ```
-
 ---
+> [!NOTE]
+> This test deployment used SLES 16 for ARM64 systems and validated on a local physical aarch64 servers as well as AWS aarch64 images.
+> Provided `ansible-playbook-extenstion-1.0-1.noarch.rpm` was built on arm64 server.
+>  
 
 ## 1. Install Cockpit and Ansible Environment
 
