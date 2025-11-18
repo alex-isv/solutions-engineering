@@ -570,11 +570,11 @@ with dropdown-based playbook selection and a shared deploy button.
 </details>
 ---
 
----
-
 ##  7. Build the RPM Package
 
 ### 7.1 Build Script: `/usr/local/bin/build-rpm.sh`
+
+<details><summary>Expand for detailed values</summary>
 
 ```bash
 #!/bin/bash
@@ -589,7 +589,7 @@ VERSION="${1:-1.0}"
 RELEASE="1"
 SUMMARY="Cockpit Ansible Playbook extension (Tomcat, PostgreSQL, MariaDB, MCP)"
 LICENSE="MIT"
-MAINTAINER="ChatGPT Builder <builder@example.com>"
+MAINTAINER=" Builder <builder@example.com>"
 TOPDIR="/usr/src/packages"
 SRCDIR="${TOPDIR}/SOURCES/${PKGNAME}"
 TARBALL="${PKGNAME}-${VERSION}.tar.gz"
@@ -668,6 +668,7 @@ else
 fi
 ```
 
+</details>
 ---
 
 ### 7.2 Make It Executable
