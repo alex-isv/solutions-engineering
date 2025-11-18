@@ -25,6 +25,11 @@ sudo python3 -m pip install requests fastapi uvicorn
 
 ## 1) Deploy the MCP Server (FastAPI) + Ollama
 
+> [!NOTE]
+> This test deployment used SLES 16 for ARM64 systems and validated on a local physical aarch64 servers as well as AWS aarch64 images.
+> MCP-server is this case is an arm64 based server with 3 Ollama models Docker containers running. (No GPUs involved)
+>
+
 ### 1.1 Create folder and server code
 
 ````
