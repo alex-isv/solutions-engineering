@@ -94,6 +94,8 @@ Each playbook lives under `/usr/share/cockpit/ansible-playbook/ansible/`.
 
 **File:** `/usr/share/cockpit/ansible-playbook/ansible/deploy_tomcat.yml`
 
+<details><summary>Expand for detailed values</summary>
+    
 ```yaml
 ---
 - hosts: tomcat_servers
@@ -170,11 +172,15 @@ Each playbook lives under `/usr/share/cockpit/ansible-playbook/ansible/`.
         state: restarted
 ```
 
+</details>
 ---
 
 ###  4.2 PostgreSQL 17
 
 **File:** `/usr/share/cockpit/ansible-playbook/ansible/deploy_postgres.yml`
+
+<details><summary>Expand for detailed values</summary>
+
 
 ```yaml
 ---
@@ -204,11 +210,15 @@ Each playbook lives under `/usr/share/cockpit/ansible-playbook/ansible/`.
         state: present
 ```
 
+</details>
 ---
 
 ### 4.3 MariaDB 11
 
 **File:** `/usr/share/cockpit/ansible-playbook/ansible/deploy_mariadb.yml`
+
+<details><summary>Expand for detailed values</summary>
+
 
 ```yaml
 ---
@@ -239,11 +249,14 @@ Each playbook lives under `/usr/share/cockpit/ansible-playbook/ansible/`.
         state: present
 ```
 
+</details>
 ---
 
 ##  5. MCP Client Integration
 
 **Wrapper script:** `/usr/share/cockpit/ansible-playbook/bin/deploy-mcpclient`
+
+<details><summary>Expand for detailed values</summary>
 
 ```bash
 #!/bin/bash
@@ -314,6 +327,7 @@ except Exception as e:
 PYCODE
 ```
 
+</details>
 ---
 
 ##  6. Cockpit UI Integration
