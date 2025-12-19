@@ -93,9 +93,9 @@ kiwi-sles16-mariadb/
 <ins>config.sh</ins>
 
 
-  Script run by KIWI inside the chroot near the end of image preparation.
+  {tab}Script run by KIWI inside the chroot near the end of image preparation.
 
-  Performs post-install customization:
+  {tab}Performs post-install customization:
 
   Enables cloud-init services (cloud-init-local, cloud-init, cloud-config, cloud-final).
 
