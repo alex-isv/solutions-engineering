@@ -914,6 +914,9 @@ Then you can:
   sudo mariadb_tui.sh
   ```
 
+<img width="511" height="294" alt="image" src="https://github.com/user-attachments/assets/df6c42ce-5ae4-4941-a456-506c234b29a8" />
+
+
 * Open Cockpit in a browser:
 
   `https://<public-ip-or-dns>:9090/` (login as `ec2-user` with your key or password, depending on how you configure it).
