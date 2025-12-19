@@ -39,6 +39,7 @@ You should see `repodata`, `aarch64`, etc. under `/mnt/sles16/install`.
 
 ## 2. Create KIWI description layout
 
+```
 kiwi-sles16-mariadb/
 ├─ 
 │   ├─ config.xml
@@ -56,6 +57,7 @@ kiwi-sles16-mariadb/
     │   └─ mariadb_tui.sh
     └─ etc/cloud/cloud.cfg.d/
         └─ 90_mariadb_base.cfg
+```
 
 ```bash
 mkdir -p ~/kiwi-sles16-mariadb
