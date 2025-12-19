@@ -97,7 +97,7 @@ kiwi-sles16-mariadb/
 
   {tab}Performs post-install customization:
 
-  :tab: {nbsp}Enables cloud-init services (cloud-init-local, cloud-init, cloud-config, cloud-final).
+  :tab: {Enables cloud-init services (cloud-init-local, cloud-init, cloud-config, cloud-final).}
 
   Enables mysql.service (MariaDB), cockpit.socket, NetworkManager.service, sshd.service, and serial-getty@ttyS0.service.
 
