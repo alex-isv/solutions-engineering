@@ -51,10 +51,9 @@ Later: you *use mariadb_tui.sh* (and/or additional Ansible runs) to maintain the
 On your **build host** (SLES 16 aarch64):
 
 ```bash
-sudo zypper install kiwi-ng python311-kiwi aws-cli \
+sudo zypper install kiwi-ng python311-kiwi \
                     ansible dialog git \
-                    cloud-init NetworkManager \
-                    mariadb mariadb-client \
+                    cloud-init  \
                     cockpit openssh
 ```
 
