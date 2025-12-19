@@ -840,10 +840,9 @@ Assuming:
 
 * Bucket `my-kiwi-images-bucket`
 * You upload a DB config file:
-* 
+  
 ````
-  ```bash
-  cat > mariadb-config.yml <<EOF
+cat > mariadb-config.yml <<EOF
 mariadb_db_name: myappdb
 mariadb_db_user: myappuser
 mariadb_db_password: S3cr3tP@ss
