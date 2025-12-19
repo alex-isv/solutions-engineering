@@ -174,6 +174,8 @@ Create `config.xml` in `~/kiwi-sles16-mariadb`:
 
 Create `config.sh` in `~/kiwi-sles16-mariadb`:
 
+<details><summary>Expand for detailed values</summary>
+ 
 ```bash
 #!/bin/bash
 # KIWI runs this inside the image root (chroot) at the end of the prepare step.
@@ -263,6 +265,8 @@ rm -f /etc/machine-id
 
 echo "config.sh completed."
 ```
+</details>
+
 
 Make it executable:
 
