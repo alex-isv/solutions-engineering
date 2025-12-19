@@ -851,9 +851,10 @@ EOF
 
 ````
 
+````
 aws s3 cp mariadb-config.yml 
 s3://my-kiwi-images-bucket/config/mariadb-config.yml
-
+````
 
 
 In the AWS **console**, when you launch from your AMI:
