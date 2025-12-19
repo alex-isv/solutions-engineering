@@ -444,6 +444,7 @@ This expects `/opt/ansible/vars/external_mariadb.yml` to exist (created by cloud
 
 Create `root/usr/local/sbin/mariadb_tui.sh`:
 
+
 <details><summary>Expand for detailed values</summary>
 
 
@@ -560,6 +561,7 @@ EOF
   fi
 done
 ```
+
 </details>
 ---
 
