@@ -81,6 +81,9 @@ We’ll place:
 
 Create `config.xml` in `~/kiwi-sles16-mariadb`:
 
+<details><summary>Expand for detailed values</summary>
+    
+
 ```xml
 <image schemaversion="7.5" name="sles16-mariadb-cloud">
   <description type="system">
@@ -160,6 +163,8 @@ Create `config.xml` in `~/kiwi-sles16-mariadb`:
   </packages>
 </image>
 ```
+</details>
+---
 
 > If any package name differs slightly on your SLES 16 media, adjust it (e.g. `python311` vs `python3`).
 
