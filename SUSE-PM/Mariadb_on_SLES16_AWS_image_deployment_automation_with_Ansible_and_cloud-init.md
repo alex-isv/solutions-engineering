@@ -843,13 +843,14 @@ Assuming:
 
   ```bash
   cat > mariadb-config.yml <<EOF
-  ```
+  
 
 mariadb_db_name: myappdb
 mariadb_db_user: myappuser
 mariadb_db_password: S3cr3tP@ss
 mariadb_db_role: readwrite
 EOF
+```
 
 aws s3 cp mariadb-config.yml 
 s3://my-kiwi-images-bucket/config/mariadb-config.yml
