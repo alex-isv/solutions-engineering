@@ -6,33 +6,35 @@
 
 On top of the base OS, you put an Ansible stack and a MariaDB role directly into the image via the root/ overlay. That means every instance you boot already has:
 
-MariaDB packages installed
+*MariaDB packages installed*
 
-An Ansible role that knows how to configure MariaDB
+*An Ansible role that knows how to configure MariaDB*
 
-A playbook that calls that role
+*A playbook that calls that role*
 
-A TUI script (mariadb_tui.sh) that can run later to (re)configure MariaDB either from an external config file (local path or HTTP/S URL) or from interactive dialog prompts.
+*A TUI script (mariadb_tui.sh) that can run later to (re)configure MariaDB either from an external config file (local path or HTTP/S URL) or from interactive dialog prompts.*
 
-Boot-time automation is done via cloud-init:
+<ins>Boot-time automation is done via cloud-init:</ins>
 
 A base cloud-init config inside the image (90_mariadb_base.cfg) tells cloud-init it’s running on EC2, what the default user is, and sets some global behavior.
 
-At launch, you pass user-data (from the EC2 console/CLI). That user-data can:
+At launch, you pass *user-data* (from the EC2 console/CLI).
 
-Download your external MariaDB YAML config from S3 (or any HTTP URL) to /opt/ansible/vars/external_mariadb.yml.
+That user-data can:
 
-Run ansible-playbook /opt/ansible/playbooks/mariadb.yml.
+*Download your external MariaDB YAML config from S3 (or any HTTP URL) to /opt/ansible/vars/external_mariadb.yml.*
+
+*Run ansible-playbook /opt/ansible/playbooks/mariadb.yml.*
 
 Post-deployment, you can tweak or reapply config by running mariadb_tui.sh manually (SSH or via Cockpit terminal), which again drives the same Ansible role.
 
-So the flow is:
+<ins>So the flow is:</ins>
 
-Image build-time (KIWI): OS + packages + Ansible + cloud-init + TUI baked into the image.
+*Image build-time (KIWI): OS + packages + Ansible + cloud-init + TUI baked into the image.*
 
-First boot (cloud-init): reads EC2 metadata + user-data, pulls your DB config, runs the Ansible playbook.
+*First boot (cloud-init): reads EC2 metadata + user-data, pulls your DB config, runs the Ansible playbook.*
 
-Later: you use mariadb_tui.sh (and/or additional Ansible runs) to maintain the DB with either external config files or TUI inputs.
+Later: you *use mariadb_tui.sh* (and/or additional Ansible runs) to maintain the DB with either external config files or TUI inputs.
 
 1. KIWI layout
 2. `config.xml` (valid for kiwi-ng 10.2.29)
