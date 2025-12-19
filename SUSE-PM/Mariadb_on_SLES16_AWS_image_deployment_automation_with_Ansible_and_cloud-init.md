@@ -93,21 +93,21 @@ kiwi-sles16-mariadb/
 <ins>config.sh</ins>
 
 
-Script run by KIWI inside the chroot near the end of image preparation.
+  Script run by KIWI inside the chroot near the end of image preparation.
 
-Performs post-install customization:
+  Performs post-install customization:
 
-Enables cloud-init services (cloud-init-local, cloud-init, cloud-config, cloud-final).
+  Enables cloud-init services (cloud-init-local, cloud-init, cloud-config, cloud-final).
 
-Enables mysql.service (MariaDB), cockpit.socket, NetworkManager.service, sshd.service, and serial-getty@ttyS0.service.
+  Enables mysql.service (MariaDB), cockpit.socket, NetworkManager.service, sshd.service, and serial-getty@ttyS0.service.
 
-Creates /opt/ansible directories with sane permissions.
+  Creates /opt/ansible directories with sane permissions.
 
-Writes a MOTD hint explaining that this is a MariaDB image and how to use mariadb_tui.sh and Cockpit.
+  Writes a MOTD hint explaining that this is a MariaDB image and how to use mariadb_tui.sh and Cockpit.
 
-Ensures a UEFI fallback bootloader exists for EC2 by copying EFI/BOOT/bootx64.efi to EFI/BOOT/BOOTAA64.EFI if needed.
+  Ensures a UEFI fallback bootloader exists for EC2 by copying EFI/BOOT/bootx64.efi to EFI/BOOT/BOOTAA64.EFI if needed.
 
-Resets /etc/machine-id so each instance gets a fresh ID at first boot (important for cloud-init and uniqueness).
+  Resets /etc/machine-id so each instance gets a fresh ID at first boot (important for cloud-init and uniqueness).
 
 <ins>root/</ins> – files that are copied into the image root
 
