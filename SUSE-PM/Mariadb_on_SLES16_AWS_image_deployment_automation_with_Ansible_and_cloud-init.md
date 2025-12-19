@@ -336,6 +336,9 @@ These are overridden by `/opt/ansible/vars/external_mariadb.yml` (cloud-init or 
 
 `root/opt/ansible/roles/mariadb/tasks/main.yml`:
 
+<details><summary>Expand for detailed values</summary>
+
+
 ```yaml
 ---
 - name: Ensure MariaDB packages are installed
@@ -393,7 +396,8 @@ These are overridden by `/opt/ansible/vars/external_mariadb.yml` (cloud-init or 
     name: mysql
     state: restarted
 ```
-
+</details>
+---
 > Note: requires `community.mysql` collection. We’ll install it via cloud-init / TUI when we run the playbook.
 
 ### 6.4 MariaDB server template
