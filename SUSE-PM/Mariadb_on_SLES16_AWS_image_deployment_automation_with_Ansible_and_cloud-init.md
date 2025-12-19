@@ -1,5 +1,7 @@
-                                     **Deployment guide for MariaDB cloud image automation on SLES16.**
- (SLES 16, aarch64, KIWI 10.2.29, EC2, UEFI, ENA, MariaDB+Ansible+TUI+cloud-init+Cockpit).
+
+                                      ## **Deployment guide for MariaDB cloud image automation on SLES16.**
+  
+  (SLES 16, aarch64, KIWI 10.2.29, EC2, UEFI, ENA, MariaDB+Ansible+TUI+cloud-init+Cockpit).
                                     
 
 1. KIWI layout
