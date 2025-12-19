@@ -1,0 +1,724 @@
+                                     # Deployment guide for MariaDB cloud image automation on SLES16.
+ (SLES 16, aarch64, KIWI 10.2.29, EC2, UEFI, ENA, MariaDB+Ansible+TUI+cloud-init+Cockpit).
+                                    
+
+1. KIWI layout
+2. `config.xml` (valid for kiwi-ng 10.2.29)
+3. `config.sh`
+4. Ansible role + playbook + TUI script
+5. Building the image
+6. Importing to AWS and registering an ENA+UEFI AMI
+7. Launching with cloud-init + external DB config
+
+---
+
+## 1. Prereqs
+
+On your **build host** (SLES 16 aarch64):
+
+```bash
+sudo zypper install kiwi-ng python311-kiwi aws-cli \
+                    ansible dialog git \
+                    cloud-init NetworkManager \
+                    mariadb mariadb-client \
+                    cockpit openssh
+```
+
+Mount your **SLES 16 install ISO** (you already did this):
+
+```bash
+sudo mkdir -p /mnt/sles16
+sudo mount -o loop /path/to/SLES-16.0-Full-aarch64-GM.install.iso /mnt/sles16
+```
+
+You should see `repodata`, `aarch64`, etc. under `/mnt/sles16/install`.
+
+---
+
+## 2. Create KIWI description layout
+
+kiwi-sles16-mariadb/
+├─ 
+│   ├─ config.xml
+│   └─ config.sh
+└─ root/
+    ├─ opt/ansible/
+    │   ├─ playbooks/
+    │   │   └─ mariadb.yml
+    │   └─ roles/
+    │       └─ mariadb/
+    │           ├─ tasks/main.yml
+    │           ├─ defaults/main.yml
+    │           └─ templates/server.cnf.j2
+    ├─ usr/local/bin/
+    │   └─ mariadb_tui.sh
+    └─ etc/cloud/cloud.cfg.d/
+        └─ 90_mariadb_base.cfg
+
+```bash
+mkdir -p ~/kiwi-sles16-mariadb
+cd ~/kiwi-sles16-mariadb
+
+mkdir -p root/etc/cloud/cloud.cfg.d
+mkdir -p root/etc/ansible
+mkdir -p root/opt/ansible/playbooks
+mkdir -p root/opt/ansible/roles/mariadb/{defaults,tasks,templates}
+mkdir -p root/usr/local/sbin
+```
+
+We’ll place:
+
+* `config.xml` + `config.sh` in `~/kiwi-sles16-mariadb/`
+* Ansible + TUI under `root/...` so they end up inside the image
+
+---
+
+## 3. `config.xml` (KIWI image description)
+
+Create `config.xml` in `~/kiwi-sles16-mariadb`:
+
+```xml
+<image schemaversion="7.5" name="sles16-mariadb-cloud">
+  <description type="system">
+    <author>Your Name</author>
+    <contact>you@example.com</contact>
+    <specification>SLES 16 cloud image with MariaDB + Ansible + Cockpit</specification>
+  </description>
+
+  <preferences>
+    <version>1.0.0</version>
+    <arch>aarch64</arch>
+    <packagemanager>zypper</packagemanager>
+
+    <type image="oem"
+          filesystem="btrfs"
+          primary="true"
+          installiso="true"
+          firmware="uefi"
+          devicepersistency="by-uuid"
+          rootfs_label="ROOT"
+          kernelcmdline="console=ttyS0,115200 console=tty1 ip=dhcp">
+      <size unit="G">20</size>
+      <oemconfig>
+        <oem-resize>true</oem-resize>
+      </oemconfig>
+    </type>
+  </preferences>
+
+  <!-- Use the mounted SLES 16 install ISO as repo -->
+  <repository type="rpm-md" priority="1">
+    <source path="/mnt/sles16/install"/>
+    <alias>SLES16-InstallDVD</alias>
+  </repository>
+
+  <!-- Minimal bootstrap; kiwi will install these first -->
+  <packages type="bootstrap">
+    <package name="aaa_base"/>
+    <package name="bash"/>
+    <package name="filesystem"/>
+    <package name="glibc-locale"/>
+    <package name="zypper"/>
+  </packages>
+
+  <!-- Main image packages -->
+  <packages type="image">
+    <!-- Base system -->
+    <package name="patterns-base-base"/>
+    <package name="kernel-default"/>
+    <package name="grub2"/>
+    <package name="grub2-arm64-efi"/>
+    <package name="dracut"/>
+
+    <!-- Networking & SSH -->
+    <package name="NetworkManager"/>
+    <package name="iproute2"/>
+    <package name="iputils"/>
+    <package name="openssh"/>
+
+    <!-- Cloud-init -->
+    <package name="cloud-init"/>
+
+    <!-- Ansible + Python -->
+    <package name="python311"/>
+    <package name="python311-PyMySQL"/>
+    <package name="ansible"/>
+
+    <!-- MariaDB -->
+    <package name="mariadb"/>
+    <package name="mariadb-client"/>
+
+    <!-- Cockpit web UI -->
+    <package name="cockpit"/>
+    <package name="cockpit-system"/>
+
+    <!-- TUI helper -->
+    <package name="dialog"/>
+  </packages>
+</image>
+```
+
+> If any package name differs slightly on your SLES 16 media, adjust it (e.g. `python311` vs `python3`).
+
+---
+
+## 4. `config.sh` (run in chroot at the end)
+
+Create `config.sh` in `~/kiwi-sles16-mariadb`:
+
+```bash
+#!/bin/bash
+# KIWI runs this inside the image root (chroot) at the end of the prepare step.
+
+# Load KIWI helper functions if present
+if [ -f /.kconfig ]; then
+  . /.kconfig
+fi
+if [ -f /.profile ]; then
+  . /.profile
+fi
+
+echo "Running config.sh customization..."
+
+# 1. Enable cloud-init services
+echo "Enabling cloud-init services..."
+if type suseInsertService >/dev/null 2>&1; then
+  suseInsertService cloud-init-local
+  suseInsertService cloud-init
+  suseInsertService cloud-config
+  suseInsertService cloud-final
+elif type systemctl >/dev/null 2>&1; then
+  for svc in cloud-init-local cloud-init cloud-config cloud-final; do
+    systemctl enable "$svc" || true
+  done
+fi
+
+# 2. Enable MariaDB
+echo "Enabling MariaDB (mysql.service)..."
+if type systemctl >/dev/null 2>&1; then
+  systemctl enable mysql.service || true
+fi
+
+# 3. Enable Cockpit
+echo "Enabling Cockpit (cockpit.socket)..."
+if type systemctl >/dev/null 2>&1; then
+  systemctl enable cockpit.socket || true
+fi
+
+# 4. Enable NetworkManager
+echo "Enabling NetworkManager..."
+if type systemctl >/dev/null 2>&1; then
+  systemctl enable NetworkManager.service || true
+fi
+
+# 5. Enable SSH server
+echo "Enabling SSH server (sshd)..."
+if type systemctl >/dev/null 2>&1; then
+  systemctl enable sshd.service || true
+fi
+
+# 6. Enable serial console login on ttyS0 (for EC2 Serial Console)
+echo "Enabling serial-getty on ttyS0..."
+if type systemctl >/dev/null 2>&1; then
+  systemctl enable serial-getty@ttyS0.service || true
+fi
+
+# 7. Prepare Ansible directory
+echo "Preparing /opt/ansible directories..."
+mkdir -p /opt/ansible/playbooks
+mkdir -p /opt/ansible/vars
+chmod -R 755 /opt/ansible
+
+# 8. MOTD hint
+cat << 'EOF' >/etc/motd.d/20-mariadb.txt
+MariaDB image:
+
+ - First boot: cloud-init may run Ansible automatically (if user-data is provided)
+ - Post-deploy: run 'sudo mariadb_tui.sh' to (re)configure the database
+ - Cockpit web UI: https://<host>:9090/
+EOF
+
+# 9. Ensure EC2 UEFI fallback loader exists
+echo "Ensuring EC2 UEFI fallback bootloader..."
+EFI_DIR=/boot/efi/EFI
+if [ -d "$EFI_DIR" ]; then
+  mkdir -p "$EFI_DIR/BOOT"
+  if [ -f "$EFI_DIR/BOOT/bootx64.efi" ] && [ ! -f "$EFI_DIR/BOOT/BOOTAA64.EFI" ]; then
+    cp "$EFI_DIR/BOOT/bootx64.efi" "$EFI_DIR/BOOT/BOOTAA64.EFI" || true
+  fi
+fi
+
+# 10. Reset machine-id so each instance gets a unique ID
+echo "Resetting machine-id for cloud-init..."
+rm -f /etc/machine-id
+: > /var/lib/dbus/machine-id
+
+echo "config.sh completed."
+```
+
+Make it executable:
+
+```bash
+chmod +x config.sh
+```
+
+---
+
+## 5. Cloud-init default EC2 user (SSH key based)
+
+Create `root/etc/cloud/cloud.cfg.d/99_ec2_default_user.cfg`:
+
+```yaml
+# /etc/cloud/cloud.cfg.d/99_ec2_default_user.cfg
+datasource_list: [ Ec2, None ]
+
+system_info:
+  default_user:
+    name: ec2-user
+    lock_passwd: true
+    gecos: EC2 Default User
+    groups: [ users, wheel ]
+    sudo: ["ALL=(ALL) NOPASSWD:ALL"]
+    shell: /bin/bash
+```
+
+This makes cloud-init:
+
+* Create `ec2-user` at first boot
+* Install the EC2 key pair’s **public key** into `/home/ec2-user/.ssh/authorized_keys`
+
+So you can log in with `ssh -i your-key.pem ec2-user@...` and don’t need a hard-coded password.
+
+---
+
+## 6. Ansible bits inside the image
+
+### 6.1 `ansible.cfg` (optional but nice)
+
+Create `root/etc/ansible/ansible.cfg`:
+
+```ini
+[defaults]
+log_path = /var/log/ansible.log
+host_key_checking = False
+inventory = localhost,
+```
+
+### 6.2 MariaDB role defaults
+
+`root/opt/ansible/roles/mariadb/defaults/main.yml`:
+
+```yaml
+---
+mariadb_db_name: appdb
+mariadb_db_user: appuser
+mariadb_db_password: ChangeMeDB!
+mariadb_db_role: readwrite
+mariadb_bind_address: "0.0.0.0"
+mariadb_port: 3306
+```
+
+These are overridden by `/opt/ansible/vars/external_mariadb.yml` (cloud-init or TUI).
+
+### 6.3 MariaDB role tasks
+
+`root/opt/ansible/roles/mariadb/tasks/main.yml`:
+
+```yaml
+---
+- name: Ensure MariaDB packages are installed
+  package:
+    name:
+      - mariadb
+      - mariadb-client
+      - python311-PyMySQL
+    state: present
+
+- name: Deploy MariaDB server configuration
+  template:
+    src: server.cnf.j2
+    dest: /etc/my.cnf.d/server.cnf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart MariaDB
+
+- name: Ensure MariaDB is started and enabled
+  service:
+    name: mysql
+    state: started
+    enabled: true
+
+- name: Wait for MariaDB socket
+  wait_for:
+    path: /run/mysql/mysql.sock
+    state: present
+    timeout: 30
+
+- name: Create database
+  community.mysql.mysql_db:
+    name: "{{ mariadb_db_name }}"
+    state: present
+    login_unix_socket: /run/mysql/mysql.sock
+
+- name: Create application user
+  community.mysql.mysql_user:
+    name: "{{ mariadb_db_user }}"
+    password: "{{ mariadb_db_password }}"
+    priv: "{{ mariadb_db_name }}.*:ALL"
+    host: "%"
+    state: present
+    login_unix_socket: /run/mysql/mysql.sock
+
+- name: Flush privileges
+  community.mysql.mysql_query:
+    query: "FLUSH PRIVILEGES"
+    login_unix_socket: /run/mysql/mysql.sock
+
+# Handlers
+- name: Restart MariaDB
+  service:
+    name: mysql
+    state: restarted
+```
+
+> Note: requires `community.mysql` collection. We’ll install it via cloud-init / TUI when we run the playbook.
+
+### 6.4 MariaDB server template
+
+`root/opt/ansible/roles/mariadb/templates/server.cnf.j2`:
+
+```ini
+[mysqld]
+bind-address = {{ mariadb_bind_address }}
+port         = {{ mariadb_port }}
+
+# Basic tuning
+max_connections = 200
+character-set-server = utf8mb4
+collation-server     = utf8mb4_unicode_ci
+
+[client]
+default-character-set = utf8mb4
+```
+
+### 6.5 MariaDB playbook
+
+`root/opt/ansible/playbooks/mariadb.yml`:
+
+```yaml
+---
+- name: Configure MariaDB on local host
+  hosts: localhost
+  connection: local
+  become: true
+
+  vars_files:
+    - /opt/ansible/vars/external_mariadb.yml
+
+  roles:
+    - mariadb
+```
+
+This expects `/opt/ansible/vars/external_mariadb.yml` to exist (created by cloud-init or the TUI).
+
+---
+
+## 7. `mariadb_tui.sh` – post-deploy TUI
+
+Create `root/usr/local/sbin/mariadb_tui.sh`:
+
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+
+DIALOG=${DIALOG:-dialog}
+TMP=$(mktemp)
+trap 'rm -f "$TMP"' EXIT
+
+CONFIG_DIR="/opt/ansible"
+PLAYBOOK="${CONFIG_DIR}/playbooks/mariadb.yml"
+VARS_FILE="${CONFIG_DIR}/vars/external_mariadb.yml"
+
+while true; do
+  $DIALOG --clear --backtitle "MariaDB Configuration" \
+    --title "MariaDB Configuration" \
+    --menu "Choose configuration source:" 15 70 5 \
+      1 "Use external config file (local path or HTTP URL)" \
+      2 "Enter settings manually (TUI)" \
+      3 "Cancel" 2>"$TMP"
+
+  menu_status=$?
+  CHOICE=""
+  if [[ -s "$TMP" ]]; then
+    CHOICE=$(<"$TMP")
+  fi
+
+  # ESC or Cancel
+  if [[ $menu_status -ne 0 || "$CHOICE" == "3" || -z "$CHOICE" ]]; then
+    clear
+    echo "MariaDB configuration cancelled."
+    exit 0
+  fi
+
+  case "$CHOICE" in
+    1)
+      # External config file / URL
+      $DIALOG --inputbox "Enter local path or HTTP(S) URL to MariaDB YAML config:" \
+        10 70 "/opt/ansible/vars/external_mariadb.yml" 2>"$TMP"
+      status=$?
+      [[ $status -ne 0 ]] && continue
+      SRC=$(<"$TMP")
+
+      clear
+      echo "Using external config from: $SRC"
+
+      mkdir -p "$(dirname "$VARS_FILE")"
+
+      if [[ "$SRC" =~ ^https?:// ]]; then
+        if ! curl -fsSL "$SRC" -o "$VARS_FILE"; then
+          $DIALOG --msgbox "Failed to download config from:\n$SRC" 10 60
+          continue
+        fi
+      else
+        if [[ ! -f "$SRC" ]]; then
+          $DIALOG --msgbox "Local file not found:\n$SRC" 8 60
+          continue
+        fi
+        cp "$SRC" "$VARS_FILE"
+      fi
+      ;;
+
+    2)
+      # Manual entry
+      $DIALOG --inputbox "Database name:" 8 60 "appdb" 2>"$TMP"
+      status=$?; [[ $status -ne 0 ]] && continue
+      DB_NAME=$(<"$TMP")
+
+      $DIALOG --inputbox "Database user:" 8 60 "appuser" 2>"$TMP"
+      status=$?; [[ $status -ne 0 ]] && continue
+      DB_USER=$(<"$TMP")
+
+      $DIALOG --insecure --passwordbox "Database password:" 8 60 2>"$TMP"
+      status=$?; [[ $status -ne 0 ]] && continue
+      DB_PASS=$(<"$TMP")
+
+      $DIALOG --inputbox "Database role (e.g. readwrite):" 8 60 "readwrite" 2>"$TMP"
+      status=$?; [[ $status -ne 0 ]] && continue
+      DB_ROLE=$(<"$TMP")
+
+      mkdir -p "$(dirname "$VARS_FILE")"
+      cat >"$VARS_FILE" <<EOF
+mariadb_db_name: "$DB_NAME"
+mariadb_db_user: "$DB_USER"
+mariadb_db_password: "$DB_PASS"
+mariadb_db_role: "$DB_ROLE"
+EOF
+      ;;
+  esac
+
+  # Run Ansible
+  $DIALOG --clear --backtitle "MariaDB Configuration" \
+    --title "Running Ansible" \
+    --infobox "Running Ansible playbook...\n\nPlaybook: $PLAYBOOK\nVars file: $VARS_FILE" 10 70
+  clear
+
+  ansible-playbook "$PLAYBOOK" -e "@$VARS_FILE"
+  rc=$?
+
+  if [[ $rc -eq 0 ]]; then
+    $DIALOG --msgbox "MariaDB configuration completed successfully." 8 60
+  else
+    $DIALOG --msgbox "Ansible playbook FAILED (rc=$rc).\nCheck /var/log/ansible.log for details." 10 70
+  fi
+
+  $DIALOG --yesno "Do you want to run the MariaDB configuration again?" 8 60
+  again_status=$?
+  if [[ $again_status -ne 0 ]]; then
+    clear
+    echo "MariaDB configuration finished."
+    exit 0
+  fi
+done
+```
+
+Make it executable:
+
+```bash
+chmod +x root/usr/local/sbin/mariadb_tui.sh
+```
+
+After boot, you’ll be able to run:
+
+```bash
+sudo mariadb_tui.sh
+```
+
+from SSH or Cockpit’s terminal.
+
+---
+
+## 8. Build the KIWI image
+
+From `~/kiwi-sles16-mariadb`:
+
+```bash
+sudo rm -rf ~/kiwi-build-aws/build  # clean old builds if any
+
+sudo kiwi-ng system build \
+  --description . \
+  --target-dir ~/kiwi-build-aws \
+  --target-arch aarch64
+```
+
+When it finishes, in `~/kiwi-build-aws` you should see something like:
+
+* `sles16-mariadb-cloud.aarch64-1.0.0.raw`
+* `sles16-mariadb-cloud.aarch64-1.0.0.install.iso`
+* `.changes`, `.packages`, `.verified` files, etc.
+
+We’ll use the **.raw** for AWS.
+
+---
+
+## 9. Import RAW into AWS and create ENA+UEFI AMI
+
+### 9.1 Upload RAW to S3
+
+```bash
+BUCKET=my-kiwi-images-bucket
+OBJ_KEY=images/sles16-mariadb-cloud.aarch64-1.0.0.raw
+
+aws s3 mb s3://$BUCKET   # if not already created
+aws s3 cp ~/kiwi-build-aws/sles16-mariadb-cloud.aarch64-1.0.0.raw \
+  s3://$BUCKET/$OBJ_KEY
+```
+
+### 9.2 Import as snapshot
+
+```bash
+aws ec2 import-snapshot \
+  --description "SLES16 MariaDB KIWI raw" \
+  --disk-container "Format=RAW,UserBucket={S3Bucket=$BUCKET,S3Key=$OBJ_KEY}"
+```
+
+Note the `ImportTaskId` and poll until it’s `completed`:
+
+```bash
+aws ec2 describe-import-snapshot-tasks \
+  --import-task-ids import-snap-XXXXXXXX
+```
+
+When done, note the resulting `SnapshotId` (call it `SNAP_ID`).
+
+### 9.3 Register AMI (arm64, ENA, UEFI)
+
+```bash
+SNAP_ID=snap-xxxxxxxxxxxxxxxxx
+
+aws ec2 register-image \
+  --name "sles16-mariadb-cloud-aarch64-1.0.0-ena" \
+  --architecture arm64 \
+  --virtualization-type hvm \
+  --root-device-name /dev/xvda \
+  --boot-mode uefi \
+  --block-device-mappings "DeviceName=/dev/xvda,Ebs={SnapshotId=$SNAP_ID,VolumeSize=20,DeleteOnTermination=true,VolumeType=gp3}" \
+  --ena-support
+```
+
+This returns a new `ImageId` (AMI). Use that for launching.
+
+---
+
+## 10. Launch with cloud-init user-data (external DB config)
+
+Assuming:
+
+* Bucket `my-kiwi-images-bucket`
+* You upload a DB config file:
+
+  ```bash
+  cat > mariadb-config.yml <<EOF
+  ```
+
+mariadb_db_name: myappdb
+mariadb_db_user: myappuser
+mariadb_db_password: S3cr3tP@ss
+mariadb_db_role: readwrite
+EOF
+
+aws s3 cp mariadb-config.yml 
+s3://my-kiwi-images-bucket/config/mariadb-config.yml
+
+````
+
+In the AWS **console**, when you launch from your AMI:
+
+- Choose instance type (`t4g.small`, etc.)
+- Security group allowing:
+- SSH (22) from your IP
+- Cockpit (9090) if desired
+- Under **Advanced details → User data**, paste:
+
+```yaml
+#cloud-config
+package_update: true
+
+write_files:
+- path: /etc/ansible/ansible.cfg
+  content: |
+    [defaults]
+    log_path = /var/log/ansible.log
+    host_key_checking = False
+    inventory = localhost,
+
+runcmd:
+- mkdir -p /opt/ansible/vars
+- curl -fsSL "https://my-kiwi-images-bucket.s3.us-east-1.amazonaws.com/config/mariadb-config.yml" \
+    -o /opt/ansible/vars/external_mariadb.yml
+- ansible-galaxy collection install community.mysql
+- ansible-playbook /opt/ansible/playbooks/mariadb.yml
+````
+
+(adjust region / bucket name for your setup.)
+
+On first boot:
+
+* cloud-init creates `ec2-user` and installs your SSH key
+* Downloads `mariadb-config.yml` into `/opt/ansible/vars/external_mariadb.yml`
+* Installs `community.mysql`
+* Runs the MariaDB playbook with those vars
+
+---
+
+## 11. Post-deployment
+
+Once the instance is `running` and health checks are OK:
+
+```bash
+ssh -i your-key.pem ec2-user@<public-ip-or-dns>
+```
+
+Then you can:
+
+* Re-run config with the TUI:
+
+  ```bash
+  sudo mariadb_tui.sh
+  ```
+
+* Open Cockpit in a browser:
+
+  `https://<public-ip-or-dns>:9090/` (login as `ec2-user` with your key or password, depending on how you configure it).
+
+* Change DB config by:
+
+  * updating the YAML on S3 and re-running:
+
+    ```bash
+    sudo curl -fsSL "https://.../mariadb-config.yml" \
+      -o /opt/ansible/vars/external_mariadb.yml
+    sudo ansible-playbook /opt/ansible/playbooks/mariadb.yml
+    ```
+
+---
+
