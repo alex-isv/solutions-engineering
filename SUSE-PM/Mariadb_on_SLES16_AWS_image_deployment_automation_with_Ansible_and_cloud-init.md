@@ -444,6 +444,9 @@ This expects `/opt/ansible/vars/external_mariadb.yml` to exist (created by cloud
 
 Create `root/usr/local/sbin/mariadb_tui.sh`:
 
+<details><summary>Expand for detailed values</summary>
+
+
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
@@ -557,6 +560,8 @@ EOF
   fi
 done
 ```
+</details>
+---
 
 Make it executable:
 
