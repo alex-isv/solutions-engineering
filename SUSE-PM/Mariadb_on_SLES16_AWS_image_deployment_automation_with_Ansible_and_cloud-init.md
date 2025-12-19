@@ -683,6 +683,7 @@ In the AWS **console**, when you launch from your AMI:
 - Cockpit (9090) if desired
 - Under **Advanced details → User data**, paste:
 
+````
 ```yaml
 #cloud-config
 package_update: true
