@@ -93,11 +93,11 @@ kiwi-sles16-mariadb/
 <ins>config.sh</ins>
 
 
-  {tab}Script run by KIWI inside the chroot near the end of image preparation.
+  Script run by KIWI inside the chroot near the end of image preparation.
 
-  {tab}Performs post-install customization:
+  Performs post-install customization:
 
-  :tab: {Enables cloud-init services (cloud-init-local, cloud-init, cloud-config, cloud-final).}
+  Enables cloud-init services (cloud-init-local, cloud-init, cloud-config, cloud-final).
 
   Enables mysql.service (MariaDB), cockpit.socket, NetworkManager.service, sshd.service, and serial-getty@ttyS0.service.
 
