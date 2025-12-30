@@ -272,7 +272,7 @@ Create `config.xml` in `~/kiwi-sles16-mariadb`:
     <specification>SLES 16 cloud image with MariaDB + Ansible + Cockpit</specification>
   </description>
 
-  <preferences>
+  <preferences arch="aarch64">
     <version>1.0.0</version>
     <arch>aarch64</arch>
     <packagemanager>zypper</packagemanager>
@@ -311,10 +311,10 @@ Create `config.xml` in `~/kiwi-sles16-mariadb`:
   <packages type="image">
     <!-- Base system -->
     <package name="patterns-base-base"/>
-    <package name="kernel-default"/>
+    <package name="kernel-default" arch="aarch64"/>
     <package name="grub2"/>
-    <package name="grub2-arm64-efi"/>
     <package name="dracut"/>
+    <package name="grub2-arm64-efi" arch="aarch64"/>
 
     <!-- Networking & SSH -->
     <package name="NetworkManager"/>
@@ -326,6 +326,7 @@ Create `config.xml` in `~/kiwi-sles16-mariadb`:
     <package name="cloud-init"/>
 
     <!-- Ansible + Python -->
+    <package name="python313-mysqlclient"/>
     <package name="python313"/>
     <package name="python313-PyMySQL"/>
     <package name="ansible"/>
@@ -768,10 +769,9 @@ From `~/kiwi-sles16-mariadb`:
 ```bash
 sudo rm -rf ~/kiwi-build-aws/build  # clean old builds if any
 
-sudo kiwi-ng system build \
+sudo kiwi-ng --target-arch aarch64 system build \
   --description . \
-  --target-dir ~/kiwi-build-aws \
-  --target-arch aarch64
+  --target-dir ~/kiwi-build-aws/Mdb
 ```
 
 When it finishes, in `~/kiwi-build-aws` you should see something like:
