@@ -265,26 +265,38 @@ Create `config.xml` in `~/kiwi-sles16-mariadb`:
     
 
 ```xml
-<image schemaversion="7.5" name="sles16-mariadb-cloud">
+<?xml version="1.0" encoding="UTF-8"?>
+<image schemaversion="8.0" name="sles16-mariadb-cloud">
+
+  <!-- Metadata -->
   <description type="system">
     <author>Your Name</author>
     <contact>you@example.com</contact>
-    <specification>SLES 16 cloud image with MariaDB + Ansible + Cockpit</specification>
+    <specification>SLES 16 with MariaDB, Ansible, cloud-init, Cockpit</specification>
   </description>
 
+  <!--
+    OEM, expandable disk image for aarch64/EC2:
+
+    * image="oem"        → OEM disk image type
+    * filesystem="btrfs" → SLES default filesystem
+    * primary="true"     → main image
+    * installiso="true"  → also produce an install ISO
+    * firmware="efi"     → required for AArch64 EFI boot
+  -->
   <preferences arch="aarch64">
-    <version>1.0.0</version>
-    <arch>aarch64</arch>
+    <version>1.0.3</version>
     <packagemanager>zypper</packagemanager>
 
     <type image="oem"
           filesystem="btrfs"
           primary="true"
           installiso="true"
-          firmware="uefi"
+          firmware="efi"
           devicepersistency="by-uuid"
           rootfs_label="ROOT"
           kernelcmdline="console=ttyS0,115200 console=tty1 ip=dhcp">
+
       <size unit="G">20</size>
       <oemconfig>
         <oem-resize>true</oem-resize>
@@ -292,18 +304,18 @@ Create `config.xml` in `~/kiwi-sles16-mariadb`:
     </type>
   </preferences>
 
-  <!-- Use the mounted SLES 16 install ISO as repo -->
-  <repository type="rpm-md" priority="1">
-    <source path="/mnt/sles16/install"/>
-    <alias>SLES16-InstallDVD</alias>
+  <!-- Use your mounted SLES16 installer ISO as an rpm-md repo -->
+  <repository type="rpm-md" alias="SLES16-InstallDVD">
+    <source path="file:///mnt/sles16/install"/>
   </repository>
 
-  <!-- Minimal bootstrap; kiwi will install these first -->
+  <!-- Minimal bootstrap environment
+       KIWI docs say filesystem + glibc-locale are essential; others come as deps. -->
   <packages type="bootstrap">
     <package name="aaa_base"/>
-    <package name="bash"/>
     <package name="filesystem"/>
     <package name="glibc-locale"/>
+    <package name="bash"/>
     <package name="zypper"/>
   </packages>
 
@@ -311,37 +323,50 @@ Create `config.xml` in `~/kiwi-sles16-mariadb`:
   <packages type="image">
     <!-- Base system -->
     <package name="patterns-base-base"/>
-    <package name="kernel-default" arch="aarch64"/>
-    <package name="grub2"/>
+    <package name="kernel-default"/>
     <package name="dracut"/>
+    <package name="dracut-kiwi-oem-repart"/>
+    <package name="dracut-kiwi-oem-dump"/>
+
+    <!-- Bootloader stack for AArch64 EFI -->
+    <package name="grub2"/>
     <package name="grub2-arm64-efi" arch="aarch64"/>
 
     <!-- Networking & SSH -->
     <package name="NetworkManager"/>
+    <package name="shim"/>
     <package name="iproute2"/>
     <package name="iputils"/>
     <package name="openssh"/>
 
-    <!-- Cloud-init -->
+    <!-- Cloud-init for EC2 metadata/user-data -->
     <package name="cloud-init"/>
 
-    <!-- Ansible + Python -->
-    <package name="python313-mysqlclient"/>
-    <package name="python313"/>
-    <package name="python313-PyMySQL"/>
-    <package name="ansible"/>
-
-    <!-- MariaDB -->
+    <!-- MariaDB + client + Python bindings
+         NOTE: adjust python package names if your SLES16 repo uses python311 instead of 313 -->
     <package name="mariadb"/>
     <package name="mariadb-client"/>
+    <package name="python313"/>
+    <package name="python313-PyMySQL"/>
+    <package name="python313-mysqlclient"/>
 
-    <!-- Cockpit web UI -->
+    <!-- Automation -->
+    <package name="ansible"/>
+
+    <!-- TUI + Cockpit -->
+    <package name="dialog"/>
     <package name="cockpit"/>
     <package name="cockpit-system"/>
+    <package name="cockpit-storaged"/>
+    <package name="cockpit-machines"/>
 
-    <!-- TUI helper -->
-    <package name="dialog"/>
+    <!-- Utilities -->
+    <package name="curl"/>
+    <package name="git"/>
+    <package name="less"/>
+    <package name="vim"/>
   </packages>
+
 </image>
 ```
 </details>
