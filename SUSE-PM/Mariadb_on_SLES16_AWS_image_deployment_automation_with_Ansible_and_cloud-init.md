@@ -326,8 +326,8 @@ Create `config.xml` in `~/kiwi-sles16-mariadb`:
     <package name="cloud-init"/>
 
     <!-- Ansible + Python -->
-    <package name="python311"/>
-    <package name="python311-PyMySQL"/>
+    <package name="python313"/>
+    <package name="python313-PyMySQL"/>
     <package name="ansible"/>
 
     <!-- MariaDB -->
