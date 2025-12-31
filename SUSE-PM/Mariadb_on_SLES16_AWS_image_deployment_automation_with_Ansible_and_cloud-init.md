@@ -511,15 +511,20 @@ So you can log in with `ssh -i your-key.pem ec2-user@...` and don’t need a har
 
 ## 6. Ansible bits inside the image
 
-### 6.1 `ansible.cfg` (optional but nice)
+### 6.1 `ansible.cfg` 
 
-Create `root/etc/ansible/ansible.cfg`:
+Create `root/opt/ansible/ansible.cfg`:
 
 ```ini
 [defaults]
+# Use localhost as our only host
+inventory = localhost,
+
+# Tell Ansible where your custom roles live
+roles_path = /opt/ansible/roles
+
 log_path = /var/log/ansible.log
 host_key_checking = False
-inventory = localhost,
 ```
 
 ### 6.2 MariaDB role defaults
