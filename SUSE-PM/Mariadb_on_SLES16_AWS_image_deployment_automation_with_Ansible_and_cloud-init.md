@@ -396,8 +396,11 @@ fi
 
 echo "Running config.sh customization..."
 
-# 1. Enable cloud-init services
+# ---------------------------
+# 1. Enable cloud-init
+# ---------------------------
 echo "Enabling cloud-init services..."
+
 if type suseInsertService >/dev/null 2>&1; then
   suseInsertService cloud-init-local
   suseInsertService cloud-init
@@ -409,62 +412,92 @@ elif type systemctl >/dev/null 2>&1; then
   done
 fi
 
+# ---------------------------
 # 2. Enable MariaDB
+# ---------------------------
 echo "Enabling MariaDB (mysql.service)..."
 if type systemctl >/dev/null 2>&1; then
   systemctl enable mysql.service || true
 fi
 
+# ---------------------------
 # 3. Enable Cockpit
+# ---------------------------
 echo "Enabling Cockpit (cockpit.socket)..."
 if type systemctl >/dev/null 2>&1; then
   systemctl enable cockpit.socket || true
 fi
 
+# ---------------------------
 # 4. Enable NetworkManager
+# ---------------------------
 echo "Enabling NetworkManager..."
 if type systemctl >/dev/null 2>&1; then
   systemctl enable NetworkManager.service || true
 fi
 
+# ---------------------------
 # 5. Enable SSH server
+# ---------------------------
 echo "Enabling SSH server (sshd)..."
 if type systemctl >/dev/null 2>&1; then
+  # Service name is usually 'sshd' on SUSE
   systemctl enable sshd.service || true
 fi
 
-# 6. Enable serial console login on ttyS0 (for EC2 Serial Console)
+# ---------------------------
+# 6. Create EC2 debug user
+#    (for serial console / first login; change/remove for production)
+# ---------------------------
+echo "Creating EC2 debug user (ec2-user)..."
+if ! id ec2-user >/dev/null 2>&1; then
+  useradd -m -s /bin/bash ec2-user || true
+
+  # Temporary password for lab use ONLY – change/remove for production
+  echo 'ec2-user:ChangeMe123!' | chpasswd || true
+
+  # Passwordless sudo for convenience
+  cat > /etc/sudoers.d/ec2-user << 'EOF'
+ec2-user ALL=(ALL) NOPASSWD:ALL
+EOF
+  chmod 440 /etc/sudoers.d/ec2-user || true
+fi
+
+# ---------------------------
+# 7. Enable serial console login on ttyS0
+#    (so EC2 Serial Console shows a login prompt)
+# ---------------------------
 echo "Enabling serial-getty on ttyS0..."
 if type systemctl >/dev/null 2>&1; then
   systemctl enable serial-getty@ttyS0.service || true
 fi
 
-# 7. Prepare Ansible directory
-echo "Preparing /opt/ansible directories..."
+# ---------------------------
+# 8. Ensure Ansible directory exists
+# ---------------------------
+echo "Preparing /opt/ansible directory..."
+mkdir -p /opt/ansible
+chmod 755 /opt/ansible
+
+# You can also pre-create subdirs if you want:
 mkdir -p /opt/ansible/playbooks
 mkdir -p /opt/ansible/vars
-chmod -R 755 /opt/ansible
 
-# 8. MOTD hint
+# ---------------------------
+# 9. MOTD hint
+# ---------------------------
 cat << 'EOF' >/etc/motd.d/20-mariadb.txt
 MariaDB image:
 
  - First boot: cloud-init may run Ansible automatically (if user-data is provided)
  - Post-deploy: run 'sudo mariadb_tui.sh' to (re)configure the database
  - Cockpit web UI: https://<host>:9090/
+ - Serial console login: user 'ec2-user' (change the password after first login!)
 EOF
 
-# 9. Ensure EC2 UEFI fallback loader exists
-echo "Ensuring EC2 UEFI fallback bootloader..."
-EFI_DIR=/boot/efi/EFI
-if [ -d "$EFI_DIR" ]; then
-  mkdir -p "$EFI_DIR/BOOT"
-  if [ -f "$EFI_DIR/BOOT/bootx64.efi" ] && [ ! -f "$EFI_DIR/BOOT/BOOTAA64.EFI" ]; then
-    cp "$EFI_DIR/BOOT/bootx64.efi" "$EFI_DIR/BOOT/BOOTAA64.EFI" || true
-  fi
-fi
-
-# 10. Reset machine-id so each instance gets a unique ID
+# ---------------------------
+# 10. Reset machine-id so clones get unique IDs
+# ---------------------------
 echo "Resetting machine-id for cloud-init..."
 rm -f /etc/machine-id
 : > /var/lib/dbus/machine-id
