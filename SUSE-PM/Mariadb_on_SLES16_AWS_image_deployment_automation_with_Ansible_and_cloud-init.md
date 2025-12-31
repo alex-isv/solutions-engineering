@@ -648,7 +648,7 @@ This expects `/opt/ansible/vars/external_mariadb.yml` to exist (created by cloud
 
 ## 7. `mariadb_tui.sh` – post-deploy TUI
 
-Create `root/usr/local/sbin/mariadb_tui.sh`:
+Create `root/usr/local/bin/mariadb_tui.sh`:
 
 
 <details><summary>Expand for detailed values</summary>
@@ -660,7 +660,11 @@ set -euo pipefail
 
 DIALOG=${DIALOG:-dialog}
 TMP=$(mktemp)
-trap 'rm -f "$TMP"' EXIT
+cleanup() {
+  rm -f "$TMP"
+  clear
+}
+trap cleanup EXIT
 
 CONFIG_DIR="/opt/ansible"
 PLAYBOOK="${CONFIG_DIR}/playbooks/mariadb.yml"
@@ -748,8 +752,9 @@ EOF
     --title "Running Ansible" \
     --infobox "Running Ansible playbook...\n\nPlaybook: $PLAYBOOK\nVars file: $VARS_FILE" 10 70
   clear
-
-  ansible-playbook "$PLAYBOOK" -e "@$VARS_FILE"
+   cd /opt/ansible
+   ansible-playbook playbooks/mariadb.yml -e "@$VARS_FILE" 
+ # ansible-playbook "$PLAYBOOK" -e "@$VARS_FILE"
   rc=$?
 
   if [[ $rc -eq 0 ]]; then
@@ -758,12 +763,13 @@ EOF
     $DIALOG --msgbox "Ansible playbook FAILED (rc=$rc).\nCheck /var/log/ansible.log for details." 10 70
   fi
 
-  $DIALOG --yesno "Do you want to run the MariaDB configuration again?" 8 60
+  $DIALOG --clear --yesno "Do you want to run the MariaDB configuration again?" 8 60
   again_status=$?
+  clear
+
   if [[ $again_status -ne 0 ]]; then
-    clear
     echo "MariaDB configuration finished."
-    exit 0
+    break
   fi
 done
 ```
@@ -905,7 +911,7 @@ write_files:
 
 runcmd:
 - mkdir -p /opt/ansible/vars
-- curl -fsSL "https://my-kiwi-images-bucket.s3.us-east-1.amazonaws.com/config/mariadb-config.yml" \
+- curl -fsSL "https://my-kiwi-images-bucket.s3.us-west-1.amazonaws.com/config/mariadb-config.yml" \
     -o /opt/ansible/vars/external_mariadb.yml
 - ansible-galaxy collection install community.mysql
 - ansible-playbook /opt/ansible/playbooks/mariadb.yml
