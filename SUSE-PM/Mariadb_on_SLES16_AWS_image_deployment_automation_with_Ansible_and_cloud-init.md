@@ -946,10 +946,35 @@ Then you can:
 
 <img width="511" height="294" alt="image" src="https://github.com/user-attachments/assets/df6c42ce-5ae4-4941-a456-506c234b29a8" />
 
+If using external config file for example from S3
+
+enter your bucket url: https://my-kiwi-images-bucket.s3.us-west-1.amazonaws.com/config/external_mariadb.yml
+
+<img width="665" height="253" alt="image" src="https://github.com/user-attachments/assets/9d0c4800-faf1-4475-94d2-8a0caf59aec6" />
+
+<img width="539" height="169" alt="image" src="https://github.com/user-attachments/assets/ef06aec8-7bbd-4c9a-886f-c7f36bd88717" />
+
+If using a manual option from TUI, just enter values on prompt:
+
+<img width="544" height="173" alt="image" src="https://github.com/user-attachments/assets/52ef4fbe-a93d-4296-a73a-b1f4c6ea262f" />
+<img width="546" height="169" alt="image" src="https://github.com/user-attachments/assets/c005c4d9-bdfe-4a87-b0a8-1c5e47d6a4b7" />
+
+To run it from ansible:
+
+````
+cd /opt/ansible
+
+sudo ansible-galaxy collection install community.mysql
+
+sudo ansible-playbook playbooks/mariadb.yml -vv
+````
+
+Or you can use it from the Cockpit:
 
 * Open Cockpit in a browser:
 
   `https://<public-ip-or-dns>:9090/` (login as `ec2-user` with your key or password, depending on how you configure it).
+
 
 * Change DB config by:
 
