@@ -300,9 +300,10 @@ You should see:
 You can also test logging in as that user:
 
 ```bash
-mysql -h 127.0.0.1 -u produser -p prodappdb
+mariadb -u produser -p prodappdb-v1
 # Enter the password from S3 or the default in the script.
 ```
+
 
 ---
 
