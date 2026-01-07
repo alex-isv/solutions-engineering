@@ -248,6 +248,9 @@ sudo systemctl status mysql
 
 You should see `Active: active (running)`.
 
+<img width="794" height="174" alt="image" src="https://github.com/user-attachments/assets/60fe8398-06d3-4c81-9803-7df477411d83" />
+
+
 ### 4.3 Check the init log
 
 ```bash
@@ -264,6 +267,7 @@ Running SQL init script with mysql...
 Init done, marker file created.
 ==== MariaDB init (S3 + fallback) finished at ...
 ```
+<img width="732" height="101" alt="image" src="https://github.com/user-attachments/assets/d535ff2c-f40a-4401-ac07-2dd553111d2f" />
 
 If S3 failed or the file was missing, you’ll see:
 
@@ -276,14 +280,21 @@ Using DB_NAME=myappdb DB_USER=appuser ...
 
 ```bash
 sudo mysql -e "SHOW DATABASES;"
+````
+
+````bash
 sudo mysql -e "SELECT User, Host FROM mysql.user;"
-```
+````
 
 You should see:
 
 * Database: `prodappdb` (or your default `myappdb`).
 * User: `produser`@`%` (or default `appuser`@`%`).
 * Role: `prod_rw_role` in `mysql.user` / `mysql.roles_mapping` if roles are enabled.
+
+<img width="743" height="149" alt="image" src="https://github.com/user-attachments/assets/2cf14063-0026-4f12-b98c-8f949848c8a9" />
+
+<img width="735" height="182" alt="image" src="https://github.com/user-attachments/assets/5e79e654-fc0f-43ef-a830-98cf5e971e7a" />
 
 You can also test logging in as that user:
 
