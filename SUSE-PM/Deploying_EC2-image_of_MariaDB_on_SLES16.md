@@ -38,7 +38,7 @@ EOF
 
 Assume:
 
-* Bucket: `my-kiwi-images-bucket`
+* Bucket: `your-image-bucket`
 * Region: `us-west-1`
 * Object key: `config/mariadb.conf`
 
@@ -46,7 +46,7 @@ Upload:
 
 ```bash
 aws s3 cp mariadb.conf \
-  s3://my-kiwi-images-bucket/config/mariadb.conf \
+  s3://your-image-bucket/config/mariadb.conf \
   --region us-west-1
 ```
 
@@ -54,7 +54,7 @@ If you want EC2 to fetch it via plain `curl` (no IAM):
 
 ```bash
 aws s3 cp mariadb.conf \
-  s3://my-kiwi-images-bucket/config/mariadb.conf \
+  s3://your-image-bucket/config/mariadb.conf \
   --region us-west-1 \
   --acl public-read
 ```
@@ -62,7 +62,7 @@ aws s3 cp mariadb.conf \
 You’ll then be able to fetch it from instances at:
 
 ```text
-https://my-kiwi-images-bucket.s3.us-west-1.amazonaws.com/config/mariadb.conf
+https://your-image-bucket.s3.us-west-1.amazonaws.com/config/mariadb.conf
 ```
 
 > If you keep the object private instead, use an **IAM role** + `aws s3 cp` in the script, or a **pre-signed URL** in `CONFIG_URL`.
@@ -115,7 +115,7 @@ write_files:
       #   DB_NAME=prodappdb-v1
       #   DB_USER=produser
       #   DB_PASSWORD=AnotherS3cret123!
-      CONFIG_URL="https://my-kiwi-images-bucket.s3.us-west-1.amazonaws.com/config/mariadb.conf"
+      CONFIG_URL="https://your-image-bucket.s3.us-west-1.amazonaws.com/config/mariadb.conf"
 
       # Try to download S3 config; fall back to defaults on failure
       if curl -fsSL "$CONFIG_URL" -o /root/mariadb.conf; then
@@ -215,7 +215,7 @@ runcmd:
    * Make sure there is **no extra indentation** at the very beginning of the file and it starts with `#cloud-config`.
 
 7. **IAM role (optional but better)**
-   If you want to keep the S3 object private and avoid `--acl public-read`, attach an IAM role to the instance with `s3:GetObject` permission on `s3://my-kiwi-images-bucket/config/mariadb.conf`, and adjust the script to use `aws s3 cp` instead of `curl`.
+   If you want to keep the S3 object private and avoid `--acl public-read`, attach an IAM role to the instance with `s3:GetObject` permission on `s3://your-image-bucket/config/mariadb.conf`, and adjust the script to use `aws s3 cp` instead of `curl`.
 
 8. **Launch**
 
@@ -262,7 +262,7 @@ You want to see something like:
 
 ```text
 ==== MariaDB init (S3 + fallback) starting at ...
-Downloaded config from https://my-kiwi-images-bucket.s3.us-west-1.amazonaws.com/config/mariadb.conf
+Downloaded config from https://your-image-bucket.s3.us-west-1.amazonaws.com/config/mariadb.conf
 Using DB_NAME=prodappdb DB_USER=produser DB_ROLE=prod_rw_role DB_HOST=%
 Running SQL init script with mysql...
 Init done, marker file created.
