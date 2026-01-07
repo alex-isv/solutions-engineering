@@ -3,13 +3,13 @@
 
 This guide shows how to:
 
-1. Launch  **prebuilt SLES 16 MariaDB AMI** on AWS EC2.
+1. Launch  **MariaDB on SUSE Linux Enterprise Server** on AWS EC2.
 2. Use **cloud-init user-data** to:
 
    * Create a database, role, user, and password on first boot.
    * Optionally pull those settings from an **external S3 config file**.
    * Fall back to **built-in defaults** if S3 is unavailable.
-
+   
 ---
 
 ## 1. Prepare the S3 config file (optional but recommended)
