@@ -148,8 +148,10 @@ write_files:
 
       GRANT ALL PRIVILEGES ON \`${DB_NAME}\`.* TO '${DB_ROLE}';
 
-      CREATE USER IF NOT EXISTS '${DB_USER}'@'${DB_HOST}'
-        IDENTIFIED BY '${DB_PASSWORD}';
+      DROP USER IF EXISTS '${DB_USER}'@'${DB_HOST}';
+
+      CREATE USER '${DB_USER}'@'${DB_HOST}'
+      IDENTIFIED BY '${DB_PASSWORD}';
 
       GRANT '${DB_ROLE}' TO '${DB_USER}'@'${DB_HOST}';
 
