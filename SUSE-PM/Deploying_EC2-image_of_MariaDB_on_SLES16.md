@@ -25,7 +25,7 @@ cat > mariadb.conf << 'EOF'
 # mariadb.conf (this file goes to S3)
 DB_NAME=prodappdb
 DB_USER=produser
-DB_PASSWORD='SuperSecretPass123!'
+DB_PASSWORD=SuperSecretPass123!
 DB_ROLE=prod_rw_role
 DB_HOST=%
 EOF
