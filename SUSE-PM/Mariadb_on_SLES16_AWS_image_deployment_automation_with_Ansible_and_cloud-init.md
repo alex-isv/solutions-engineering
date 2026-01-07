@@ -858,7 +858,7 @@ We’ll use the **.raw** for AWS.
 ### 9.1 Upload RAW to S3
 
 ```bash
-BUCKET=my-kiwi-images-bucket
+BUCKET=your-image-bucket
 OBJ_KEY=images/sles16-mariadb-cloud.aarch64-1.0.0.raw
 
 aws s3 mb s3://$BUCKET   # if not already created
@@ -906,7 +906,7 @@ This returns a new `ImageId` (AMI). Use that for launching.
 
 Assuming:
 
-* Bucket `my-kiwi-images-bucket`
+* Bucket `your-image-bucket`
 * You upload a DB config file:
   
 ````
@@ -921,7 +921,7 @@ EOF
 
 ````
 aws s3 cp mariadb-config.yml 
-s3://my-kiwi-images-bucket/config/mariadb-config.yml
+s3://your-image-bucket/config/mariadb-config.yml
 ````
 
 
@@ -949,7 +949,7 @@ write_files:
 
 runcmd:
 - mkdir -p /opt/ansible/vars
-- curl -fsSL "https://my-kiwi-images-bucket.s3.us-west-1.amazonaws.com/config/mariadb-config.yml" \
+- curl -fsSL "https://your-image-bucket.s3.us-west-1.amazonaws.com/config/mariadb-config.yml" \
     -o /opt/ansible/vars/external_mariadb.yml
 - ansible-galaxy collection install community.mysql
 - ansible-playbook /opt/ansible/playbooks/mariadb.yml
@@ -986,7 +986,7 @@ Then you can:
 
 If using external config file for example from S3
 
-enter your bucket url: https://my-kiwi-images-bucket.s3.us-west-1.amazonaws.com/config/external_mariadb.yml
+enter your bucket url: https://your-image-bucket.s3.us-west-1.amazonaws.com/config/external_mariadb.yml
 
 <img width="665" height="253" alt="image" src="https://github.com/user-attachments/assets/9d0c4800-faf1-4475-94d2-8a0caf59aec6" />
 
