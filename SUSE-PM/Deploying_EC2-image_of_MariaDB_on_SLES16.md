@@ -88,7 +88,7 @@ This cloud-config does:
 
 When launching the instance, in **Advanced details → User data**, paste:
 
-```yaml
+```yml
 #cloud-config
 
 write_files:
@@ -102,76 +102,75 @@ write_files:
       LOG=/var/log/mariadb-init.log
       exec >>"$LOG" 2>&1
 
-      echo "==== MariaDB init (S3 + fallback) starting at $(date) ===="
+      echo "==== MariaDB init (S3 + fallback, no roles) starting at $(date) ===="
 
-      # Only run once
+      # Only run once per instance
       if [ -f /root/.mariadb_cloudinit_done ]; then
         echo "Marker file exists, skipping MariaDB init."
         exit 0
       fi
 
       # === EDIT THIS: S3 (or HTTPS) URL to your config file ===
-      # The file at this URL must be a shell-style env file with lines like:
-      #   DB_NAME=...
-      #   DB_USER=...
-      #   DB_PASSWORD='...'
-      #   DB_ROLE=...
-      #   DB_HOST=...
+      # The file at this URL must be a shell-style env file, e.g.:
+      #   DB_NAME=prodappdb-v1
+      #   DB_USER=produser
+      #   DB_PASSWORD=AnotherS3cret123!
       CONFIG_URL="https://my-kiwi-images-bucket.s3.us-west-1.amazonaws.com/config/mariadb.conf"
 
-      # Try to download config; fallback to defaults if it fails or is not usable
+      # Try to download S3 config; fall back to defaults on failure
       if curl -fsSL "$CONFIG_URL" -o /root/mariadb.conf; then
         echo "Downloaded config from $CONFIG_URL"
-        # If sourcing fails (e.g. bad format), fall back to defaults
+        # If sourcing fails (bad format, etc.), we still use defaults below
         . /root/mariadb.conf || echo "WARNING: Failed to source /root/mariadb.conf, using defaults."
       else
         echo "WARNING: Failed to download $CONFIG_URL, using default DB settings."
       fi
 
-      # Defaults if not supplied by S3
-      DB_NAME="${DB_NAME:-myappdb}"
-      DB_USER="${DB_USER:-appuser}"
-      DB_PASSWORD="${DB_PASSWORD:-ChangeMe123!}"
-      DB_ROLE="${DB_ROLE:-app_rw_role}"
-      DB_HOST="${DB_HOST:-%}"
+      # DEFAULTS (used if not provided by S3)
+      DB_NAME="${DB_NAME:-prodappdb-v1}"
+      DB_USER="${DB_USER:-produser}"
+      DB_PASSWORD="${DB_PASSWORD:-AnotherS3cret123!}"
 
-      echo "Using DB_NAME=$DB_NAME DB_USER=$DB_USER DB_ROLE=$DB_ROLE DB_HOST=$DB_HOST"
+      echo "Using DB_NAME=$DB_NAME DB_USER=$DB_USER"
 
       cat > /root/init-mariadb.sql <<EOF
-      -- === MariaDB bootstrap via cloud-init (S3 + fallback) ===
+      -- === MariaDB bootstrap via cloud-init (S3 + fallback, no roles) ===
 
       CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\`
         CHARACTER SET utf8mb4
         COLLATE utf8mb4_unicode_ci;
 
-      CREATE ROLE IF NOT EXISTS '${DB_ROLE}';
+      -- Always reset users so password matches S3/defaults
+      DROP USER IF EXISTS '${DB_USER}'@'%';
+      DROP USER IF EXISTS '${DB_USER}'@'localhost';
 
-      GRANT ALL PRIVILEGES ON \`${DB_NAME}\`.* TO '${DB_ROLE}';
+      CREATE USER '${DB_USER}'@'%'
+        IDENTIFIED BY '${DB_PASSWORD}';
 
-      DROP USER IF EXISTS '${DB_USER}'@'${DB_HOST}';
+      CREATE USER '${DB_USER}'@'localhost'
+        IDENTIFIED BY '${DB_PASSWORD}';
 
-      CREATE USER '${DB_USER}'@'${DB_HOST}'
-      IDENTIFIED BY '${DB_PASSWORD}';
-
-      GRANT '${DB_ROLE}' TO '${DB_USER}'@'${DB_HOST}';
+      GRANT ALL PRIVILEGES ON \`${DB_NAME}\`.* TO '${DB_USER}'@'%';
+      GRANT ALL PRIVILEGES ON \`${DB_NAME}\`.* TO '${DB_USER}'@'localhost';
 
       FLUSH PRIVILEGES;
       EOF
 
-      echo "Running SQL init script with mysql..."
-      mysql -u root < /root/init-mariadb.sql
+      echo "Running SQL init script with mariadb client..."
+      /usr/bin/mariadb -u root < /root/init-mariadb.sql
 
       touch /root/.mariadb_cloudinit_done
       echo "Init done, marker file created."
-      echo "==== MariaDB init (S3 + fallback) finished at $(date) ===="
+      echo "==== MariaDB init (S3 + fallback, no roles) finished at $(date) ===="
 
 runcmd:
-  # Start and enable MariaDB at boot
-  # If your service is called mysql.service instead, change this line.
+  # Start and enable MariaDB at boot.
+  # If your service is mysql.service instead, change mariadb.service to mysql.service.
   - [ systemctl, enable, --now, mariadb.service ]
 
   # Run the combined S3+fallback init script
   - [ bash, /root/init-mariadb-from-s3-or-default.sh ]
+
 ```
 
 **Things you should edit:**
