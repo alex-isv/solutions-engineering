@@ -188,7 +188,7 @@ runcmd:
 
 2. **Choose your AMI**
 
-   * Select  **SLES 16 MariaDB AMI** (the one built with KIWI and imported as an AMI).
+   * Select  **MariaDB on SUSE Linux Enterprise Server** 
 
 3. **Choose instance type**
 
