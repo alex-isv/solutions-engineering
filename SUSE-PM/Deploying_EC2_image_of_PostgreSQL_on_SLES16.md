@@ -1,6 +1,6 @@
 
 
-````markdown
+
 # Deploying EC2 image of PostgreSQL on SLES16
 
 This document describes how to deploy the **PostgreSQL on SUSE Linux Enterprise Server** image from the AWS Marketplace and bootstrap it using **cloud-init**:
