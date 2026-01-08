@@ -383,20 +383,3 @@ If you want to apply a **new S3 config** to an already running instance:
 Remember: **each run will drop & recreate** the configured database and role.
 
 ---
-
-## 9. Next steps
-
-* Integrate this deployment pattern into:
-
-  * CloudFormation / Terraform templates.
-  * SUSE-based automation or internal tooling.
-* Extend the SQL bootstrap to:
-
-  * Create application schemas/tables.
-  * Apply extensions or initial data.
-* Introduce a **“safe” bootstrap** variant for production that:
-
-  * Avoids dropping existing databases.
-  * Only applies non-destructive schema and user changes.
-
-
