@@ -256,7 +256,7 @@ An example command to copy to your S3 bucket:
 
 ````
 aws s3 cp postgresql.conf s3://your-image-bucket/config/postgresql.conf --region us-west-1   --acl public-read
-```
+````
 
 ---
 
