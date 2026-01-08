@@ -85,7 +85,7 @@ The following `#cloud-config`:
 
 > **Note:** this script is deliberately **destructive** for the configured DB/role: it will drop and recreate them on each run.
 
-```yaml
+````
 #cloud-config
 
 write_files:
