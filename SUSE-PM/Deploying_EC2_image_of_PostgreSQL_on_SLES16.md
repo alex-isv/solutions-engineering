@@ -252,6 +252,12 @@ PG_SERVICE=postgresql.service
 
 You can safely change values and rerun the script later (see §8), keeping in mind that it **drops & recreates** the configured DB and role.
 
+An example command to copy to your S3 bucket:
+
+````
+aws s3 cp postgresql.conf s3://your-image-bucket/config/postgresql.conf --region us-west-1   --acl public-read
+```
+
 ---
 
 ## 6. Validating the deployment
