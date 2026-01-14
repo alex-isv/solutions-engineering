@@ -127,8 +127,8 @@ write_files:
       fi
 
       # DEFAULTS (used if not provided by S3)
-      DB_NAME="${DB_NAME:-prodappdb-v1}"
-      DB_USER="${DB_USER:-produser}"
+      DB_NAME="${DB_NAME:-prodappdb-local}"
+      DB_USER="${DB_USER:-user-local}"
       DB_PASSWORD="${DB_PASSWORD:-AnotherS3cret123!}"
 
       echo "Using DB_NAME=$DB_NAME DB_USER=$DB_USER"
