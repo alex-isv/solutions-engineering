@@ -467,3 +467,60 @@ Common cases:
 
 ---
 
+## PHP runtime and package options on SLES16
+
+The examples above use a minimal Apache + PHP setup:
+
+- `apache2`
+- `apache2-mod_php8`
+- `php8` (core runtime and configuration)
+
+SLES 16 ships PHP as a **set of smaller packages**, so you can add only what you actually need (CLI, FPM, database drivers, etc.). This section summarizes the most common options you may want for real workloads.
+
+### Web server and SAPI combinations
+
+On SLES you typically choose **both** a web server and a PHP SAPI (how PHP is executed):
+
+1. **Apache + mod_php8 (what this document uses)**  
+   - Packages:
+     - `apache2`
+     - `apache2-mod_php8`
+     - `php8`
+   - Apache loads PHP directly as a module. This is the simplest way to run PHP and is a good fit for small to medium applications or quick tests.
+   - You do **not** need `php8-fpm` in this mode.
+
+2. **Apache + PHP-FPM (FastCGI)**  
+   - Packages:
+     - `apache2`
+     - `php8`
+     - `php8-fpm`
+     - `php8-fastcgi`
+   - Apache stays focused on HTTP and static content while PHP runs in a separate FastCGI process manager (`php-fpm`). Apache talks to PHP via `proxy_fcgi` over a socket or TCP port.
+   - This layout is useful when you want:
+     - Independent tuning of Apache workers vs PHP workers.
+     - Easier PHP restarts/rollouts without fully restarting Apache.
+
+3. **Nginx + PHP-FPM**  
+   - Packages (typical):
+     - `nginx` (from the Web and Scripting module or relevant repo)
+     - `php8`
+     - `php8-fpm`
+   - Nginx cannot load PHP modules directly, so it always uses FastCGI/FPM for `.php` requests.
+   - This is a common choice for highly tuned or containerized deployments.
+
+> For simple “one EC2 instance with PHP” setups, **Apache + `apache2-mod_php8`** is usually the easiest starting point. For more advanced scaling or when you standardize on Nginx, **PHP-FPM** is the preferred option.
+
+### Command-line PHP (php8-cli)
+
+The base `php8` package does **not** provide a `/usr/bin/php` binary. It mainly delivers:
+
+- `/etc/php8` configuration
+- PHP modules and shared libraries
+- Session storage directories, etc.
+
+If you want to run PHP scripts from the **command line** (for example `php artisan`, `php bin/console`, cron jobs, ad-hoc `php -v`), install the CLI SAPI:
+
+```bash
+sudo zypper -n install php8-cli
+
+
