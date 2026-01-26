@@ -448,7 +448,7 @@ Common cases:
   * Confirm with:
 
     ```bash
-    aws s3 ls s3://my-kiwi-images-bucket/config/
+    aws s3 ls s3://my-image-bucket/config/
     ```
 
 * **Apache not running**
