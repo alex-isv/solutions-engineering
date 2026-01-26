@@ -417,11 +417,16 @@ Once the instance is in `running` state and `Status checks` are OK:
    * `http://<public-ip>/health.php`
    * `http://<public-ip>/info.php`
 
-You should see the **sample PHP site** from your `php-site.tar.gz` bundle. If the bundle cannot be downloaded, you’ll see the **fallback “It works ✅”** page instead.
+You should see the **sample PHP site** from your `php-site.tar.gz` bundle. 
 
 <img width="887" height="502" alt="image" src="https://github.com/user-attachments/assets/c4399796-1be2-4a8d-8a5e-122580a3d448" />
 
 ---
+
+If the bundle cannot be downloaded, you’ll see the **fallback “It works ✅”** page instead.
+
+<img width="446" height="261" alt="image" src="https://github.com/user-attachments/assets/fbc5140d-9723-4d83-81dd-c20c41a521f0" />
+
 
 ## 7. Troubleshooting
 
