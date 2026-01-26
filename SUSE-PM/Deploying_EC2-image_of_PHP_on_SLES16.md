@@ -11,7 +11,6 @@ The deployment uses:
 * A **PHP site bundle from S3** (tar.gz) downloaded via **HTTPS**.
 * A **fallback sample page** if the S3 object is not reachable.
 
-> Note: this example uses a **public S3 object (`--acl public-read`)** for simplicity and quick testing. For production use, replace this with an **IAM-based** approach.
 
 ---
 
@@ -22,7 +21,7 @@ You’ll need:
 * An **AWS account** and basic familiarity with EC2 and S3.
 * A **S3 bucket**, for example:
 
-  * `my-kiwi-images-bucket`
+  * `my-image-bucket`
 * A **sample PHP site bundle** (`php-site.tar.gz`) you can upload to S3.
 * AWS CLI installed locally and configured with credentials that can write to the bucket:
 
@@ -35,7 +34,7 @@ You’ll need:
 In the examples below:
 
 * **Region**: `us-west-1`
-* **Bucket**: `my-kiwi-images-bucket`
+* **Bucket**: `my-image-bucket`
 * **Object key**: `config/php-site.tar.gz`
 
 Adjust these names as needed.
@@ -148,7 +147,7 @@ For this **simple test** we make the object **public-readable**. This matches th
 
 ```bash
 aws s3 cp php-site.tar.gz \
-  s3://my-kiwi-images-bucket/config/php-site.tar.gz \
+  s3://my-image-bucket/config/php-site.tar.gz \
   --region us-west-1 \
   --acl public-read
 ```
@@ -156,7 +155,7 @@ aws s3 cp php-site.tar.gz \
 Verify that the object is reachable:
 
 ```bash
-curl -I https://my-kiwi-images-bucket.s3.us-west-1.amazonaws.com/config/php-site.tar.gz
+curl -I https://my-image-bucket.s3.us-west-1.amazonaws.com/config/php-site.tar.gz
 ```
 
 You should see: `HTTP/1.1 200 OK`.
@@ -194,7 +193,7 @@ write_files:
 
       # ---- CONFIG ----
       # Region-specific S3 HTTPS URL (or a pre-signed URL)
-      APP_SOURCE_HTTPS="https://my-kiwi-images-bucket.s3.us-west-1.amazonaws.com/config/php-site.tar.gz"
+      APP_SOURCE_HTTPS="https://my-image-bucket.s3.us-west-1.amazonaws.com/config/php-site.tar.gz"
       DOCROOT="/srv/www/htdocs"
       APACHE_PORT="80"
       MARKER="/var/lib/cloud/instance/sem/php_site_initialized"
