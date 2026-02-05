@@ -370,6 +370,309 @@ Paste this into the **User data** field when launching the EC2 instance.
 
 ---
 
+## 4.1 For NginX and php8-php8-fpm use the following cloud-config example:
+
+> Replace `APP_SOURCE_HTTPS` with your actual S3 HTTPS URL.
+
+```yaml
+#cloud-config
+package_update: false
+
+write_files:
+  - path: /usr/local/sbin/init-wordpress-nginx-from-https-or-default.sh
+    permissions: "0755"
+    owner: root:root
+    content: |
+      #!/bin/bash
+      set -euo pipefail
+      exec > >(tee -a /var/log/init-wordpress-site.log) 2>&1
+
+      echo "== $(date -Is) WordPress (Nginx) init starting =="
+
+      # ---- CONFIG ----
+      APP_SOURCE_HTTPS="https://my-bucket.s3.us-west-1.amazonaws.com/config/wordpress-site.tar.gz"
+      DOCROOT="/srv/www/htdocs"
+      NGINX_PORT="80"
+      MARKER="/var/lib/cloud/instance/sem/wordpress_site_initialized"
+      TMP="/tmp/wordpress-site-bundle"
+      PHP_FPM_SOCKET="/run/php-fpm/www.sock"
+      # ---------------
+
+      if [[ -f "$MARKER" ]]; then
+        echo "Marker exists ($MARKER). Skipping."
+        exit 0
+      fi
+
+      # Wait for zypper to be ready
+      for i in {1..30}; do
+        if zypper -n lr >/dev/null 2>&1; then
+          echo "[info] zypper repos available"
+          break
+        fi
+        echo "[info] Waiting for zypper/repos... ($i/30)"
+        sleep 2
+      done
+
+      # Refresh repos with retries
+      for i in {1..10}; do
+        if zypper -n --gpg-auto-import-keys refresh; then
+          echo "[info] Repo refresh OK"
+          break
+        fi
+        echo "[warn] Repo refresh failed, retrying... ($i/10)"
+        sleep 5
+      done
+
+      # Install Nginx + PHP + WordPress extensions
+      echo "[info] Installing Nginx, PHP-FPM and extensions needed for WordPress..."
+      zypper -n install --no-recommends \
+        nginx \
+        php8 php8-cli \
+        php8-fpm \
+        php8-mysql \
+        php8-gd \
+        php8-mbstring \
+        php8-zip \
+        php8-curl \
+        php8-intl \
+        php8-openssl \
+        php8-xmlreader \
+        php8-xmlwriter \
+        curl tar gzip unzip || {
+          echo "[error] Package installation failed"
+          exit 1
+        }
+
+      echo "[info] Installed packages (subset):"
+      rpm -q nginx php8 php8-fpm php8-mysql || true
+
+      mkdir -p "$DOCROOT"
+
+      # Silence PCRE JIT warning (optional but nice)
+      mkdir -p /etc/php8/conf.d
+      cat >/etc/php8/conf.d/90-pcre.ini <<EOF
+      ; Disable PCRE JIT to avoid JIT memory warnings in WordPress
+      pcre.jit=0
+      EOF
+
+      # Configure PHP-FPM pool (www) to listen on Unix socket
+      if [[ -d /etc/php8/fpm/php-fpm.d ]]; then
+        cat >/etc/php8/fpm/php-fpm.d/www.conf <<EOF
+      [www]
+      user = wwwrun
+      group = www
+
+      listen = ${PHP_FPM_SOCKET}
+      listen.owner = wwwrun
+      listen.group = www
+      listen.mode  = 0660
+
+      pm = dynamic
+      pm.max_children = 5
+      pm.start_servers = 2
+      pm.min_spare_servers = 1
+      pm.max_spare_servers = 3
+
+      php_admin_value[error_log] = /var/log/php8-fpm-www-error.log
+      php_admin_flag[log_errors] = on
+      EOF
+      else
+        echo "[warn] /etc/php8/fpm/php-fpm.d not found; adjust PHP-FPM config path as needed."
+      fi
+
+      # Minimal Nginx config for WordPress + PHP-FPM via Unix socket
+      cat >/etc/nginx/nginx.conf <<EOF
+      user  wwwrun;
+      worker_processes  auto;
+
+      error_log  /var/log/nginx/error.log;
+      pid        /run/nginx.pid;
+
+      events {
+          worker_connections  1024;
+      }
+
+      http {
+          include       /etc/nginx/mime.types;
+          default_type  application/octet-stream;
+
+          log_format  main  '\$remote_addr - \$remote_user [\$time_local] "\$request" '
+                            '\$status \$body_bytes_sent "\$http_referer" '
+                            '"\$http_user_agent" "\$http_x_forwarded_for"';
+
+          access_log  /var/log/nginx/access.log  main;
+
+          sendfile        on;
+          keepalive_timeout  65;
+
+          server {
+              listen       ${NGINX_PORT} default_server;
+              server_name  _;
+
+              root   ${DOCROOT};
+              index  index.php index.html index.htm;
+
+              # Pretty permalinks support
+              location / {
+                  try_files \$uri \$uri/ /index.php?\$args;
+              }
+
+              location ~ \.php$ {
+                  fastcgi_split_path_info ^(.+\.php)(/.+)$;
+
+                  # Standard fastcgi params (SUSE provides this file)
+                  include fastcgi.conf;
+
+                  # Path to the actual PHP script file
+                  fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
+
+                  # Use the Unix socket from php-fpm
+                  fastcgi_pass unix:${PHP_FPM_SOCKET};
+
+                  fastcgi_index index.php;
+              }
+
+              # Deny access to .ht* (leftover from Apache-based plugins)
+              location ~ /\.ht {
+                  deny all;
+              }
+          }
+      }
+      EOF
+
+      deploy_fallback_site() {
+        echo "[info] Deploying fallback WordPress placeholder site."
+        rm -rf "${DOCROOT:?}/"* 2>/dev/null || true
+        cat >"${DOCROOT}/index.php" <<'EOF'
+      <!doctype html>
+      <html>
+      <head><meta charset="utf-8"><title>SLES16 WordPress placeholder (Nginx)</title></head>
+      <body style="font-family: system-ui, sans-serif;">
+        <h1>WordPress placeholder ✅</h1>
+        <p>The WordPress bundle could not be downloaded or unpacked.</p>
+        <ul>
+          <li>Check S3 URL and ACL (public-read or pre-signed).</li>
+          <li>Check /var/log/init-wordpress-site.log for details.</li>
+        </ul>
+      </body>
+      </html>
+      EOF
+      }
+
+      deploy_bundle_from_file() {
+        local file="$1"
+        echo "[info] Deploying WordPress bundle from $file"
+        rm -rf "${DOCROOT:?}/"* 2>/null || true 2>/dev/null || true
+
+        if [[ "$APP_SOURCE_HTTPS" == *.tar.gz ]] || [[ "$APP_SOURCE_HTTPS" == *.tgz ]]; then
+          tar -xzf "$file" -C "$DOCROOT"
+        elif [[ "$APP_SOURCE_HTTPS" == *.zip ]]; then
+          unzip -o "$file" -d "$DOCROOT"
+        else
+          echo "[warn] Unknown bundle extension; expected .tar.gz/.tgz or .zip"
+          return 1
+        fi
+
+        # If bundle extracted into a 'wordpress' subdir, move it up
+        if [[ -d "${DOCROOT}/wordpress" && ! -f "${DOCROOT}/index.php" ]]; then
+          echo "[info] Moving wordpress/ contents to DOCROOT"
+          mv "${DOCROOT}/wordpress/"* "${DOCROOT}/"
+          rmdir "${DOCROOT}/wordpress" || true
+        fi
+
+        if [[ ! -f "${DOCROOT}/index.php" ]]; then
+          echo "[warn] No index.php found in WordPress bundle; deployment incomplete."
+          return 1
+        fi
+
+        # Ensure web user owns files (for uploads/plugins)
+        if id wwwrun >/dev/null 2>&1; then
+          chown -R wwwrun:www "${DOCROOT}"
+        fi
+      }
+
+      echo "[info] Checking HTTPS bundle URL:"
+      echo "[info]   $APP_SOURCE_HTTPS"
+
+      DEPLOYED="no"
+
+      # HEAD request to see if object is reachable
+      HTTP_CODE="$(curl -L -sS -o /dev/null -w '%{http_code}' -I "$APP_SOURCE_HTTPS" || true)"
+      echo "[info] HEAD status: $HTTP_CODE"
+
+      if [[ "$HTTP_CODE" == "200" || "$HTTP_CODE" == "302" ]]; then
+        echo "[info] WordPress bundle appears reachable. Downloading..."
+        if curl -fLsS --retry 5 --retry-delay 2 "$APP_SOURCE_HTTPS" -o "$TMP"; then
+          if deploy_bundle_from_file "$TMP"; then
+            DEPLOYED="yes"
+          else
+            echo "[warn] Downloaded WordPress bundle but failed to unpack/deploy."
+          fi
+        else
+          echo "[warn] Download failed."
+        fi
+      elif [[ "$HTTP_CODE" == "403" ]]; then
+        echo "[warn] Got 403 Forbidden. Object may exist but is private."
+        echo "[warn] For quick tests, upload with: --acl public-read"
+      else
+        echo "[warn] WordPress bundle not reachable via HTTPS (HTTP $HTTP_CODE)."
+      fi
+
+      if [[ "$DEPLOYED" != "yes" ]]; then
+        deploy_fallback_site
+      else
+        echo "[info] WordPress bundle deployed successfully."
+      fi
+
+      # Enable & start PHP-FPM + Nginx
+      echo "[info] Enabling and starting php-fpm + nginx..."
+      systemctl enable php-fpm || echo "[warn] php-fpm service not found; adjust service name if needed"
+      systemctl restart php-fpm || echo "[error] php-fpm failed to start"
+
+      systemctl enable nginx
+      systemctl restart nginx || {
+        echo "[error] nginx failed to start"
+        journalctl -u nginx -n 50 || true
+      }
+
+      # Optional firewall open if enabled
+      if systemctl is-enabled --quiet firewalld 2>/dev/null; then
+        firewall-cmd --permanent --add-service=http
+        firewall-cmd --reload
+      fi
+
+      echo "[info] Local curl check:"
+      curl -fsS "http://127.0.0.1:${NGINX_PORT}/" | head -n 8 || true
+
+      mkdir -p "$(dirname "$MARKER")"
+      touch "$MARKER"
+      echo "== $(date -Is) WordPress (Nginx) init done =="
+
+  - path: /etc/systemd/system/wordpress-site-init.service
+    permissions: "0644"
+    owner: root:root
+    content: |
+      [Unit]
+      Description=Initialize WordPress site (Nginx + PHP-FPM) from HTTPS S3 URL if present, else deploy fallback
+      After=network-online.target
+      Wants=network-online.target
+
+      [Service]
+      Type=oneshot
+      ExecStart=/usr/local/sbin/init-wordpress-nginx-from-https-or-default.sh
+      RemainAfterExit=yes
+
+      [Install]
+      WantedBy=multi-user.target
+
+runcmd:
+  - systemctl daemon-reload
+  - systemctl enable --now wordpress-site-init.service
+
+final_message: "WordPress (Nginx) site init finished. Logs: /var/log/init-wordpress-site.log"
+````
+----
+
 ## 5. Prepare the local MariaDB database and user
 
 On the same SLES16 instance, install and run MariaDB (if not already):
