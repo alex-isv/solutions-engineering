@@ -370,7 +370,7 @@ Paste this into the **User data** field when launching the EC2 instance.
 
 ---
 
-## 4.1 For NginX and php8-php8-fpm use the following cloud-config example:
+## 4.1 For NginX and php8-fpm use the following cloud-config example:
 
 > Replace `APP_SOURCE_HTTPS` with your actual S3 HTTPS URL.
 
