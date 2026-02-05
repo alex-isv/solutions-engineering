@@ -8,7 +8,7 @@ This document describes how to deploy a **WordPress** site on an **EC2 instance 
 
 The deployment uses:
 
-* **Apache + PHP 8** on SLES16 (mod_php).
+* **Apache + PHP 8** on SLES16 (mod_php) or **NGINX + PHP8-fmp**
 * A **WordPress tar.gz bundle** downloaded from **S3 over HTTPS** at first boot.
 * A **local MariaDB instance on the same server** (WordPress connects via `localhost`).
 * A **fallback placeholder page** if the WordPress bundle cannot be downloaded or unpacked.
@@ -751,17 +751,25 @@ sudo tail -n 200 /var/log/init-wordpress-site.log
 
 You should see:
 
-* PHP and Apache packages installed.
+* PHP and Apache packages installed. Or NGINX and PHP8-fpm depends on which configuration you used.
 * `HEAD status: 200` for the S3 object.
 * “WordPress bundle deployed successfully.”
 * A final local curl check.
 
-### 7.2 Check Apache
+### 7.2 Check Apache or NGINX
 
 ```bash
 sudo systemctl status apache2 --no-pager
 curl -fsS http://127.0.0.1/ | head
 ```
+or 
+
+```bash
+sudo systemctl status nginx --no-pager
+sudo systemctl status php8-fpm --no-pager
+curl -fsS http://127.0.0.1/ | head
+```
+
 
 You should see the WordPress front page or install screen HTML.
 
@@ -869,7 +877,7 @@ sudo systemctl restart apache2
 At this point you have a repeatable EC2 + SLES16 + WordPress deployment:
 
 * WordPress code pulled from S3 at first boot.
-* Apache/PHP configured with all needed extensions.
+* Apache/PHP or NGINX + PHP8-fpm configured with all needed extensions.
 * Local MariaDB backing the site via `localhost`.
 
 You can now build on this to:
