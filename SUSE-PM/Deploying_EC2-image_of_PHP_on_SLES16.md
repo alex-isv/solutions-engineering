@@ -400,7 +400,7 @@ Once the instance is in `running` state and `Status checks` are OK:
 1. SSH into the instance (optional, for debugging):
 
    ```bash
-   ssh ec2-user@<public-ip>
+   ssh -i 'your-key.pem' ec2-user@<public-ip>
    ```
 
 2. Check the init log:
