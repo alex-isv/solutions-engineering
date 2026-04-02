@@ -220,7 +220,7 @@ sudo systemctl enable --now mcp-server
 ````
 ````
 sudo systemctl status mcp-server
-```
+````
 
 ### 1.4 Sanity checks
 
