@@ -209,9 +209,16 @@ User=root
 [Install]
 WantedBy=multi-user.target
 UNIT
+````
 
+````
 sudo systemctl daemon-reload
+````
+
+````
 sudo systemctl enable --now mcp-server
+````
+````
 sudo systemctl status mcp-server
 ```
 
