@@ -222,6 +222,9 @@ sudo systemctl enable --now mcp-server
 sudo systemctl status mcp-server
 ````
 
+<img width="1041" height="335" alt="image" src="https://github.com/user-attachments/assets/52d51338-4ce5-4d49-86c2-49b25248f1d0" />
+
+
 ### 1.4 Sanity checks
 
 ```bash
