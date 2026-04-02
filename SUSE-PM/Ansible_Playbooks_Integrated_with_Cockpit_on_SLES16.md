@@ -405,7 +405,7 @@ with dropdown-based playbook selection and a shared deploy button.
       <legend>MCP Client Settings</legend>
 
       <label>MCP Server URL
-        <input id="mcp_server" type="text" value="http://192.168.150.152:8787" style="width: 300px;" />
+        <input id="mcp_server" type="text" value="http://YOUR-MCP-SERVER-IP:8787" style="width: 300px;" />
       </label>
 
       <label>Tool name
