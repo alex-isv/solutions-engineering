@@ -9,7 +9,7 @@
 
 ```bash
 # Base
-sudo zypper install -y python313 python313-pip git curl unzip
+sudo zypper install -y python313 python313-pip git curl unzip docker-compose
 sudo python3 -m pip install --upgrade pip setuptools wheel
 
 # Cockpit + Ansible (if not already)
@@ -146,7 +146,6 @@ Create `/opt/ollama-compose/docker-compose.yml`:
 
 ```bash
 
-```yaml
 services:
   ollama-llama3-8b:
     image: ollama/ollama:latest
@@ -184,9 +183,14 @@ Bring it up:
 
 ```bash
 cd /opt/ollama-compose
-sudo docker compose up -d
-sudo docker ps
+sudo podman compose up -d
+sudo podman ps
 ```
+
+<img width="1627" height="421" alt="image" src="https://github.com/user-attachments/assets/4099b3f0-65a2-4d9f-87ef-96b8d4a957cd" />
+
+<img width="1242" height="113" alt="image" src="https://github.com/user-attachments/assets/fc70e959-d3a0-4fff-a461-8204e13bc99f" />
+
 
 ### 1.3 Systemd unit for the MCP server
 
