@@ -104,6 +104,8 @@ curl http://localhost:11402/api/tags
 
 Create `/opt/mcp-server/server.py`:
 
+<details><summary>Expand for detailed values</summary>
+  
 ```bash
 sudo tee /opt/mcp-server/server.py > /dev/null <<'PY'
 #!/usr/bin/env python3
@@ -460,8 +462,12 @@ if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=MCP_PORT)
 PY
 
+</details>
+---
+
+````
 sudo chmod 755 /opt/mcp-server/server.py
-```
+````
 
 ---
 
@@ -547,151 +553,7 @@ rpm -ql ansible-playbook-extension
 
 ---
 
-## 9. Replace the Client Wrapper with the Formatted Output Version
 
-If your RPM already contains the fixed wrapper, skip this step. Otherwise, replace `/usr/share/cockpit/ansible-playbook/bin/deploy-mcpclient`:
-
-```bash
-sudo tee /usr/share/cockpit/ansible-playbook/bin/deploy-mcpclient > /dev/null <<'SH'
-#!/bin/bash
-SERVER_URL="http://localhost:8787"
-TOOL="list_tools"
-PAYLOAD="{}"
-
-if [[ "$1" == "--list-tools" ]]; then
-    SERVER_URL="${2:-http://localhost:8787}"
-    python3 - <<PYCODE
-import json
-import requests
-server = "$SERVER_URL"
-try:
-    r = requests.get(f"{server}/tools", timeout=10)
-    r.raise_for_status()
-    tools = r.json()
-    print(json.dumps(tools if isinstance(tools, list) else {"error": "Unexpected response type"}))
-except Exception as e:
-    print(json.dumps({"error": str(e)}))
-PYCODE
-    exit 0
-fi
-
-while [[ $# -gt 0 ]]; do
-  case "$1" in
-    --server) SERVER_URL="$2"; shift 2 ;;
-    --tool) TOOL="$2"; shift 2 ;;
-    --payload) PAYLOAD="$2"; shift 2 ;;
-    *) echo "Unknown option: $1"; exit 1 ;;
-  esac
-done
-
-echo "Invoking MCP client..."
-echo "Server: $SERVER_URL"
-echo "Tool: $TOOL"
-echo "Payload: $PAYLOAD"
-
-python3 - <<PYCODE
-import json, requests, sys, textwrap
-
-server = "$SERVER_URL"
-tool = "$TOOL"
-
-def indent_text(text, prefix="  "):
-    if text is None:
-        return ""
-    text = str(text)
-    lines = text.splitlines() or [text]
-    return "\n".join(prefix + line for line in lines)
-
-def print_block(title, text, indent=0):
-    pad = " " * indent
-    print(f"{pad}{title}:")
-    if text is None or text == "":
-        print(f"{pad}  (empty)")
-    else:
-        print(indent_text(text, prefix=pad + "  "))
-
-def print_wrapped(title, text, indent=0, width=100):
-    pad = " " * indent
-    print(f"{pad}{title}:")
-    if text is None or text == "":
-        print(f"{pad}  (empty)")
-        return
-    for paragraph in str(text).splitlines():
-        if not paragraph:
-            print()
-            continue
-        wrapped = textwrap.wrap(paragraph, width=width, replace_whitespace=False, drop_whitespace=False)
-        if not wrapped:
-            print(f"{pad}  ")
-        for line in wrapped:
-            print(f"{pad}  {line}")
-
-def print_obj(obj, indent=0, key_name=None):
-    pad = " " * indent
-    if key_name is not None:
-        print(f"{pad}{key_name}:")
-    if isinstance(obj, dict):
-        for k, v in obj.items():
-            if k in ("stdout", "stderr"):
-                print_block(k, v, indent + (2 if key_name is not None else 0))
-            elif k == "cmd":
-                print_wrapped(k, v, indent + (2 if key_name is not None else 0))
-            elif k == "rc":
-                print(f"{' ' * (indent + (2 if key_name is not None else 0))}{k}: {v}")
-            elif isinstance(v, (dict, list)):
-                print_obj(v, indent + (2 if key_name is not None else 0), k)
-            else:
-                print(f"{' ' * (indent + (2 if key_name is not None else 0))}{k}: {v}")
-    elif isinstance(obj, list):
-        if not obj:
-            print(f"{pad}  []")
-            return
-        for item in obj:
-            if isinstance(item, (dict, list)):
-                print(f"{pad}  -")
-                print_obj(item, indent + 4)
-            else:
-                print(f"{pad}  - {item}")
-    elif isinstance(obj, str):
-        print_block("value", obj, indent)
-    else:
-        print(f"{pad}{obj}")
-
-try:
-    payload = json.loads("""$PAYLOAD""")
-except Exception:
-    payload = {}
-
-try:
-    print(f"→ Connecting to {server}/call_tool ...")
-    r = requests.post(f"{server}/call_tool", json={"name": tool, "arguments": payload}, timeout=600)
-    print(f"← Status: {r.status_code}")
-    if r.ok:
-        try:
-            data = r.json()
-            print("\n✅ MCP Response:\n")
-            print_obj(data)
-        except Exception:
-            print("✅ MCP Raw Response:")
-            print(r.text)
-    else:
-        print("❌ Error:")
-        try:
-            print_obj(r.json())
-        except Exception:
-            print(r.text)
-        sys.exit(1)
-except Exception as e:
-    print("❌ MCP invocation failed:", e)
-    sys.exit(1)
-PYCODE
-SH
-
-sudo chmod +x /usr/share/cockpit/ansible-playbook/bin/deploy-mcpclient
-sudo systemctl restart cockpit.socket
-```
-
----
 
 ## 10. Configure the MCP Client in Cockpit
 
