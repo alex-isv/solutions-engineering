@@ -107,6 +107,7 @@ Create `/opt/mcp-server/server.py`:
 <details><summary>Expand for detailed values</summary>
   
 ```bash
+---
 sudo tee /opt/mcp-server/server.py > /dev/null <<'PY'
 #!/usr/bin/env python3
 """
@@ -461,7 +462,7 @@ async def call_tool(request: Request):
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=MCP_PORT)
 PY
-
+```
 </details>
 ---
 
