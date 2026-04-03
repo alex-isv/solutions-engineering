@@ -401,12 +401,30 @@ async def verify_service(request: Request) -> Dict[str, Any]:
         "health": {"status": "ok"},
     }
 
+def normalize_arguments(arguments: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    If the client sends native-tool arguments wrapped as:
+      {"prompt":"{\\"service\\":\\"mcp-server\\"}"}
+    convert them to:
+      {"service":"mcp-server"}
+    """
+    if not isinstance(arguments, dict):
+        return {}
 
+    if "prompt" in arguments and isinstance(arguments["prompt"], str):
+        prompt_text = arguments["prompt"].strip()
+        if prompt_text.startswith("{") and prompt_text.endswith("}"):
+            try:
+                parsed = json.loads(prompt_text)
+                if isinstance(parsed, dict):
+                    return parsed
+            except Exception:
+                pass
 @app.post("/call_tool")
 async def call_tool(request: Request):
     body = await request.json()
     name = body.get("name")
-    arguments = body.get("arguments", {})
+    arguments = normalize_arguments(body.get("arguments", {}))
 
     if name not in TOOLS:
         return JSONResponse(status_code=404, content={"error": f"Tool {name} not found"})
