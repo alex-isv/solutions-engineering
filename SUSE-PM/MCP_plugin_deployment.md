@@ -39,7 +39,7 @@ Install the required packages:
 
 ```bash
 sudo zypper refresh
-sudo zypper install -y   python313 python313-pip python313-virtualenv   podman curl git jq ca-certificates
+sudo zypper install -y python313 python313-pip python313-virtualenv podman curl git jq ca-certificates docker-compose
 ```
 
 Create the server directories:
