@@ -151,6 +151,11 @@ Please follow steps as described in [Creating a container based Nvidia GPU drive
 
 ## Install a gpu-operator with a helm command:
 
+Add Nvidia repo:
+````
+helm repo add nvidia https://helm.ngc.nvidia.com/nvidia
+````
+
 > [!NOTE]
 >  **If a gpu driver was installed locally on the worker node use option `--set driver.enabled=false`**
 
