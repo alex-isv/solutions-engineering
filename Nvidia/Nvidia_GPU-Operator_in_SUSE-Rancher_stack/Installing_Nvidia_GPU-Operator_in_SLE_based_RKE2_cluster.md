@@ -164,9 +164,11 @@ helm install -n gpu-operator \
   --generate-name \
   --wait \
   --create-namespace \
-    nvidia/gpu-operator \
+  nvidia/gpu-operator \
+  --version=v25.3.4 \
   --set driver.enabled=false \
   --set operator.defaultRuntime=containerd \
+  --set toolkit.version=v1.17.2-ubi8 \
   --set toolkit.env[0].name=CONTAINERD_CONFIG \
   --set toolkit.env[0].value=/var/lib/rancher/rke2/agent/etc/containerd/config.toml \
   --set toolkit.env[1].name=CONTAINERD_SOCKET \
@@ -175,9 +177,9 @@ helm install -n gpu-operator \
   --set toolkit.env[2].value=nvidia \
   --set toolkit.env[3].name=CONTAINERD_SET_AS_DEFAULT \
   --set-string toolkit.env[3].value=true \
-  --set toolkit.version=v1.17.2-ubi8  \
   --set validator.driver.env[0].name=DISABLE_DEV_CHAR_SYMLINK_CREATION \
   --set-string validator.driver.env[0].value=true
+
 ````
 
 
