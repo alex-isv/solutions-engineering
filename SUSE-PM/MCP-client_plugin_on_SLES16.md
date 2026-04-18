@@ -1,5 +1,5 @@
 
- **SLES16 MCP client in Cockpit** (Ansible extension) and a **FastAPI MCP server** that fronts three Ollama models.
+ **SLES16 MCP client in Cockpit** (Ansible extension) and a **FastAPI MCP server** that fronts three Ollama models.**Version-1.0**
 
 ---
 
