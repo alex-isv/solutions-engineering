@@ -1,4 +1,4 @@
-# MCP Server and Cockpit MCP Client Plugin on SLES 16
+# MCP Server and Cockpit MCP Client Plugin on SLES 16 - Version-2.0.
 
 This document provides a guide for building an MCP server on SLES 16, and for using the Cockpit MCP client plugin to interact with it.
 
