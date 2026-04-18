@@ -920,8 +920,6 @@ It must call:
 /usr/share/cockpit/ansible-playbook-extension/bin/deploy-mcpclient
 ```
 
-and not the old path.
-
 ### rpmbuild layout
 
 ```bash
@@ -1004,4 +1002,4 @@ For your design, the clean split is:
   - install Python packages locally
   - restart services locally
 
-That is the model you should document and package into the next RPM release.
+===================================
