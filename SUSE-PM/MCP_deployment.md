@@ -43,10 +43,13 @@ Save as:
 ```bash
 /opt/mcp-server/server.py
 ```
+
 <details><summary>Expand for detailed values</summary>
+  ```bash
+  
 ```python
 #!/usr/bin/env python3
-"""
+```
 FastAPI-based MCP Server for SLES16
 
 Features:
