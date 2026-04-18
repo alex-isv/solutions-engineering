@@ -45,11 +45,12 @@ Save as:
 ```
 
 <details><summary>Expand for detailed values</summary>
-  ```bash
+  
+```bash
   
 ```python
 #!/usr/bin/env python3
-```
+"""
 FastAPI-based MCP Server for SLES16
 
 Features:
