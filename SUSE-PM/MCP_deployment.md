@@ -461,6 +461,8 @@ Install on the **client node** at:
 ```bash
 /usr/share/cockpit/ansible-playbook-extension/bin/deploy-mcpclient
 ```
+<details><summary>Expand for detailed values</summary>
+    
 
 ```bash
 #!/bin/bash
@@ -736,6 +738,7 @@ else:
     sys.exit(1)
 PYCODE
 ```
+</details>
 
 Then:
 
