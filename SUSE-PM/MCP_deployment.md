@@ -43,7 +43,7 @@ Save as:
 ```bash
 /opt/mcp-server/server.py
 ```
-
+<details><summary>Expand for detailed values</summary>
 ```python
 #!/usr/bin/env python3
 """
@@ -447,7 +447,7 @@ async def call_tool(request: Request):
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=MCP_PORT)
 ```
-
+</details>
 ---
 
 ## 3. Final `deploy-mcpclient`
