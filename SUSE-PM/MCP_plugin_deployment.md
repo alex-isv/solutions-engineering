@@ -863,7 +863,7 @@ sudo systemctl restart cockpit.socket
 ```
 
 ---
-## 6. RPM rebuild checklist
+## 9. RPM rebuild checklist
 
 Your package should include at least:
 
@@ -1001,7 +1001,7 @@ The current Cockpit UI uses a single prompt field.
 - For **LLM tools**, enter plain text.
 - For **native tools**, enter JSON in the prompt field.
 
-## 4. Tool examples for Cockpit
+## 12. Tool examples for Cockpit
 
 ### LLM tools
 
@@ -1111,7 +1111,7 @@ Prompt:
 
 ---
 
-## 5. Recommended client workflow
+## Recommended client workflow
 
 ### Diagnose a client issue
 
