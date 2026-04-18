@@ -14,7 +14,7 @@ This guide reflects the validated working design:
   - `analyze_uploaded_logs` analysis endpoint
   - optional server-local tools if you still want them
 
-This document is intended to help you **rewrite your guide** and **rebuild your Cockpit MCP client RPM**.
+This document is intended to help you  **build your Cockpit MCP client RPM**.
 
 ---
 
